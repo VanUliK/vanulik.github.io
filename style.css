@@ -17,15 +17,10 @@
 img {
   width: 260px;
 }
-ul {
-  font-size: large;
-  color: #3e177a;
-  padding-left: 30px;
-}
 
 .color {
-  color: forestgreen;
-  padding-left: 30px;
+  padding-left: 300px;
+  color: #3e177a;
 }
 .footer {
   display: flex;
