@@ -13,9 +13,7 @@
   padding-top: 16px;
   padding-bottom: 16px;
 }
-это всё хорошо,
-интересно,
-но как это всё потом применять к html .item1 {
+.item1 {
   text-align: center;
   font-size: 40px;
   color: brown;
@@ -23,6 +21,15 @@
   margin-top: 1px;
   background-color: #d7e491;
   border: 1px solid #000000;
+}
+
+.script {
+  text-align: center;
+  font-size: 60px;
+  color: rgba(193, 50, 50, 0.985);
+  background-color: #7070be35;
+
+  padding-bottom: 1000px;
 }
 
 .item2 {

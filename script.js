@@ -8,8 +8,8 @@ function name() {
   } else {
     alert(`Привет, ${result}`);
   }
+  return result;
 }
-name();
 
 // if (result === null) {
 //   alert("Ты не ввёл имя");
