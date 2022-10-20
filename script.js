@@ -8,7 +8,6 @@ function name() {
   } else {
     alert(`Привет, ${result}`);
   }
-  return name;
 }
 name();
 
