@@ -1,11 +1,22 @@
 // Создать страницу, которая спрашивает имя у пользователя и выводит его с помощью функции.
 
-let result = prompt("Как тебя зовут?", "");
-if (result === null) {
-  alert("Ты не ввёл имя");
-} else {
-  alert(`Привет, ${result}`);
+function name() {
+  let result = prompt("Как тебя зовут?", "");
+  if (result === null) {
+    alert("Ты не ввёл имя");
+    name();
+  } else {
+    alert(`Привет, ${result}`);
+  }
+  return name;
 }
+name();
+
+// if (result === null) {
+//   alert("Ты не ввёл имя");
+// } else {
+//   alert(`Привет, ${result}`);
+// }
 
 // if (confirm("Вы уверены?")) {
 //   alert("Мы рады, что Вы уверены!");
