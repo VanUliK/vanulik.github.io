@@ -4,7 +4,7 @@ function name() {
   let result = prompt("Как тебя зовут?", "");
   if (result === null) {
     alert("Ты не ввёл имя");
-    name();
+    return name();
   } else {
     alert(`Привет, ${result}`);
   }
