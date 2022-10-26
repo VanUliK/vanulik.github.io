@@ -13,6 +13,7 @@
   padding-top: 16px;
   padding-bottom: 16px;
 }
+
 .item1 {
   text-align: center;
   font-size: 40px;
@@ -28,7 +29,7 @@
   font-size: 60px;
   color: rgba(193, 50, 50, 0.985);
   background-color: #7070be35;
-  padding-bottom: 400px;
+
 }
 
 .item2 {
@@ -100,4 +101,22 @@ summary {
 
 summary::-webkit-details-marker {
   display: none;
+}
+
+.title {
+  color: rgb(0, 0, 0);
+  font-size: large;
+  font-weight: bold;
+  align-items: center;
+}
+
+a {
+
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: rgb(23, 0, 232);
+
 }
