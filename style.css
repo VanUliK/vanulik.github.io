@@ -14,6 +14,8 @@
     padding-bottom: 16px;
 }
 
+
+
 .container {
     width: 1000px;
     margin: 0 auto;
@@ -76,6 +78,10 @@ h1 {
     background-color: #217070;
 }
 
+.angular {
+    color: red;
+    font-weight: bold;
+}
 
 .form {
 
