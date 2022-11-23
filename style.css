@@ -14,7 +14,13 @@
     padding-bottom: 16px;
 }
 
+.menu {
+    background-color: #ccc;
+}
 
+.table {
+    height: 20px;
+}
 
 .container {
     width: 1000px;
