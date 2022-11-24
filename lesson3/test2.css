@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+body {
+    background-color: #020A18;
+}
+
+.header {
+    background-color: #0a121f;
+}
+
+.container {
+    margin: 0 auto;
+    width: 1146px;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.header-link {
+    padding: 40px;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.header-link:hover {
+    background-color: #3A68B8;
+    border-radius: 5px;
+}
+
+.main {
+    margin-top: 160px;
+}
+
+
+.flex-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.next {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 160%;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    color: #3A68B8;
+}
+
+.main-headding {
+    font-weight: 800;
+    font-size: 55px;
+    line-height: 130%;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    width: 604px;
+}
+
+
+.main-dsc {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 160%;
+    color: #ccc;
+    margin-top: 40px;
+    width: 558px;
+    margin-bottom: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.get {
+    background: #3A68B8;
+    border-radius: 5px;
+    margin-right: 20px;
+
+}
+
+.button-txt-flex {
+    height: 100%;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+}
+
+.watch {
+    background: #3A68B8;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+
+}
+
+.watch-txt {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.button-flex {
+    display: flex;
+}
+
+
+.button-txt {
+    padding: 15px 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+
+}
+
+.get:hover,
+.watch:hover {
+    outline: 4px solid #fff;
+}
+
+
+.footer {
+    margin-top: 200px;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+}

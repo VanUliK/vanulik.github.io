@@ -6,22 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/3f27ae9b39.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style/style.css">
     <title>Домашняя работа</title>
 </head>
 
 <body>
     <header>
-        <div class="header">
-            <a class="url_head" href="../index.html">Главная</a>
-            <a class="url_head" href="https://vanulik.github.io">GitHub Pages</a>
-            <a class="url_head" href="lesson3.html">Семинар 3</a>
-            <a class="url_head" href="catalog.html">Каталог</a>
-            <a class="url_head angular" href="https://vanulik.github.io/cars-app">Мой сайт на angular</a>
-            <a class="url_head angular" href="../figma/index.html">Cайт из Figma</a>
-            <a class="url_head" href="about.html">About</a>
-        </div>
+        <ul>
+            <li><a class="url_head" href="../index.html">Главная</a></li>
+            <li class="dropdown">
+                <a href="#" class="url_head orange">Учеба GeekBrains</a>
+                <div class="dropdown-content">
+                    <a class="url_head" href="../lesson3/test.html">Семинар 3</a>
+                    <a class="url_head" href="./lesson3.html">Семинар 3 (ред.)</a>
+                    <a class="url_head" href="lesson3_hw.html">ДЗ Семинар 3</a>
+                    <a class="url_head" href="#">Семинар 4</a>
+                    <a class="url_head" href="#">ДЗ Семинар 4</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="url_head orange">Figma</a>
+                <div class="dropdown-content">
+                    <a class="url_head"
+                        href="https://www.figma.com/file/Ti6JoXstsk9S9gA4WTBExj/frontend-intensive?node-id=0%3A1&t=wzOGgNz7Zqr1R5KP-0">Original</a>
+                    <a class="url_head" href="../figma/index.html">Верстка из Figma</a>
+                </div>
+            </li>
+            <li><a class="url_head" href="https://vanulik.github.io">GitHub Pages</a></li>
+            <li><a class="url_head" href="catalog.html">Каталог</a></li>
+            <li><a class="url_head" href="about.html">About</a></li>
+            <li><a class="url_head" href="https://vanulik.github.io/cars-app">Мой сайт на angular</a></li>
+        </ul>
     </header>
+
+
 
 
     <div class="container">

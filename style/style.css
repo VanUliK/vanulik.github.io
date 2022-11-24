@@ -3,23 +3,56 @@
     padding: 0;
 }
 
-.header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    font-size: 16px;
-    background: #217070;
-    border: 1px solid #000;
-    padding-top: 16px;
-    padding-bottom: 16px;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #217070;
 }
 
-.menu {
-    background-color: #ccc;
+li {
+    float: left;
 }
 
-.table {
-    height: 20px;
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    display: block;
+    text-align: left;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.url_head {
+    text-decoration: none;
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    padding: 20px 26px;
+}
+
+.url_head:hover {
+    font-size: 20px;
+    color: #fff;
+    background-color: #165a5a;
+}
+
+.orange {
+    color: orange;
 }
 
 .container {
@@ -37,15 +70,8 @@
     border: 1px solid black;
 }
 
-.url_head {
-    text-decoration: none;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    color: #000;
-}
+
+
 
 .paragraph {
     font-style: normal;
@@ -78,16 +104,6 @@ h1 {
     color: #000;
 }
 
-.url_head:hover {
-    font-size: 20px;
-    color: #fff;
-    background-color: #217070;
-}
-
-.angular {
-    color: red;
-    font-weight: bold;
-}
 
 .form {
 
@@ -142,8 +158,6 @@ h1 {
 .fa-facebook {
     color: blue;
 }
-
-
 
 .lp {
     width: 100px;
