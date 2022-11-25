@@ -6,11 +6,15 @@
 .container {
     margin: 0 auto;
     max-width: 1200px;
-    display: flex;
+
 }
 
 .header {
     display: flex;
+    margin: 0 auto;
+    max-width: 1200px;
+    justify-content: center;
+    margin-top: 51px;
 }
 
 .logo {
@@ -52,6 +56,7 @@
 
 .main {
     margin-top: 96px;
+    display: flex;
 }
 
 .flex-box {
@@ -75,11 +80,47 @@
     padding-bottom: 37px;
 }
 
-.button-txt-start {
+.main-pic {
+    padding-left: 41px;
+}
+
+.button-block {
+    display: flex;
+    align-items: center;
+}
+
+.button {
     width: 140px;
     height: 50px;
-
     background: #F25822;
     box-shadow: 4px 4px 8px rgba(242, 88, 34, 0.2);
     border-radius: 50px;
+    cursor: pointer;
+}
+
+.button-txt-start {
+    padding-top: 15px;
+    text-align: center;
+    font-size: 15px;
+    color: #FFFFFF;
+}
+
+.button-txt-start:hover {
+    color: #f1dcd3;
+}
+
+.button-txt-watch {
+    font-size: 15px;
+    color: #AAAAAA;
+    padding-left: 72px;
+}
+
+.footer {
+    margin-top: 259px;
+    justify-content: space-between;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
 }
