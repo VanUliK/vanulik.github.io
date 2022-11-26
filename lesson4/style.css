@@ -178,7 +178,7 @@ body {
 }
 
 .third-page {
-    padding-top: 132px;
+    padding-top: 102px;
 }
 
 .container-item {
@@ -200,19 +200,19 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .item-big {
     width: 754px;
-    height: 838px;
+    height: 868px;
     background: #132035;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .item-pic {
