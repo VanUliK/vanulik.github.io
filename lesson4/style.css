@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+body {
+    background-color: #020A18;
+}
+
+
+.first-page {
+    padding-bottom: 113px;
+    background-color: #0a121f;
+}
+
+.container {
+    margin: 0 auto;
+    width: 1146px;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.header-link {
+    padding: 40px;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.header-link:hover {
+    background-color: #3A68B8;
+    border-radius: 5px;
+}
+
+.first-section {
+    margin-top: 160px;
+    margin-bottom: 200px;
+}
+
+
+.flex-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.next {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 160%;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    color: #3A68B8;
+}
+
+.first-section-headding {
+    font-weight: 800;
+    font-size: 55px;
+    line-height: 130%;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    width: 604px;
+}
+
+
+.first-section-dsc {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 160%;
+    color: #ccc;
+    margin-top: 40px;
+    width: 558px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.get {
+    background: #3A68B8;
+    border-radius: 5px;
+    margin-right: 20px;
+
+}
+
+.button-txt-flex {
+    height: 100%;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+}
+
+.watch {
+    background: #3A68B8;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.watch-txt {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.button-flex {
+    display: flex;
+    padding-top: 50px;
+
+}
+
+
+.button-txt {
+    padding: 15px 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.get:hover,
+.watch:hover {
+    outline: 4px solid #fff;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.second-page {
+    margin-top: 157px;
+    margin-bottom: 132px;
+}
+
+.second-section-txt {
+    padding-left: 68px;
+}
+
+.second-section-headding {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 130%;
+    color: #FFFFFF;
+
+}
+
+.second-section-dsc {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    color: #FFFFFF;
+    opacity: 0.7;
+    padding-top: 30px;
+}
+
+.third-page {
+    padding-top: 132px;
+}
+
+.container-item {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 1146px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.item {
+    width: 362px;
+    height: 419px;
+    background: #132035;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.item-big {
+    width: 754px;
+    height: 838px;
+    background: #132035;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.item-pic {
+    margin-top: 30px;
+
+}
+
+.item-heading {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 125%;
+    text-align: center;
+    color: #FFFFFF;
+    opacity: 0.7;
+    width: 302px;
+}
+
+.item-dsc {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    text-align: center;
+    color: #FFFFFF;
+    opacity: 0.7;
+    width: 302px;
+    padding-bottom: 30px;
+}
+
+.item-big-heading {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 125%;
+    text-align: center;
+    color: #FFFFFF;
+    opacity: 0.7;
+    width: 694px;
+}
+
+.item-big-dsc {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    text-align: center;
+    color: #FFFFFF;
+    opacity: 0.7;
+    width: 694px;
+    padding-bottom: 144px;
+}
