@@ -269,3 +269,134 @@ body {
     width: 694px;
     padding-bottom: 144px;
 }
+
+.fourth-page {
+    padding-top: 243px;
+    margin-bottom: 235px;
+}
+
+.fourth-section-headding {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 130%;
+    color: #FFFFFF;
+    padding-bottom: 20px;
+
+}
+
+.fourth-section-dsc {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    color: #FFFFFF;
+    opacity: 0.7;
+    padding-right: 113px;
+    padding-top: 20px;
+}
+
+.footer {
+    background-color: #0a121f;
+}
+
+.flex-box-footer {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.first-column {
+    width: 261px;
+    padding-right: 110px;
+    padding-bottom: 50px;
+
+}
+
+.footer-headding {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+    padding-top: 48px;
+    padding-bottom: 33px;
+    width: 261px;
+
+}
+
+.email-txt {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+    padding-left: 9px;
+}
+
+
+
+.phone-txt {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+    padding-left: 9px;
+}
+
+.phone {
+    padding-top: 25px;
+}
+
+.adress-txt {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+    padding-left: 9px;
+}
+
+.adress {
+    padding-top: 25px;
+}
+
+.footer-dsc {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 100;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+    opacity: 0.6;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    width: 261px;
+    padding-right: 131px;
+}
+
+.footer-link {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    padding-bottom: 24px;
+}
+
+.footer-img {
+    padding-right: 24px;
+}
