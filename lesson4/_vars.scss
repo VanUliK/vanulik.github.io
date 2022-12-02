@@ -1,0 +1,25 @@
+@mixin txt($fs, $fw, $lh) {
+    color: $color-txt;
+    font-family: 'Open Sans', sans-serif;
+    font-size: $fs;
+    font-weight: $fw;
+    line-height: $lh
+}
+
+@mixin item($br) {
+    background: $itemcolor;
+    border-radius: $br;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+$site-width: 1146px;
+$headcolor: #0a121f;
+$backcolor: #020A18;
+$itemcolor: #132035;
+$buttoncolor: #3A68B8;
+$color-txt: white;
+$fontfooter: 'Roboto';
