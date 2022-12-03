@@ -15,17 +15,17 @@
   font-weight: normal;
   src: local("Gilroy-Regular"), url("../fonts/Gilroy-Regular.woff") format("woff");
 }
-.header {
-  height: 490px;
+.container {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: center;
-  padding-top: 100px;
   background-color: #eee;
 }
 
-.container {
+.header {
+  display: flex;
   width: 1170px;
+  height: 490px;
+  padding-top: 100px;
 }
 
 .item-header {
