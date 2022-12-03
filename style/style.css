@@ -15,8 +15,6 @@ li {
     float: left;
 }
 
-
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -31,7 +29,6 @@ li {
     display: block;
     text-align: left;
 }
-
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -70,15 +67,12 @@ li {
     border: 1px solid black;
 }
 
-
-
-
 .paragraph {
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 30px;
-    color: #7D7987
+    color: #7d7987;
 }
 
 h1 {
@@ -104,7 +98,6 @@ h1 {
     color: #000;
 }
 
-
 .form {
     max-width: 420px;
     margin: 50px auto;
@@ -123,7 +116,6 @@ h1 {
     border-radius: 5px;
     margin-bottom: 20px;
     border: 2px solid #d7d7d7;
-
 }
 
 .form button {
@@ -233,7 +225,7 @@ h1 {
     }
 
     27% {
-        stroke-dasharray: 8 335.85 8
+        stroke-dasharray: 8 335.85 8;
     }
 
     28% {
@@ -274,7 +266,7 @@ h1 {
     }
 
     77% {
-        stroke-dasharray: 8 335.85 8
+        stroke-dasharray: 8 335.85 8;
     }
 
     78% {
