@@ -2,8 +2,8 @@ $width-site: 1170px;
 $bg-item_1: rgba(242, 88, 34, 0.25);
 $bg-item_2: rgba(20, 146, 17, 0.28);
 $bg-item_3: rgba(255, 205, 29, 0.24);
-$color-txt: #4839af;
-$color-dsc: #0b830b;
+$color-txt: #000000;
+$color-dsc: #666666;
 
 @mixin txt-head($fs, $lh) {
   color: $color-txt;

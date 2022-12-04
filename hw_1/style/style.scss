@@ -20,17 +20,21 @@
 
 @import "vars";
 
-.container {
+body {
+  background-color: #fafafa;
+}
+
+.container-head {
   display: flex;
   justify-content: center;
-  background-color: #eee;
+  background-color: #ffffff;
 }
 
 .header {
   display: flex;
   width: $width-site;
-  height: 490px;
   padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 .item-header {
@@ -64,7 +68,7 @@
   background: $bg-item_3;
 }
 
-.img {
+.img-head {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -84,4 +88,96 @@
 .item-url {
   @include txt-head(11px, 150%);
   text-decoration: none;
+}
+
+.main-txt {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-head {
+  @include txt-head(45px, 53px);
+  text-align: center;
+  margin-top: 92px;
+  margin-bottom: 19px;
+}
+
+.main-dsc {
+  @include txt-dsc(16px, 150%);
+  text-align: center;
+  width: 682px;
+  margin-bottom: 54px;
+}
+
+.container-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.main {
+  display: flex;
+}
+
+.item-main {
+  margin-left: 15px;
+  margin-right: 15px;
+  width: 370px;
+  height: 550px;
+  background: #ffffff;
+  margin-bottom: 100px;
+}
+
+.item-main:hover {
+  box-shadow: 15px 25px 60px -5px rgba(0, 0, 0, 0.1);
+}
+
+.img-main {
+  padding-bottom: 30px;
+}
+
+.button-main {
+  @include txt-head(13px, 150%);
+  border: 0px;
+  color: #ffffff;
+  width: 150px;
+  height: 50px;
+  background: #f25822;
+  border-radius: 50px;
+}
+
+.button-main:hover {
+  box-shadow: 4px 4px 8px rgba(242, 88, 34, 0.2);
+  border: 1px solid #ad411a;
+}
+
+.item-main-head {
+  padding-bottom: 22px;
+  text-align: center;
+}
+
+.item-main-dsc {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 39px;
+  text-align: center;
+  color: #aaaaaa;
+}
+
+.button-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-url {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
 }
