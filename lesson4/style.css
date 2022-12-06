@@ -384,8 +384,34 @@ body {
   .flex-box {
     justify-content: center;
   }
+  .first-section-pic {
+    margin-top: 50px;
+  }
   .footer-flex {
     justify-content: center;
     gap: 30px;
+  }
+  .second-section-txt {
+    padding: 55px;
+  }
+  .item-big {
+    display: none;
+  }
+  .item-column {
+    display: none;
+  }
+  .container-item {
+    flex-direction: column;
+    align-items: center;
+  }
+  .fourth-section {
+    padding-left: 40px;
+  }
+  .fourth-section-txt {
+    padding-bottom: 64px;
+  }
+  .flex-box-footer {
+    margin-left: 40px;
+    flex-wrap: wrap;
   }
 }/*# sourceMappingURL=style.css.map */
