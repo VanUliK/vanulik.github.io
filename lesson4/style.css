@@ -387,6 +387,9 @@ body {
   .first-section-pic {
     margin-top: 50px;
   }
+  .next {
+    font-size: 16px;
+  }
   .first-section-headding {
     font-size: 48px;
   }
@@ -416,5 +419,29 @@ body {
   .flex-box-footer {
     margin-left: 40px;
     flex-wrap: wrap;
+  }
+}
+@media (max-width: 767px) {
+  .flex-box {
+    justify-content: center;
+  }
+  .header-link {
+    font-size: 14px;
+    line-height: 19px;
+    padding: 16px;
+  }
+  .next {
+    font-size: 14px;
+    text-align: center;
+  }
+  .first-section-headding {
+    font-size: 28px;
+    text-align: center;
+  }
+  .first-section-dsc {
+    text-align: center;
+  }
+  .first-section-pic {
+    margin-top: 50px;
   }
 }/*# sourceMappingURL=style.css.map */
