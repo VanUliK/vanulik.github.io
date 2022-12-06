@@ -357,14 +357,36 @@ body {
   .first-section-headding {
     font-size: 28px;
     text-align: center;
+    width: 100%;
+  }
+  .first-section-txt {
+    width: 100%;
   }
   .first-section-dsc {
     text-align: center;
+    width: 100%;
   }
   .first-section-pic {
     margin-top: 50px;
   }
   .button-flex {
-    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+  }
+  .button-txt-flex {
+    padding: 22px;
+  }
+  .get {
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+  .second-section-txt {
+    text-align: center;
+    padding: 0;
+  }
+
+  .fourth-section-txt {
+    text-align: center;
   }
 }
