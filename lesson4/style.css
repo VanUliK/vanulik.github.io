@@ -15,12 +15,13 @@ body {
 
 .container {
   margin: 0 auto;
-  width: 1146px;
+  max-width: 1146px;
 }
 
 .nav {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .header-link {
@@ -48,6 +49,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .next {
@@ -138,6 +140,7 @@ body {
 .footer-flex {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .second-page {
@@ -172,7 +175,7 @@ body {
 }
 
 .container-item {
-  width: 1146px;
+  max-width: 1146px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
@@ -375,4 +378,14 @@ body {
 
 .footer-img {
   padding-right: 24px;
+}
+
+@media (max-width: 1024px) {
+  .flex-box {
+    justify-content: center;
+  }
+  .footer-flex {
+    justify-content: center;
+    gap: 30px;
+  }
 }/*# sourceMappingURL=style.css.map */
