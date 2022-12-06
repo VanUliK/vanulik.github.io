@@ -416,6 +416,9 @@ body {
   .fourth-section-txt {
     padding-bottom: 64px;
   }
+  .fourth-section-dsc {
+    padding-right: 0;
+  }
   .flex-box-footer {
     margin-left: 40px;
     flex-wrap: wrap;
@@ -443,5 +446,8 @@ body {
   }
   .first-section-pic {
     margin-top: 50px;
+  }
+  .button-flex {
+    justify-content: center;
   }
 }/*# sourceMappingURL=style.css.map */
