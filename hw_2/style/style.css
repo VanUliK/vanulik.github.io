@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+.center {
+  padding-left: calc(50% - 570px);
+  padding-right: calc(50% - 570px);
+}
+
 .nav {
   height: 75px;
   display: flex;

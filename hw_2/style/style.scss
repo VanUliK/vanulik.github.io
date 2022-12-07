@@ -2,11 +2,13 @@
   margin: 0;
   padding: 0;
 }
-.header {
-}
-.nav {
-  //   width: 100%;
 
+.center {
+  padding-left: calc(50% - 570px);
+  padding-right: calc(50% - 570px);
+}
+
+.nav {
   height: 75px;
   display: flex;
   justify-content: space-between;
