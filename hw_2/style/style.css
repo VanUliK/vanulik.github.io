@@ -87,4 +87,160 @@
   height: 92px;
   background: #f16d7f;
   margin-right: 16px;
+}
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 65px;
+  margin-bottom: 96px;
+}
+
+.nav-group {
+  width: 360px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.first-img {
+  background-image: url(../img/Group\ 36.jpg);
+}
+
+.second-img {
+  background-image: url(../img/Group\ 37.jpg);
+}
+
+.third-img {
+  background-image: url(../img/Group\ 38.jpg);
+}
+
+.nav-group-big {
+  background-image: url(../img/Group\ 39.jpg);
+  width: 1140px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-group-txt-1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.2px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.nav-group-txt-2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28.8px;
+  text-align: center;
+  color: #f16d7f;
+}
+
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-head {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 36px;
+  color: #222222;
+  margin-bottom: 6px;
+}
+
+.main-head-dsc {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #9f9f9f;
+}
+
+.item-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
+
+.item {
+  width: 360px;
+  height: 581px;
+  background-color: #f8f8f8;
+}
+
+.item-txt {
+  margin-top: 25px;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.item-head {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 16px;
+}
+
+.item-dsc {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5d5d5d;
+  margin-bottom: 16px;
+}
+
+.item-price {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #f16d7f;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #f26376;
+  width: 211px;
+  height: 47px;
+  border: 1px solid #ff6a6a;
+  margin-bottom: 96px;
+}
+
+.down {
+  height: 341px;
+  background: #222224;
 }/*# sourceMappingURL=style.css.map */
