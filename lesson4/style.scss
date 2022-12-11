@@ -10,32 +10,32 @@ body {
   background-color: $backcolor;
 }
 
-.first-page {
-  padding-bottom: 113px;
-  background-color: $headcolor;
-}
-
 .container {
   margin: 0 auto;
   max-width: $site-width;
 }
 
-.nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.header-link {
-  @include txt(20px, 400, 50px);
-  padding: 40px;
-  display: block;
-  text-decoration: none;
-}
-
-.header-link:hover {
-  background-color: $buttoncolor;
-  border-radius: 5px;
+.first-page {
+  padding-bottom: 113px;
+  background-color: $headcolor;
+  &__nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  &__header-link {
+    @include txt(20px, 400, 50px);
+    padding: 40px;
+    display: block;
+    text-decoration: none;
+    &_green {
+      background-color: green;
+    }
+    &_hover:hover {
+      background-color: $buttoncolor;
+      border-radius: 5px;
+    }
+  }
 }
 
 .first-section {

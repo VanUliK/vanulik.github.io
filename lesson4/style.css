@@ -8,23 +8,21 @@ body {
   background-color: #020A18;
 }
 
-.first-page {
-  padding-bottom: 113px;
-  background-color: #0a121f;
-}
-
 .container {
   margin: 0 auto;
   max-width: 1146px;
 }
 
-.nav {
+.first-page {
+  padding-bottom: 113px;
+  background-color: #0a121f;
+}
+.first-page__nav {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-
-.header-link {
+.first-page__header-link {
   color: white;
   font-family: "Open Sans", sans-serif;
   font-size: 20px;
@@ -34,8 +32,10 @@ body {
   display: block;
   text-decoration: none;
 }
-
-.header-link:hover {
+.first-page__header-link_green {
+  background-color: green;
+}
+.first-page__header-link_hover:hover {
   background-color: #3A68B8;
   border-radius: 5px;
 }
