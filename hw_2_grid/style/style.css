@@ -202,6 +202,10 @@
   background-color: #f8f8f8;
 }
 
+.item-url {
+  text-decoration: none;
+}
+
 .item-img__width {
   width: 100%;
 }
