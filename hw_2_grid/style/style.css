@@ -99,13 +99,14 @@
   grid-template-columns: repeat(3, 33.33332%);
   grid-template-rows: repeat(2, 1fr);
   margin-top: 65px;
+  gap: 20px;
 }
 
 .url-nav {
   text-decoration: none;
 }
 .url-nav__big-column {
-  grid-column: 1/5;
+  grid-column: 1/4;
 }
 
 .nav-group {
