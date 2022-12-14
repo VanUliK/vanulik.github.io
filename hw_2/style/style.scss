@@ -95,13 +95,20 @@
   margin-top: 65px;
   margin-bottom: 96px;
 }
-
+.url-nav {
+  text-decoration: none;
+}
 .nav-group {
   width: 360px;
   height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+.nav-group:hover {
+  box-shadow: 0 0 10px 5px #ccc;
 }
 
 .first-img {
@@ -122,6 +129,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+.nav-group-big:hover {
+  box-shadow: 0 0 10px 5px #ccc;
 }
 
 .nav-group-txt-1 {
