@@ -206,6 +206,11 @@
   text-decoration: none;
 }
 
+.item-img:hover {
+  box-shadow: 0 0 10px 5px #ccc;
+  opacity: 0.5;
+}
+
 .item-img__width {
   width: 100%;
 }
