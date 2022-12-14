@@ -101,6 +101,7 @@
     grid-column: 1 / 4;
   }
 }
+
 .nav-group {
   height: 260px;
   border: 1px solid #ddd;
@@ -213,7 +214,16 @@
   width: 211px;
   height: 47px;
   border: 1px solid #ff6a6a;
+}
+
+.button-url {
+  text-decoration: none;
   margin-bottom: 96px;
+}
+
+.button:hover {
+  color: #fff;
+  background-color: #f26376;
 }
 
 .footer {
