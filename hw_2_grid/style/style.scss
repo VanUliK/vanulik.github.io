@@ -92,7 +92,6 @@
   display: grid;
   grid-template-columns: repeat(3, 33.33332%);
   grid-template-rows: repeat(2, 1fr);
-  gap: 30px;
   margin-top: 65px;
 }
 .url-nav {
@@ -123,13 +122,9 @@
   background-image: url(../img/Group\ 38.jpg);
 }
 
-.nav-group-big {
-  display: grid;
-  align-content: center;
+.big-img {
   background-image: url(../img/Group\ 39.jpg);
   height: 180px;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
 }
 .nav-group-big:hover {
   box-shadow: 0 0 10px 5px #ccc;
