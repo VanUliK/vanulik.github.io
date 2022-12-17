@@ -1,0 +1,15 @@
+.navbar-light .navbar-nav .nav-link {
+  color: red;
+}
+
+.carousel-control-next-icon {
+  background: url(../img/line/arrow-redo.svg);
+}
+
+.carousel-control-prev-icon {
+  background: url(../img/line/arrow-undo.svg);
+}
+
+.bg-light-gray {
+  background-color: #ccc;
+}/*# sourceMappingURL=style.css.map */
