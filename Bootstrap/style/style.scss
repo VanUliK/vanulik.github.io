@@ -3,12 +3,15 @@
 }
 
 .carousel-control-next-icon {
-  background: url(../img/line/arrow-redo.svg);
+  background: url(../img/next.jpg);
 }
 .carousel-control-prev-icon {
-  background: url(../img/line/arrow-undo.svg);
+  background: url(../img/back.jpg);
 }
 
 .bg-light-gray {
   background-color: #ccc;
+}
+.navbar-toggler-icon {
+  background: url(../img/32px.png);
 }
