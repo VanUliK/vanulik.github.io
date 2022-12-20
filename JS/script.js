@@ -107,8 +107,8 @@ console.log(hello + ' ' + world);
 
 let tempC = -10;
 let tempF = (9 / 5) * tempC + 32;
-console.log(`температура в градусах Цельсия ${tempC}`);
-console.log(`температура в градусах Цельсия ${tempF}`);
+console.log(`температура в градусах по Цельсию ${tempC}`);
+console.log(`температура в градусах по Фаренгейту ${tempF}`);
 
 
 
