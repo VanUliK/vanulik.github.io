@@ -3,4 +3,23 @@
 // 2. Создайте функцию которая возводит переданное число в квадрат
 // 3. Сделайте функцию, которая параметром принимает число и проверяет, положительное это число или отрицательное.В первом случае пусть функция выводит в консоль текст '+++', а во втором '---'.
 
+// 1.
+function FIO(firstName, lastName, age) {
+  return `Привет ${firstName} ${lastName} с возрастом ${age}`;
+}
+// console.log(FIO('Иван', 'Васин', 35));
+
+// 2.
+function square(numSqr) {
+  numSqr = numSqr * numSqr;
+  return numSqr;
+}
+// console.log(square(prompt('Введите число')));
+
+// 3.
+
+function positiveOrNegative(number) {
+  return (number >= 0) ? '+++' : '---';
+}
+// console.log(positiveOrNegative(prompt('Введите число')));
 
