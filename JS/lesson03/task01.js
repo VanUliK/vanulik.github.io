@@ -4,10 +4,10 @@
 // 3. Сделайте функцию, которая параметром принимает число и проверяет, положительное это число или отрицательное.В первом случае пусть функция выводит в консоль текст '+++', а во втором '---'.
 
 // 1.
-function FIO(firstName, lastName, age) {
+function fio(firstName, lastName, age) {
   return `Привет ${firstName} ${lastName} с возрастом ${age}`;
 }
-// console.log(FIO('Иван', 'Васин', 35));
+// console.log(fio('Иван', 'Васин', 35));
 
 // 2.
 function square(numSqr) {
