@@ -12,3 +12,18 @@
 // func(2);
 // func(3);
 // func();
+
+
+const sumNumber = (first, second, third) => console.log(Number(first) + Number(second) + Number(third));
+
+let first = '1';
+let second = '21';
+let third = '3';
+sumNumber(first, second, third);
+
+// function func(num = 5) {
+//   console.log(num * num);
+// }
+// func(2);
+// func(3);
+// func();

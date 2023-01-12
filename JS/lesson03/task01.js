@@ -4,21 +4,26 @@
 // 3. Сделайте функцию, которая параметром принимает число и проверяет, положительное это число или отрицательное.В первом случае пусть функция выводит в консоль текст '+++', а во втором '---'.
 
 // 1.
-function fio(firstName, lastName, age) {
-  return `Привет ${firstName} ${lastName} с возрастом ${age}`;
+function userFIO(firstName, lastName, age) {
+  return `Привет ${firstName} ${lastName} с возрастом ${Number(age)}`;
 }
-console.log(fio('Иван', 'Васин', 35));
+// let f = (fn, ln, age) => `Привет ${fn} ${ln} с возрастом ${age}`;
+// f = 4;
+
+// console.log(userFIO('Иван', 'Васин', '35'));
 
 // 2.
-function square(numSqr) {
-  numSqr = numSqr * numSqr;
-  return numSqr;
+const square2 = (numSqr2) => {
+  return numSqr2 ** 2;
 }
-console.log(square(prompt('Введите число, которое будет возведено в квадрат')));
+// function square(numSqr) {
+//   return numSqr ** 2;
+// }
+// console.log(square2(Number(prompt('Введите число, которое будет возведено в квадрат'))));
 
 // 3.
 
 function positiveOrNegative(number) {
-  return (number >= 0) ? '+++' : '---';
+  console.log((number >= 0) ? '+++' : '---');
 }
-console.log(positiveOrNegative(prompt('Введите число')));
+// positiveOrNegative(prompt('Введите число, функция проверит положительное оно или отрицательное'));
