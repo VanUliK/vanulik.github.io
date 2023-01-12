@@ -19,7 +19,7 @@ const sumNumber = (first, second, third) => console.log(Number(first) + Number(s
 let first = '1';
 let second = '21';
 let third = '3';
-sumNumber(first, second, third);
+// sumNumber(first, second, third);
 
 // function func(num = 5) {
 //   console.log(num * num);
