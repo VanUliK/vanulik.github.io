@@ -7,19 +7,18 @@
 function fio(firstName, lastName, age) {
   return `Привет ${firstName} ${lastName} с возрастом ${age}`;
 }
-// console.log(fio('Иван', 'Васин', 35));
+console.log(fio('Иван', 'Васин', 35));
 
 // 2.
 function square(numSqr) {
   numSqr = numSqr * numSqr;
   return numSqr;
 }
-// console.log(square(prompt('Введите число')));
+console.log(square(prompt('Введите число, которое будет возведено в квадрат')));
 
 // 3.
 
 function positiveOrNegative(number) {
   return (number >= 0) ? '+++' : '---';
 }
-// console.log(positiveOrNegative(prompt('Введите число')));
-
+console.log(positiveOrNegative(prompt('Введите число')));
