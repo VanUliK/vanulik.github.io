@@ -11,9 +11,31 @@ Exponentiation(numA, numB)
 // 2
 // Пользователь вводит с клавиатуры число, если ввёл текст, необходимо вывести что значение задано неверно
 // Создать фукнцию, которая высчитывает 13% от данного числа и выводит в консоль текст "Размер заработной платы за вычетом налогов равен значение"
+let salarySum = Number(prompt('Введите размер з/п'));
+
+const Salary = (salarySum) => {
+  if (Number.isInteger(salarySum)) {
+    console.log(`Размер заработной платы за вычетом налогов равен ${salarySum * 0.87}`);
+  }
+  else {
+    console.log('Введено некорректное значение');
+  }
+}
+Salary(salarySum);
 
 // 3
 // Пользователь с клавиатуры вводит 3 числа, необходимо создать функцию, которая определяет максимальное значение среди этих чисел
+
+let numberA = Number(prompt('Введите число A'));
+let numberB = Number(prompt('Введите число B'));
+let numberC = Number(prompt('Введите число C'));
+const maxNumber = (maxA, maxB, maxC) => {
+  let max = maxA;
+  if (maxB > max) max = maxB;
+  if (maxC > max) max = maxC;
+  console.log(max);
+}
+maxNumber(numberA, numberB, numberC);
 
 // 4
 // Необходимо реализовать четыре функции, каждая функция должна принимать по два
@@ -30,3 +52,4 @@ Exponentiation(numA, numB)
 // вернуть 0, если числа равны.
 // Функциям всегда передаются корректные числа, проверки на NaN, Infinity делать
 // не нужно.
+
