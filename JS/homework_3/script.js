@@ -57,14 +57,16 @@ const Sum = (a, b) => {
   return sum = a + b;
 }
 Sum(numberA, numberB);
-console.log(sum);
+console.log(`Сложение ${numberA} и ${numberB} = ${sum}`);
 
 let diff;
 const Diff = (a, b) => {
-  return diff = a - b;
+  (a > b) ? (diff = a - b) : (diff = b - a);
+  return diff;
 }
 Diff(numberA, numberB);
-console.log(diff);
+(numberA > numberB) ? console.log(`Разность ${numberA} и ${numberB} = ${diff}`) : console.log(`Разность ${numberB} и ${numberA} = ${diff}`);
+
 
 // let c = 10;
 // let d = 2;
@@ -72,9 +74,9 @@ console.log(diff);
 // let  = c - d;
 // let multi = c * d;
 // let delenie = c / d;
-// console.log(`Переменная c = ${c}`);
-// console.log(`Переменная d = ${d}`);
-// console.log(`Переменная суммы = ${sum}`);
-// console.log(`Переменная разности = ${diff}`);
-// console.log(`Переменная прозведения = ${multi}`);
-// console.log(`Переменная частного = ${delenie}`);
+// console.log(`Переменная c = ${ c }`);
+// console.log(`Переменная d = ${ d }`);
+// console.log(`Переменная суммы = ${ sum }`);
+// console.log(`Переменная разности = ${ diff }`);
+// console.log(`Переменная прозведения = ${ multi }`);
+// console.log(`Переменная частного = ${ delenie }`);
