@@ -52,4 +52,29 @@ maxNumber(numberA, numberB, numberC);
 // вернуть 0, если числа равны.
 // Функциям всегда передаются корректные числа, проверки на NaN, Infinity делать
 // не нужно.
+let sum;
+const Sum = (a, b) => {
+  return sum = a + b;
+}
+Sum(numberA, numberB);
+console.log(sum);
 
+let diff;
+const Diff = (a, b) => {
+  return diff = a - b;
+}
+Diff(numberA, numberB);
+console.log(diff);
+
+// let c = 10;
+// let d = 2;
+// let sum = c + d;
+// let  = c - d;
+// let multi = c * d;
+// let delenie = c / d;
+// console.log(`Переменная c = ${c}`);
+// console.log(`Переменная d = ${d}`);
+// console.log(`Переменная суммы = ${sum}`);
+// console.log(`Переменная разности = ${diff}`);
+// console.log(`Переменная прозведения = ${multi}`);
+// console.log(`Переменная частного = ${delenie}`);
