@@ -1,12 +1,13 @@
 // 1
 // Создайте функцию которая возводит переданное число в куб, необходимо вывести в консоль результат 2^3 степени + 3 ^ 3 степени
+let numberA = Number(prompt('Введите число A'));
+let numberB = Number(prompt('Введите число B'));
+let numberC = Number(prompt('Введите число C'));
 
-let numA = 2;
-let numB = 2;
 const Exponentiation = (a, b) => {
-  console.log(a ** 3 + b ** 3);
+  console.log(`результат: ${numberA}^3 + ${numberB}^3 = ${a ** 3 + b ** 3}`);
 }
-Exponentiation(numA, numB)
+Exponentiation(numberA, numberB)
 
 // 2
 // Пользователь вводит с клавиатуры число, если ввёл текст, необходимо вывести что значение задано неверно
@@ -25,15 +26,11 @@ Salary(salarySum);
 
 // 3
 // Пользователь с клавиатуры вводит 3 числа, необходимо создать функцию, которая определяет максимальное значение среди этих чисел
-
-let numberA = Number(prompt('Введите число A'));
-let numberB = Number(prompt('Введите число B'));
-let numberC = Number(prompt('Введите число C'));
 const maxNumber = (maxA, maxB, maxC) => {
   let max = maxA;
   if (maxB > max) max = maxB;
   if (maxC > max) max = maxC;
-  console.log(max);
+  console.log(`максимальное значение среди чисел ${numberA}, ${numberB} и ${numberC} - ${max}`);
 }
 maxNumber(numberA, numberB, numberC);
 
@@ -67,16 +64,17 @@ const Diff = (a, b) => {
 Diff(numberA, numberB);
 (numberA > numberB) ? console.log(`Разность ${numberA} и ${numberB} = ${diff}`) : console.log(`Разность ${numberB} и ${numberA} = ${diff}`);
 
+let multi;
+const Multi = (a, b) => {
+  return multi = a * b;
+}
+Multi(numberA, numberB);
+console.log(`Умножение ${numberA} и ${numberB} = ${multi}`);
 
-// let c = 10;
-// let d = 2;
-// let sum = c + d;
-// let  = c - d;
-// let multi = c * d;
-// let delenie = c / d;
-// console.log(`Переменная c = ${ c }`);
-// console.log(`Переменная d = ${ d }`);
-// console.log(`Переменная суммы = ${ sum }`);
-// console.log(`Переменная разности = ${ diff }`);
-// console.log(`Переменная прозведения = ${ multi }`);
-// console.log(`Переменная частного = ${ delenie }`);
+let delenie;
+const Delenie = (a, b) => {
+  return delenie = a / b;
+}
+Delenie(numberA, numberB);
+console.log(`Деление ${numberA} на ${numberB} = ${delenie}`);
+
