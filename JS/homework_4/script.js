@@ -51,12 +51,6 @@ for (let i = 0; i < arrRandom.length; i++) {
     min = element;
   }
   sum += element;
-
-
-  if (element === elemFind) {
-  }
-  else {
-  }
 }
 console.log(`Сумма всех элементов массива = ${sum}`);
 console.log(`Минимальное число массива = ${min}`);
