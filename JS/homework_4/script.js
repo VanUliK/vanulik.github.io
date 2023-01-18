@@ -78,12 +78,9 @@ console.log(`------------------------Задание №4------------------------
 // xxx
 // xxxx
 // xxxxx
-
+let x = ' ';
 for (let i = 0; i < 20; i++) {
-  let x = '';
-  for (var j = 0; j <= i; j++) {
-    x += 'x';
-  }
+  x += 'x';
   console.log(x);
 }
 
