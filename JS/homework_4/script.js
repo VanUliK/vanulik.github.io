@@ -79,7 +79,7 @@ console.log(`------------------------Задание №4------------------------
 // xxxx
 // xxxxx
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 0; i++) {
   let x = '';
   for (var j = 0; j <= i; j++) {
     x += 'x';
@@ -101,4 +101,47 @@ for (let i = 1; i <= 10; i++) {
 
 console.log(`------------------------Задание №6------------------------`);
 // 6. Реализовать алгоритм умножения матриц
+
+function multiply(A, B) {
+  let rowA = A.length,
+    colA = A[0].length,
+    rowB = B.length,
+    colB = B[0].length,
+    multiArr = [];
+  if (colA != rowB) return false;
+  for (let i = 0; i < rowA; i++) multiArr[i] = [];
+  for (let k = 0; k < colB; k++) {
+    for (let i = 0; i < rowA; i++) {
+      let temp = 0;
+      for (let j = 0; j < rowB; j++) temp += A[i][j] * B[j][k];
+      multiArr[i][k] = temp;
+    }
+  }
+  return multiArr;
+}
+const matrixA = [[1, 2], [3, 2]];
+const matrixB = [[3, 2], [1, 1]];
+
+// multiply(matrixA, matrixB);
+// [[5, 4], [11, 8]]
+
+const matrixC = [
+  [2, 5],
+  [6, 7],
+  [1, 8],
+];
+const matrixD = [
+  [1, 2, 1],
+  [0, 1, 0],
+];
+
+// multiply(matrixC, matrixD);
+// [
+//   [2, 9, 2],
+//   [6, 19, 6],
+//   [1, 10, 1],
+// ]
+
+console.log(multiply(matrixA, matrixB));
+console.log(multiply(matrixC, matrixD));
 
