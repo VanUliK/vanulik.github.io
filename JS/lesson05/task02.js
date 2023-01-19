@@ -17,11 +17,18 @@ console.log(`------------------------Задание №2------------------------
 
 const obj = {
   x: 1,
-  y: 2,
+  y: '2',
   z: 3,
 };
+console.log(Object.values(obj));
+
 console.log(obj);
 for (let key in obj) {
-  obj[key] **= 2;
+  if (typeof obj[key] === 'number')
+    obj[key] **= 2;
+  else
+    console.log("Не все значения числа!");
 }
 console.log(obj);
+
+

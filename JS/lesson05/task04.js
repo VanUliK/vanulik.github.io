@@ -1,26 +1,44 @@
-console.log(`------------------------Задание №1------------------------`);
 // 1. Создайте объект riddles 
+const riddles = {};
 
-
-console.log(`------------------------Задание №2------------------------`);
 // 2. Добавьте свойства question, answer
+riddles.question = '',
+  riddles.answer = '111'
 
-
-console.log(`------------------------Задание №3------------------------`);
 // 3. создайте метод askQuestion который спрашивает у пользователя вопрос question и сравнивает ответ с answer
+const askQuestion = () => {
+  riddles.question = prompt('Введите ответ');
+  if (riddles.question === this.answer) {
+    console.log('Good');
+  }
+  else {
+    console.log('вы проиграли');
+  }
+}
+askQuestion();
 
 
-console.log(`------------------------Задание №4------------------------`);
 // 4. Добавьте свойство hints (содержащее 2 подсказки)
 
+riddles.hints = ['цифры', 'по порядку']
+// console.log(ri);
 
-console.log(`------------------------Задание №5------------------------`);
 // 5. Если пользователь ответил неверно, ему даётся одна подсказка
 
 
-console.log(`------------------------Задание №6------------------------`);
 // 6. Если пользователь ответил второй раз неверно, даётся вторая подсказка
 
 
-console.log(`------------------------Задание №7------------------------`);
 // 7. Если ответил неверно, то в консоль выводится текст: “вы проиграли”
+
+
+// const riddles = {
+//   question: 'where is my green suit?',
+//   answer: 'Arkham Asylum',
+//   riddler() {
+//     userAnswer = prompt(this.question);
+//     return console.log((userAnswer === this.answer) ? true : false);
+
+//   }
+// }
+// riddles.riddler();
