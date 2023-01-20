@@ -12,7 +12,6 @@ const numbers = {
   keyin7: 7,
 }
 
-Object.values(numbers)
 for (const key in numbers) {
   if (numbers[key] >= 3) {
     console.log(numbers[key]);
