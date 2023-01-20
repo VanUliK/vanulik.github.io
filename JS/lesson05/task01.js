@@ -11,6 +11,23 @@ const day = {
 };
 console.log(day[2]);
 
+// Первый вариант
+
+const dayArr = Object.values(day);
+console.log(dayArr);
+
+// Второй вариант
+
+const dayArray = Object.keys(day);
+for (let i = 0; i < dayArray.length; i++) {
+  if (dayArray[i] > 3 && dayArray[i] < 7)
+    console.log(day[dayArray[i]]);
+}
+
+// Третий вариант
+
+console.log(Object.entries(day));
+
 
 console.log(`------------------------Задание №2------------------------`);
 //  2. Создайте объект user с ключами 'name', 'surname', ‘age’. Выведите на экран фамилию, имя и возраст через дефис.
@@ -20,7 +37,11 @@ const user = {
   age: '35'
 };
 console.log(`${user.name} - ${user.surname} - ${user.age}`);
-
+let temp = ' ';
+for (const key in user) {
+  temp += user[key] + ' ';
+}
+console.log(temp);
 
 console.log(`------------------------Задание №3------------------------`);
 // 3. Добавьте в объект user свойство отчество, которое пользователь должен ввести с клавиатуры

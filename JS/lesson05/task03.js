@@ -93,3 +93,4 @@ console.log(sum);
 //   sum2 += test3[i];
 // }
 // console.log(sum2);
+

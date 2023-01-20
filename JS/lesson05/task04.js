@@ -42,3 +42,53 @@ riddles.hints = ['цифры', 'по порядку']
 //   }
 // }
 // riddles.riddler();
+
+console.log('----------------------------------------------');
+
+const riddles = {
+  question: 'Введите набор цифр',
+  answer: '123',
+  hints: ['цифры', 'по порядку', 'asfasf'],
+  askQuestion: function () {
+    this.userAnswer = prompt('Введите ответ', this.question);
+    if (this.userAnswer === this.answer) {
+      console.log('Вы угадали');
+    }
+    else if (this.hints.length > 0) {
+      this.showHints();
+      this.askQuestion();
+    }
+    else {
+      console.log('Не угадали');
+    }
+  },
+  showHints: function () {
+
+    alert(this.hints.shift())
+  }
+};
+riddles.askQuestion();
+
+
+// const riddles = {
+//   question: 'Зимой и летом одним цветом',
+//   answer: 'елка',
+//   hints: [
+//     'Зеленая',
+//     'С иголками',
+
+//   ],
+//   askQuestion() {
+//     if (prompt(this.question).toLowerCase() !== riddles.answer) {
+//       do {
+//         alert(this.hints.shift());
+//         if (prompt(this.question).toLowerCase() == riddles.answer) {
+//           return alert('Молодец');
+//         }
+//       } while (this.hints.length > 0);
+//     }
+//     console.log('вы проиграли');
+//   }
+// }
+
+// riddles.askQuestion();

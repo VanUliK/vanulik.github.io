@@ -45,7 +45,7 @@ console.log(`------------------------Второй вариант----------------
 const firstArray = Object.values(post.comments[0]);
 const ratingAray = Object.values(firstArray[3]);
 const secondArray = Object.values(post.comments[1]);
-// console.log(post.author, array[1], secondArray[0], secondArray[2]);
+// console.log(post.author, ratingAray[1], secondArray[0], secondArray[2]);
 console.log(
   `${post.author} 
 ${Object.values(firstArray[3])[1]} или так ${ratingAray[1]}

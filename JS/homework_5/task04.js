@@ -29,26 +29,10 @@ const products = [
 
 // Необходимо вывести в консоль массив продуктов в котором есть хоть одна фотография используя метод filter.Исходные данные - массив products.
 
-
-const findPicture = products.filter(function (pic) {
-  for (let i = 0; i < pic[i].length; i++) {
-    const element = pic[i]
-    console.log(pic[i]);
-  }
-  return pic;
-
-});
-
-for (let i = 0; i < findPicture.length; i++) {
-  const element = findPicture[i];
-  if (findPicture[i].photos > 0) {
-    console.log('yes');
-  }
-}
-
-console.log(findPicture[0].photos);
-
-
-
+const productsPhoto = products.filter(product => product.photos >= '.jpg');
+console.log(productsPhoto);
 
 // Необходимо отсортировать массив products используя метод sort по цене, начиная с самой маленькой, заканчивая самой большой ценой, после чего вывести отсортированный массив в консоль.
+
+products.sort((min, max) => min.price - max.price);
+console.log(products);

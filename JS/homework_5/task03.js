@@ -17,7 +17,7 @@ const products = [
 ];
 
 console.log(`------------------------Первый вариант------------------------`);
-// Вывод построчно значений price
+// Вывод значений price построчно
 
 products.forEach(element => {
   const arrayProducts = Object.values(element);
