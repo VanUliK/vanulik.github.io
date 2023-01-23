@@ -4,7 +4,9 @@
 // </div>
 // Получите ссылку на первый абзац из дива с id, равным block, выведите его в консоль
 
-const blockEl = document.querySelector("#block");
+// const blockEl = document.querySelector("#block p");
+const blockEl = document.querySelector('#block p:first-child');
+
 console.log(blockEl);
 
 // Получите ссылку на первый абзац с классом www. и вывести его в консоль

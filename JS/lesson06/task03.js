@@ -11,7 +11,7 @@ const contentEl = document.querySelector('.content');
 contentEl.appendChild(newElP)
 
 
-// Удалите добавленный узел 
+// Удалите добавленный узел
 
 contentEl.remove();
 

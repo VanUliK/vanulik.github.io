@@ -16,4 +16,6 @@ newSrc.src = 'https://molva33.ru/wp-content/uploads/2022/07/12-13-1-350x250.jpg'
 const btnEl = document.querySelector('.btn');
 btnEl.onclick = function () {
   newSrc.src = 'https://image.shutterstock.com/shutterstock/photos/3206115/display_1500/stock-photo-resurrection-bay-in-alaska-3206115.jpg'
+  newSrc.alt = 'Описание из JS'
+
 }
