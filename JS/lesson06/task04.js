@@ -21,6 +21,8 @@
 const buttonElem1 = document.createElement('button');
 const buttonElem2 = document.createElement('button');
 const buttonElem3 = document.createElement('button');
+buttonElem1.classList.add(red - button);
+buttonElem1.style.color = 'green';
 
 buttonElem1.textContent = 'Кнопка';
 buttonElem2.textContent = 'Кнопка';
@@ -45,6 +47,10 @@ for (let button of clickButton) {
     this.textContent = counter();
   });
 }
+
+button.addEventListener('click', function (e) {
+  console.log(++count);
+});
 
 // const content = document.querySelector('.content');
 // const buttonEl = document.createElement('button');

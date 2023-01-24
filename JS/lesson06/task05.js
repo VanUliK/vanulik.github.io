@@ -37,3 +37,27 @@ myButton.onclick = function () {
     alert('Вы сломали кнопку');
   }
 }
+
+    //  const content = document.querySelector('.content') 
+    //  const title = document.createElement("h1");  
+    //  title.textContent = "Кнопка катапультирования лектора";  
+    //  content.appendChild(title);  
+    //  const myButton = document.createElement('button');  
+    //  myButton.textContent = 'ЖМИ!';  
+    //  content.appendChild(myButton);  
+    //  let count = 0;  
+    //  myButton.onclick = function () {  
+    //      if (count % 2 === 0) {  
+    //          myButton.textContent = 'Давай еще раз!';  
+    //          title.textContent = 'Не выходит :('  
+    //      } else {  
+    //          myButton.textContent = 'Жми! Жми! Жми!';  
+    //          title.textContent = 'Кнопка катапультирования лектора';  
+    //      }  
+    //      count++;  
+    //      if (count === 5) {  
+    //          alert('Вы сломали кнопку'); 
+    //          myButton.remove(); 
+    //          title.textContent = 'Эх... В следующий раз повезет.'  
+    //      }  
+    //  } 
