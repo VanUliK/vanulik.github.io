@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="item">
+      <div class="elem">
+        <div class="info">
+          <h2 class="subtitle">Lorem, ipsum dolor.</h2>
+        </div>
+      </div>
+    </div>
+    <script>
+      // С помощью querySelector найти элемент h2 и вывести в консоль всех его родителей
+      const h2El = document.querySelector("h2");
+      h2El.childNodes.forEach((element) => {
+        console.log(
+          element.parentElement.parentElement.parentElement.parentElement
+        );
+      });
+    </script>
+  </body>
+</html>

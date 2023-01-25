@@ -22,13 +22,26 @@
       // Необходимо с помощью querySelector найти параграф с классом text
       const classText = document.querySelector(".text");
       console.log(classText);
+
       // Вывести в консоль соседний элемент h2
+      console.log(classText.previousElementSibling);
+      console.log(classText.parentElement.firstElementChild);
+      // const content = document.querySelector(".content");
+      // console.log(content.children[0]);
+      // console.log(content.firstElementChild);
 
       // Вывести в консоль родительский элемент content
       const classContent = classText.parentElement;
       console.log(classContent);
+
       // Вывести в консоль картинку
+      let img = document.querySelector("img");
+      console.log(img.src);
+      console.log(img.getAttribute("src"));
+
       // Вывести в консоль родительский элемент elem
+      const classElem = classText.parentElement.parentElement;
+      console.log(classElem);
     </script>
   </body>
 </html>
