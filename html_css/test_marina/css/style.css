@@ -1,0 +1,133 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  color: rgba(0, 0, 0, 1);
+  font-style: normal;
+  font-family: "Roboto";
+}
+
+.center {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.top_header {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 84 0;
+  gap: 350px;
+  padding: 40 auto;
+}
+
+.top_blok_menu_logo {
+}
+
+.top_link_menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.top_link {
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 1);
+}
+
+.link_menu {
+  color: rgba(242, 88, 34, 1);
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.top_content {
+  gap: 39px;
+  display: flex;
+}
+
+.top_blok_content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.top_content_txt {
+  font-size: 60px;
+  line-height: 70px;
+  margin: 0 0 17 0;
+}
+
+.top_txt {
+  font-size: 20px;
+  line-height: 23px;
+  color: #888888;
+  margin: 0 auto 37 auto;
+}
+
+.top_blok_content_btn {
+  width: 302px;
+  height: 50px;
+  gap: 72px;
+}
+
+.btn_one {
+  background: #f25822;
+  box-shadow: 4px 4px 8px rgba(242, 88, 34, 0.2);
+  border-radius: 50px;
+  font-size: 15px;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+.btn_two {
+  font-size: 15px;
+  line-height: 18px;
+  color: #aaaaaa;
+  border: none;
+}
+
+.top_content_photo {
+  width: 610px;
+  height: 372px;
+  background: url(pngfind);
+}
+
+.top_link {
+}
+
+.top_logos {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
+  gap: 48px;
+  height: 50px;
+  margin: 96 auto;
+}
+
+.values {
+}
+
+.values_item {
+  width: 100%;
+  max-width: 370px;
+}
+
+.values_item_poto {
+}
+
+.values_title {
+}
+
+.values_txt {
+}
+
+.values_rov {
+}
