@@ -23,6 +23,22 @@
           element.parentElement.parentElement.parentElement.parentElement
         );
       });
+
+      // С помощью querySelector найти элемент h2  и вывести в консоль всех его родителей
+      const subtitleEl = document.querySelector(".subtitle");
+      let parentEl = subtitleEl.parentElement;
+      for (let i = 0; i < document.body.childNodes.length; i++) {
+        if (parentEl) {
+          console.log(parentEl);
+          parentEl = parentEl.parentElement;
+        } else {
+          break;
+        }
+      }
+      while (parentEl) {
+        console.log(parentEl);
+        parentEl = parentEl.parentElement;
+      }
     </script>
   </body>
 </html>

@@ -35,6 +35,17 @@
       divEl.style.justifyContent = "center";
       divEl.style.alignItems = "center";
       divEl.setAttribute("class", "item_1");
+
+      // Дан блок, внутри него необходимо создать элемент div с классом item, разместить текст “Элемент внутри” и задать стили Цвет текста синий, Рамка сплошная черная, Цвет фона #f8f8f8, Внутренний отступ 16px, Добавить данному блоку класс item_1 (использоватьsetAttribute)
+      const blockEl = document.querySelector(".block");
+      const divEl = document.createElement("div");
+      const paragraphEl = document.createElement("p");
+      blockEl.appendChild(divEl);
+      divEl.setAttribute("class", "item");
+      divEl.appendChild(paragraphEl);
+      paragraphEl.setAttribute("class", "item_1");
+      paragraphEl.textContent = "Элемент внутри";
+      console.log(blockEl);
     </script>
   </body>
 </html>

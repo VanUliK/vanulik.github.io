@@ -42,6 +42,21 @@
       // Вывести в консоль родительский элемент elem
       const classElem = classText.parentElement.parentElement;
       console.log(classElem);
+
+      // Необходимо с помощью querySelector найти параграф с классом text
+      // - Вывести в консоль соседний элемент h2
+      // - Вывести в консоль родительский элемент content
+      // - Вывести в консоль картинку
+      // - Вывести в консоль родительский элемент elem
+      const parEl = document.querySelector(".text");
+      console.log(parEl.previousElementSibling);
+      console.log(parEl.parentElement);
+      console.log(parEl.parentElement.previousElementSibling);
+      console.log(parEl.parentElement.previousElementSibling.parentElement);
+      // parEl.onclick = function () {
+      //     parEl.previousElementSibling.remove();
+      // }
+      //=======================================================
     </script>
   </body>
 </html>
