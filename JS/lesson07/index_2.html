@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
@@ -19,10 +18,12 @@
       </div>
     </div>
     <script>
+      console.log("найти параграф с классом text");
       // Необходимо с помощью querySelector найти параграф с классом text
       const classText = document.querySelector(".text");
       console.log(classText);
 
+      console.log("Вывести в консоль соседний элемент h2");
       // Вывести в консоль соседний элемент h2
       console.log(classText.previousElementSibling);
       console.log(classText.parentElement.firstElementChild);
@@ -30,32 +31,38 @@
       // console.log(content.children[0]);
       // console.log(content.firstElementChild);
 
+      console.log("Вывести в консоль родительский элемент content");
       // Вывести в консоль родительский элемент content
       const classContent = classText.parentElement;
       console.log(classContent);
 
+      console.log("Вывести в консоль картинку");
       // Вывести в консоль картинку
-      let img = document.querySelector("img");
-      console.log(img.src);
-      console.log(img.getAttribute("src"));
+      // let img = document.querySelector("img");
+      // console.log(img.src);
+      // console.log(img.getAttribute("src"));
+      const img = classText.parentElement.previousElementSibling;
+      console.log(img);
 
+      console.log("Вывести в консоль родительский элемент elem");
       // Вывести в консоль родительский элемент elem
       const classElem = classText.parentElement.parentElement;
       console.log(classElem);
+      classText.onclick = function () {
+        classText.previousElementSibling.remove();
+      };
 
       // Необходимо с помощью querySelector найти параграф с классом text
-      // - Вывести в консоль соседний элемент h2
-      // - Вывести в консоль родительский элемент content
-      // - Вывести в консоль картинку
-      // - Вывести в консоль родительский элемент elem
-      const parEl = document.querySelector(".text");
-      console.log(parEl.previousElementSibling);
-      console.log(parEl.parentElement);
-      console.log(parEl.parentElement.previousElementSibling);
-      console.log(parEl.parentElement.previousElementSibling.parentElement);
-      // parEl.onclick = function () {
-      //     parEl.previousElementSibling.remove();
-      // }
+      // Вывести в консоль соседний элемент h2
+      // Вывести в консоль родительский элемент content
+      // Вывести в консоль картинку
+      // Вывести в консоль родительский элемент elem
+      const classText = document.querySelector(".text");
+      console.log(classText.previousElementSibling);
+      console.log(classText.parentElement);
+      const pic = classText.parentElement;
+      console.log(pic.previousElementSibling);
+      console.log(pic.previousElementSibling.parentElement);
       //=======================================================
     </script>
   </body>

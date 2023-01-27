@@ -4,10 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
+    <style>
+      .input {
+        border: 2px solid red;
+      }
+    </style>
   </head>
   <body>
+    <!-- <form action="#" onsubmit="return false;"> -->
     <form action="#">
       <input type="text" />
       <button class="btn">Отправить</button>
@@ -15,34 +20,20 @@
     <script>
       // Дано поле ввода и кнопка отправить, необходим реализовать функционал, если пользователь нажимает на кнопку отправить, а поле ввода пустое, то под полем ввода и кнопкой должен появиться заголовок h2 с текстом вы не заполнили поле ввода
       // Цвет у рамки сделать красным
-      const form = document.querySelector("form"),
-        button = document.querySelector("button"),
-        input = document.querySelector("input"),
-        textOne = "Введите что-нибудь",
-        textTwo = "Спасибо";
-      // input.addEventListener("keyup", function (event)
-      form.onclick = function () {
-        if (!this.value || this.value.trim() == "") {
-          button.innerText = textOne;
-        } else {
-          button.innerText = textTwo;
-        }
-      };
-      input.style.border = "2px dashed red";
-
-      // Дано поле ввода и кнопка отправить, необходим реализовать функционал, если пользователь нажимает на кнопку отправить, а поле ввода пустое, то под полем ввода и кнопкой должен появиться заголовок h2 с текстом вы не заполнили поле ввода
-      // Цвет у рамки сделать красным
-      const body = document.querySelector("form");
+      const inputEl = document.querySelector("input");
+      const button = document.querySelector(".btn");
+      const body = document.querySelector("body");
       const pElem = document.createElement("h2");
       body.appendChild(pElem);
-      const buttonElem = document.querySelector(".btn");
-      const inputEl = document.querySelector("input");
-      buttonElem.onclick = function () {
-        if (inputEl.value === "") {
-          inputEl.style.border = "2px dashed red";
-          pElem.textContent = "Вы не заполнили поле ввода!";
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (inputEl.value == "") {
+          pElem.textContent = "вы не заполнили поле ввода";
+          // inputEl.style.border = '2px solid red'
+          inputEl.classList.add("input");
         }
-      };
+        console.log(event);
+      });
     </script>
   </body>
 </html>

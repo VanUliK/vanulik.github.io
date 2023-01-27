@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
+
     <div class="item">
       <div class="elem">
         <div class="info">
@@ -15,30 +15,27 @@
         </div>
       </div>
     </div>
-    <script>
-      // С помощью querySelector найти элемент h2 и вывести в консоль всех его родителей
-      const h2El = document.querySelector("h2");
-      h2El.childNodes.forEach((element) => {
-        console.log(
-          element.parentElement.parentElement.parentElement.parentElement
-        );
-      });
 
-      // С помощью querySelector найти элемент h2  и вывести в консоль всех его родителей
+    <script>
       const subtitleEl = document.querySelector(".subtitle");
       let parentEl = subtitleEl.parentElement;
+      // ..первый вариант
       for (let i = 0; i < document.body.childNodes.length; i++) {
-        if (parentEl) {
-          console.log(parentEl);
-          parentEl = parentEl.parentElement;
-        } else {
-          break;
-        }
+          if (parentEl) {
+              console.log(parentEl);
+              parentEl = parentEl.parentElement;
+          } else {
+              break;
+          }
       }
+      // ..второй вариант
       while (parentEl) {
         console.log(parentEl);
         parentEl = parentEl.parentElement;
       }
+      
+    </script>
+    
     </script>
   </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список целей</title>
+</head>
+<body>
+    <input type="text" class="input">
+    <span class="actions">
+       <button class="button">Добавить цель</button> 
+    </span>
+    
+    <div class="goalsBlock">
+        <p>Список целей</p>
+        <ul class="listOfGoals"></ul>
+    </div>
+    
+<script>
+    const input = document.querySelector('.input');
+    const button = document.querySelector('.button');
+    let goals = document.querySelector('.listOfGoals');
+    const buttonDeleteAll = document.createElement('button');
+    buttonDeleteAll.textContent = 'Удалить все';
+    const actions = document.querySelector('.actions');
+    actions.appendChild(buttonDeleteAll);
+    const goalsBlock = document.querySelector('.goalsBlock');
+    
+    
+    button.addEventListener('click', function () {
+        const text = document.createElement('li');
+        const buttonDelete = document.createElement('button');
+        
+        buttonDelete.textContent = 'Х';
+        text.textContent = input.value;
+
+        goals.appendChild(text);
+        text.appendChild(buttonDelete);
+
+        input.value = '';
+        
+        buttonDelete.addEventListener('click', onButtonDelete);
+        //buttonDelete.onclick = onButtonDelete;
+    });
+
+    buttonDeleteAll.addEventListener('click', function() {
+        goals.remove();
+        goals = document.createElement('ul');
+        goals.setAttribute('class', 'listOfGoals');
+        goalsBlock.appendChild(goals);
+    })
+
+    function onButtonDelete (event) {
+        event.target.parentElement.remove();
+    }
+
+    
+</script>
+</body>
+</html>
