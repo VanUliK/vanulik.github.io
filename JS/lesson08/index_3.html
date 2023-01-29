@@ -7,6 +7,20 @@
     <title>Document</title>
   </head>
   <body>
+    <div>
+      <span>Элемент спан</span>
+      <p>Параграф</p>
+      <button>Кнопка</button>
+    </div>
+    <script>
+      const div = document.querySelector("div"); // находим первый элемент <div> в документе
+      div.addEventListener("click", showTargets); // регистрируем обработчик события "click" для элемента <div>
+
+      function showTargets(event) {
+        console.log("div currentTarget", event.currentTarget); // выводим в консоль значение свойства currentTarget
+        console.log("div target", event.target); // выводим в консоль значение свойства target
+      }
+    </script>
     <script>
       // Создать кнопку, которая добавляем заголовок h1 с текстом, “Новый заголовок, данный элемент нужно расположить после кнопки
       // Создать вторую кнопку, которая будет удалять созданный заголовок h1
