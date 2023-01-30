@@ -47,7 +47,6 @@
       // ---------------------------------------------------
       // 1. Необходимо вывести сообщение в консоль "все теги прогрузились", когда все теги будут созданы браузером.
       // ---------------------------------------------------
-
       function ready() {
         console.log("все теги прогрузились");
       }
@@ -57,7 +56,6 @@
       // 2. Необходимо вывести сообщение в консоль "страница загрузилась", когда все ресурсы страницы будут загружены.
       // Через addEventListener
       // ---------------------------------------------------
-
       window.addEventListener("load", function () {
         console.log("страница загрузилась");
       });
@@ -74,11 +72,23 @@
       // - которому был совершен клик.
       // - Необходимо использовать делегирование.
       // ---------------------------------------------------
+      const body = document.querySelector("body");
+      body.addEventListener("click", function (e) {
+        let target = e.target;
+        if (target.className == "super_element") {
+          console.log(
+            `Класс "super_element" присутствует в элементе ${target.tagName.toLowerCase()}`
+          );
+        } else {
+          console.log(
+            `Класс "super_element" отсутствует в элементе ${target.tagName.toLowerCase()}`
+          );
+        }
+      });
 
       // ---------------------------------------------------
       // 4. Сделайте, чтобы при наведении на textarea в консоли появлялось сообщение: "Вы навели на textarea."
       // ---------------------------------------------------
-
       const textArea = document.querySelector("textarea");
       textArea.onmouseover = function (e) {
         console.log("Вы навели на textarea.");
@@ -86,28 +96,52 @@
       textArea.onmouseout = (e) => {
         console.log("Вы вышли из textarea.");
       };
+
       // ---------------------------------------------------
       // 5. Необходимо повесить событие клика на тег ul. В обработчике события в консоль необходимо выводить текст, который записан внутри элемента кнопки, по которой был произведен клик. Если клик был не по кнопке, то ничего выводить не нужно. Необходимо использовать делегирование.
       // ---------------------------------------------------
-
       const clickUL = document.querySelector("ul");
-      clickUL.addEventListener("click", function (e) {
-        const targetUL = e.target;
-        let li = e.target.closest("li"); // (1)
-        if (!li) return; // (2)
-        if (!clickUL.contains(li)) {
-          console.log(targetUL);
-          return; // (3)
-        }
-      });
+      const ulButton = clickUL.querySelectorAll("button");
+      for (let i = 0; i < ulButton.length; i++) {
+        const element = ulButton[i];
+        clickUL.addEventListener("click", function (e) {
+          let target = e.target;
+          if (target == element) {
+            console.log(target.textContent);
+          }
+        });
+      }
 
       // ---------------------------------------------------
       // 6. Вопрос: Почему в console.log пишется сначала текст из 5 задания и только потом выводится текст из 3 задания, если мы кликаем по кнопкам в ul? Ответ необходимо написать здесь же, под этим комментарием, своими словами.
       // ---------------------------------------------------
 
+      // При наступлении события обработчики сначала срабатывают на самом вложенном элементе, затем на его родителе, затем выше и так далее, вверх по цепочке вложенности.
+
       // ---------------------------------------------------
       // 7. С помощью JS необходимо изменить цвет заднего фона каждого второго тега li.
       // ---------------------------------------------------
+
+      // Сначала сделал так, неправильно прочитав задание, оставлю просто для коллекции)
+
+      const liElem = document.querySelectorAll("li");
+      function random(number) {
+        return Math.floor(Math.random() * (number + 1));
+      }
+      for (var i = 0; i < liElem.length; i += 2) {
+        liElem[i].onclick = function () {
+          const rndCol =
+            "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
+          document.body.style.backgroundColor = rndCol;
+        };
+      }
+
+      // Правильный вариант, по моему мнению)
+      for (var i = 0; i < liElem.length; i = i + 2) {
+        const rndCol =
+          "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
+        liElem[i].style.backgroundColor = rndCol;
+      }
     </script>
   </body>
 </html>

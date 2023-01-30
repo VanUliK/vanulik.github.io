@@ -7,47 +7,67 @@
     <title>Document</title>
   </head>
   <body>
-    <ul class="menu">
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-    </ul>
     <script>
+      // ---------------------------------------------------
       // Создать в html три кнопки button с нумерацией (1, 2, 3 соответственно)
-      let countButton = 5;
+      // ---------------------------------------------------
+      const body = document.querySelector("body");
+      let countButton = 3;
       for (let i = 1; i <= countButton; i++) {
         const element = countButton;
         const buttonEL = document.createElement("button");
         buttonEL.textContent = `Кнопка ${[i]}`;
-        const body = document.querySelector("body");
         body.appendChild(buttonEL);
         buttonEL.classList.add("button");
       }
+      // ---------------------------------------------------
       // Добавить клик на кнопку , чтобы в консоль выводилась именно та кнопка на которую мы нажали
+      // ---------------------------------------------------
       const buttonEL = document.querySelectorAll(".button");
       function clickButton(e) {
         const target = e.target;
         console.log(target);
       }
-
       buttonEL.forEach((element) => {
         element.addEventListener("click", clickButton);
       });
+      // ---------------------------------------------------
       // Добавить кнопку button с текстом 4, которая считает сколько раз на нее нажали и количество нажатий на эту кнопку выводит в консоль
+      // ---------------------------------------------------
+      const buttonCount = document.createElement("button");
+      buttonCount.textContent = "Other Button";
+      body.appendChild(buttonCount);
+
       let count = 0;
-      const menuLi = document.querySelector(".menu");
-      menuLi.addEventListener("click", function (e) {
-        const target1 = e.currentTarget;
+      buttonCount.addEventListener("click", function (e) {
         count = (count || 0) + 1;
+        buttonCount.textContent = count;
         console.log(count);
-        console.log(target1);
       });
 
+      // ---------------------------------------------------
       // Создать кнопку button с текстом 5, При клике на которую, меняется текст данной кнопки на “Вы нажали на эту кнопку”
-      const textButton = (e) => {
-        textContent = "Вы нажали на эту кнопку";
-      };
-      document.addEventListener("clickCounter", function (e) {});
+      // ---------------------------------------------------
+      const buttonText = document.createElement("button");
+      buttonText.textContent = "Button Text";
+      body.appendChild(buttonText);
+      // buttonText.addEventListener("click", function (e) {
+      //   buttonText.textContent = "Вы нажали на эту кнопку";
+      // });
+      let counter = 0;
+      buttonText.addEventListener("click", function (e) {
+        buttonText.textContent =
+          counter % 2 ? "Вы нажали на эту кнопку" : "Нажми ещё раз";
+        // if (counter % 2 === 0) {
+        //   buttonText.textContent = "Вы нажали на эту кнопку";
+        // } else {
+        //   buttonText.textContent = "Нажми ещё раз";
+        // }
+        counter++;
+        if (counter >= 10) {
+          alert("Не тыкай так часто");
+        }
+      });
     </script>
   </body>
 </html>

@@ -8,17 +8,21 @@
   </head>
   <body>
     <script>
+      // ---------------------------------------------------
       // В html создать кнопку button
+      // ---------------------------------------------------
       const buttonEL = document.createElement("button");
       buttonEL.textContent = "Кнопка";
       const body = document.querySelector("body");
       body.appendChild(buttonEL);
       buttonEL.classList.add("button");
-      let count = 0;
-      buttonEL.addEventListener("click", function (e) {
-        console.log(count++);
-      });
+      // let count = 0;
+      // buttonEL.addEventListener("click", function (e) {
+      //   console.log(count++);
+      // });
+      // ---------------------------------------------------
       // После загрузки страницы вывести в консоль текст “страница загрузилась”
+      // ---------------------------------------------------
       window.addEventListener("load", function (e) {
         console.log("страница загрузилась");
       });
@@ -28,12 +32,17 @@
       document.addEventListener("DOMContentLoaded", () => {
         console.log("Построение DOM-дерева завершено.");
       });
+      // ---------------------------------------------------
       // Добавить событие onclick которое выводит в консоль текст “событие onclick”
-      buttonEL.onclick = function () {
+      // ---------------------------------------------------
+      const onClick = () => {
         console.log("событие onclick");
       };
+      buttonEL.onclick = onClick;
+      // ---------------------------------------------------
       // Добавить событие addEventListener которое выводит в консоль текст “событие addEventListener”
-      buttonEL.addEventListener("click", function (e) {
+      // ---------------------------------------------------
+      buttonEL.addEventListener("click", function () {
         console.log("событие addEventListener");
       });
     </script>

@@ -8,23 +8,69 @@
   </head>
   <body>
     <div>
-      <span>Элемент спан</span>
-      <p>Параграф</p>
-      <button>Кнопка</button>
+      <button class="button">Кнопка 1</button>
+      <button class="button-remove">Кнопка 2</button>
+      <button class="button-text">Кнопка 3</button>
     </div>
-    <script>
-      const div = document.querySelector("div"); // находим первый элемент <div> в документе
-      div.addEventListener("click", showTargets); // регистрируем обработчик события "click" для элемента <div>
+    <div class="content">
+      <button class="btn-add">Добавить</button>
+    </div>
+    <button class="btn-del">Удалить</button>
+    <button class="button3">new button</button>
 
-      function showTargets(event) {
-        console.log("div currentTarget", event.currentTarget); // выводим в консоль значение свойства currentTarget
-        console.log("div target", event.target); // выводим в консоль значение свойства target
-      }
-    </script>
     <script>
-      // Создать кнопку, которая добавляем заголовок h1 с текстом, “Новый заголовок, данный элемент нужно расположить после кнопки
+      // ---------------------------------------------------
+      // Создать кнопку, которая добавляет заголовок h1 с текстом, “Новый заголовок, данный элемент нужно расположить после кнопки
+      // ---------------------------------------------------
+      const buttonEl = document.querySelector(".button");
+      const h1El = document.createElement("h1");
+      document.body.appendChild(h1El);
+      h1El.textContent = "Новый заголовок";
+      h1El.classList.add("header");
+
+      // ---------------------------------------------------
       // Создать вторую кнопку, которая будет удалять созданный заголовок h1
+      // ---------------------------------------------------
+      const buttonRemove = document.querySelector(".button-remove");
+      buttonRemove.addEventListener("click", function (e) {
+        h1El.remove();
+      });
+      // ---------------------------------------------------
       // Создать третью кнопку, при наведении на которую в консоль будет выводиться текст “вы навели на данную кнопку” , как только вы убираем курсор мыши с кнопки, в консоли должен появиться текст “Наведения на кнопку больше нет”
+      // ---------------------------------------------------
+      const buttonText = document.querySelector(".button-text");
+      buttonText.onmouseover = function (e) {
+        console.log("“вы навели на данную кнопку”");
+      };
+      buttonText.onmouseout = (e) => {
+        console.log("“Наведения на кнопку больше нет”");
+      };
+    </script>
+
+    <script>
+      const contentEl = document.querySelector(".content");
+      const buttonAdd = document.querySelector(".btn-add");
+      const buttonDel = document.querySelector(".btn-del");
+      const button3El = document.querySelector(".button3");
+
+      const h1El = document.createElement("h1");
+      h1El.textContent = "Новый элемент";
+
+      buttonAdd.addEventListener("click", function (e) {
+        contentEl.appendChild(h1El);
+      });
+
+      buttonDel.addEventListener("click", function (e) {
+        h1El.remove();
+      });
+
+      button3El.addEventListener("mouseover", function (e) {
+        console.log("навел");
+      });
+
+      button3El.addEventListener("mouseout", function (e) {
+        console.log("убрал");
+      });
     </script>
   </body>
 </html>
