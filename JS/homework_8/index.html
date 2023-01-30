@@ -128,7 +128,7 @@
       function random(number) {
         return Math.floor(Math.random() * (number + 1));
       }
-      for (var i = 0; i < liElem.length; i += 2) {
+      for (let i = 1; i < liElem.length; i += 2) {
         liElem[i].onclick = function () {
           const rndCol =
             "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
@@ -137,7 +137,7 @@
       }
 
       // Правильный вариант, по моему мнению)
-      for (var i = 0; i < liElem.length; i = i + 2) {
+      for (let i = 1; i < liElem.length; i = i + 2) {
         const rndCol =
           "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
         liElem[i].style.backgroundColor = rndCol;
