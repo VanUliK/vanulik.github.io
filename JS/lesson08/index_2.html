@@ -25,14 +25,14 @@
       }
       // Добавить клик на кнопку , чтобы в консоль выводилась именно та кнопка на которую мы нажали
       const buttonEL = document.querySelectorAll(".button");
-      // function clickButton(e) {
-      //   const target = e.target;
-      //   console.log(target);
-      // }
+      function clickButton(e) {
+        const target = e.target;
+        console.log(target);
+      }
 
-      // buttonEL.forEach((element) => {
-      //   element.addEventListener("click", clickButton);
-      // });
+      buttonEL.forEach((element) => {
+        element.addEventListener("click", clickButton);
+      });
       // Добавить кнопку button с текстом 4, которая считает сколько раз на нее нажали и количество нажатий на эту кнопку выводит в консоль
       let count = 0;
       const menuLi = document.querySelector(".menu");
