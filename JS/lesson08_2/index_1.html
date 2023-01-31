@@ -15,7 +15,16 @@
       // ---------------------------------------------------
       // После загрузки страницы вывести в консоль текст “страница загрузилась”
       // ---------------------------------------------------
-
+      window.addEventListener("load", function (e) {
+        console.log("страница загрузилась");
+        const buttonEl = document.querySelector(".button");
+        buttonEl.onclick = function () {
+          console.log("событие onclick");
+        };
+        buttonEl.addEventListener("click", function (e) {
+          console.log("событие addEventListener");
+        });
+      });
       // ---------------------------------------------------
       // Добавить событие onclick которое выводит в консоль текст “событие onclick”
       // ---------------------------------------------------
@@ -24,5 +33,6 @@
       // Добавить событие addEventListener которое выводит в консоль текст “событие addEventListener”
       // ---------------------------------------------------
     </script>
+    <button class="button">Кнопка</button>
   </body>
 </html>

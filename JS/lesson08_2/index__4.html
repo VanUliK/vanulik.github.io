@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="button_add">Добавить элементы</button>
+    <button class="button_delete">Удалить первый элемент</button>
+    <button class="button_add_class">Добавить класс</button>
+
+    <ul class="list">
+        <li class="list_item">первый элемент</li>
+        <li class="list_item">первый элемент</li>
+        <li class="list_item">первый элемент</li>
+    </ul>
+    
+    <script>
+
+const buttonAdd = document.querySelector('.button_add');
+const buttonDel = document.querySelector('.button_delete');
+const buttonAddClass = document.querySelector('.button_add_class');
+const listEl = document.querySelector('.list');
+
+buttonAdd.addEventListener('click', function (e){
+const listItemEl = document.createElement('li');
+listItemEl.textContent = 'новый элемент списка';
+listEl.appendChild(listItemEl);
+})
+
+buttonDel.addEventListener('click', function (e) {
+    listEl.firstElementChild.remove();
+});
+
+listEl.addEventListener('click', function(e){
+    e.target.classList.toggle('changed');
+})
+    </script>
+</body>
+</html>

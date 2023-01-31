@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="content"><button class="button">Добавить заголовок</button>
+    </div>
+    
+    <script>
+        const content = document.querySelector('.content');
+        const buttonEl = document.querySelector('.button');
+        const heading = document.createElement('h1');
+        heading.textContent = 'Новый заголовок';
+        buttonEl.addEventListener('click', function (e) {
+            content.appendChild(heading);
+        });
+
+        const buttonDelete = document.createElement('button');
+        buttonDelete.textContent = 'Удалить заголовок';
+        content.appendChild(buttonDelete);
+        buttonDelete.addEventListener('click', function (e){
+            heading.remove();
+        });
+
+        const buttonHover = document.createElement('button');
+        buttonHover.textContent = 'Наведение';
+        content.appendChild(buttonHover);
+
+        buttonHover.addEventListener('mouseover', function (e) {
+            buttonHover.textContent = 'вы навели на данную кнопку';
+            console.log('вы навели на данную кнопку');
+        })
+
+        buttonHover.addEventListener('mouseout', function (e) {
+            buttonHover.textContent = 'Наведение';
+            console.log('Наведения на кнопку больше нет');
+        })
+    </script>
+</body>
+</html>
