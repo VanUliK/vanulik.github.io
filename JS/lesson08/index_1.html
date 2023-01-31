@@ -16,10 +16,10 @@
       const body = document.querySelector("body");
       body.appendChild(buttonEL);
       buttonEL.classList.add("button");
-      // let count = 0;
-      // buttonEL.addEventListener("click", function (e) {
-      //   console.log(count++);
-      // });
+      let count = 0;
+      buttonEL.addEventListener("click", function (e) {
+        console.log(count++);
+      });
       // ---------------------------------------------------
       // После загрузки страницы вывести в консоль текст “страница загрузилась”
       // ---------------------------------------------------
