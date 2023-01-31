@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a
+      href="https://monsterlessons.com/project/lessons/validaciya-formy-v-javascript"
+      >lesson</a
+    >
+    <form class="formWithValidation">
+      <div>
+        <div>
+          <label>From:</label>
+        </div>
+        <div>
+          <input type="text" class="from" />
+        </div>
+      </div>
+      <div>
+        <div>
+          <label>Password:</label>
+        </div>
+        <div>
+          <input type="password" class="password" />
+        </div>
+      </div>
+      <div>
+        <div>
+          <label>Password confirmation:</label>
+        </div>
+        <div>
+          <input type="password" class="passwordConfirmation" />
+        </div>
+      </div>
+      <div>
+        <div>
+          <label>Where</label>
+        </div>
+        <div>
+          <select class="where">
+            <option></option>
+            <option value="developers">Developers</option>
+            <option value="managers">Managers</option>
+            <option value="devops">DevOps</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div>
+          <label>Message:</label>
+        </div>
+        <div>
+          <textarea class="message"></textarea>
+        </div>
+      </div>
+      <input type="submit" class="validateBtn" value="Validate" />
+    </form>
+  </body>
+  <script>
+    var form = document.querySelector(".formWithValidation");
+    var validateBtn = form.querySelector(".validateBtn");
+    var from = form.querySelector(".from");
+    var password = form.querySelector(".password");
+    var passwordConfirmation = form.querySelector(".passwordConfirmation");
+    var where = form.querySelector(".where");
+    var message = form.querySelector(".message");
+    var fields = form.querySelectorAll(".field");
+    var errors = form.querySelectorAll(".error");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      console.log("clicked on validate");
+      console.log("from: ", from.value);
+      console.log("password: ", password.value);
+      console.log("passwordConfirmation: ", passwordConfirmation.value);
+      console.log("where: ", where.value);
+      console.log("message: ", message.value);
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      removeValidation();
+      checkFieldsPresence();
+      checkPasswordMatch();
+    });
+
+    var generateError = function (text) {
+      var error = document.createElement("div");
+      error.className = "error";
+      error.style.color = "red";
+      error.innerHTML = text;
+      return error;
+    };
+
+    var removeValidation = function () {
+      var errors = form.querySelectorAll(".error");
+
+      for (var i = 0; i < errors.length; i++) {
+        errors[i].remove();
+      }
+    };
+
+    var checkFieldsPresence = function () {
+      for (var i = 0; i < fields.length; i++) {
+        if (!fields[i].value) {
+          console.log("field is blank", fields[i]);
+          var error = generateError("Cant be blank");
+          form[i].parentElement.insertBefore(error, fields[i]);
+        }
+      }
+    };
+
+    var checkPasswordMatch = function () {
+      if (password.value !== passwordConfirmation.value) {
+        console.log("not equals");
+        var error = generateError("Password doesnt match");
+        console.log(error);
+        password.parentElement.insertBefore(error, password);
+      }
+    };
+  </script>
+</html>

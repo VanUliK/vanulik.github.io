@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="content">
+      <ul class="menu">
+        <li class="menu__list">item 1</li>
+        <li class="menu__list">item 2</li>
+        <li class="menu__list">item 3</li>
+      </ul>
+    </div>
+
+    <script>
+      // ---------------------------------------------------
+      // Создать в html список состоящий из 3-х произвольных элементов li
+      // ---------------------------------------------------
+
+      // ---------------------------------------------------
+      // Нужно создать кнопку которая будет добавлять элементы списка с текстом “новый элемент списка”
+      // ---------------------------------------------------
+      const menuUl = document.querySelector(".menu");
+      const menuList = document.querySelector(".menu__list");
+      const content = document.querySelector(".content");
+      const button = document.createElement("button");
+      button.textContent = "Add";
+      content.appendChild(button);
+      button.addEventListener("click", function (e) {
+        const menuLi = document.createElement("li");
+        menuLi.textContent = "новый элемент списка";
+        menuUl.appendChild(menuLi);
+      });
+      // ---------------------------------------------------
+      // Создать кнопку, которая будет удалять первый элемент из созданного списка
+      // ---------------------------------------------------
+      const buttonRemove = document.createElement("button");
+      buttonRemove.textContent = "Remove";
+      content.appendChild(buttonRemove);
+      buttonRemove.addEventListener("click", function (e) {
+        menuList.remove();
+      });
+      // ---------------------------------------------------
+      // Создать кнопку, при клике на которую ей добавляется класс “click”
+      // ---------------------------------------------------
+      const buttonAddClass = document.createElement("button");
+      buttonAddClass.textContent = "Добавить класс";
+      content.appendChild(buttonAddClass);
+      buttonAddClass.addEventListener("click", function (e) {
+        buttonAddClass.classList.add("click");
+      });
+    </script>
+  </body>
+</html>
