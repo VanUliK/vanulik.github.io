@@ -7,13 +7,54 @@
     <title>Document</title>
   </head>
   <body>
+    <form class="form">
+      <input type="radio" name="drink" id="radio1" />
+      <label class="label" for="radio1">“Чай”</label>
+
+      <input type="radio" name="drink" id="radio2" />
+      <label class="label" for="radio2">“Кофе”</label>
+
+      <button type="submit">Отправить</button>
+    </form>
+    <pre id="log"></pre>
+
     <script>
       // ---------------------------------------------------
-
-      //       В html создать 2 элемента радио кнопки (input type=”radio”) и текст “Чай”, “Кофе” соответственно
+      // В html создать 2 элемента радио кнопки (input type=”radio”) и текст “Чай”, “Кофе” соответственно
       // Кнопка отправить
       // Если выбран чай, необходимо вывести сообщение “Чай закончился”
       // Если выбран кофе, необходимо вывести соообщение “кофе закончился”
+      const form = document.querySelector("form");
+      const log = document.querySelector("#log");
+
+      form.addEventListener(
+        "submit",
+        function (event) {
+          const data = new FormData(form);
+          const output = "";
+          for (const entry of data) {
+            output = entry[0] + "=" + entry[1] + "\r";
+          }
+          console.log(output);
+          log.innerText = output;
+          event.preventDefault();
+        },
+        false
+      );
+
+      // form.addEventListener(
+      //   "submit",
+      //   function (event) {
+      //     var data = new FormData(form);
+      //     var output = "";
+      //     for (const entry of data) {
+      //       output = entry[0] + "=" + entry[1] + "\r";
+      //     }
+      //     log.innerText = output;
+      //     event.preventDefault();
+      //   },
+      //   false
+      // );
     </script>
   </body>
 </html>
