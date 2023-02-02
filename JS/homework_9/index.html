@@ -7,6 +7,12 @@
       .message {
         visibility: hidden;
       }
+      .visible {
+        visibility: visible;
+      }
+      .error {
+        border: 2px solid red;
+      }
     </style>
   </head>
 
@@ -40,7 +46,6 @@
       <br />
       <button class="button">Отправить</button>
     </form>
-    <div class="error"></div>
 
     <script>
       "use strict";
@@ -60,7 +65,7 @@
       buttonMsg.addEventListener("click", function (e) {
         messageEl.classList.add("animate_animated");
         messageEl.classList.add("animate_fadeInLeftBig");
-        messageEl.style.visibility = "visible";
+        messageEl.classList.toggle("visible");
       });
       // 3. Необходимо при отправке формы проверить, заполнены ли все поля в этой форме. Если какое-либо поле не заполнено, форма не должна отправляться, также должны быть подсвечены незаполненные поля (необходимо поставить класс error незаполненным полям). Как только пользователь начинает заполнять какое-либо поле, необходимо, при вводе в данное поле, произвести проверку:
       // - Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
@@ -71,12 +76,9 @@
       buttonEl.addEventListener("click", function (e) {
         fields.forEach((element) => {
           if (!element.value) {
-            console.log("Заполните поле", element);
-            element.style.border = "2px solid red";
             element.classList.add("error");
             e.preventDefault();
           } else {
-            element.style.border = "1px solid";
             element.classList.remove("error");
           }
         });
