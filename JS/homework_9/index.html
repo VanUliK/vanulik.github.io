@@ -32,7 +32,7 @@
       </label>
       <br />
       <br />
-      <button>Отправить</button>
+      <button class="button">Отправить</button>
     </form>
     <div class="error"></div>
 
@@ -59,14 +59,11 @@
       // 3. Необходимо при отправке формы проверить, заполнены ли все поля в этой форме. Если какое-либо поле не заполнено, форма не должна отправляться, также должны быть подсвечены незаполненные поля (необходимо поставить класс error незаполненным полям). Как только пользователь начинает заполнять какое-либо поле, необходимо, при вводе в данное поле, произвести проверку:
       // - Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
       // - Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
-
+      const buttonEl = document.querySelector(".button");
       const form = document.querySelector("form");
-      const from = form.querySelector(".form-control");
       const fields = form.querySelectorAll(".form-control");
-
-      form.addEventListener("submit", function (e) {
+      buttonEl.addEventListener("click", function (e) {
         fields.forEach((element) => {
-          e.preventDefault();
           if (!element.value) {
             console.log("field is blank", element);
             element.style.border = "2px solid red";
@@ -75,6 +72,7 @@
             element.style.border = "1px solid";
             element.classList.remove("error");
           }
+          e.preventDefault();
         });
       });
     </script>
