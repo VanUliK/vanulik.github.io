@@ -65,7 +65,7 @@
       buttonEl.addEventListener("click", function (e) {
         fields.forEach((element) => {
           if (!element.value) {
-            console.log("field is blank", element);
+            console.log("Заполните поле", element);
             element.style.border = "2px solid red";
             element.classList.add("error");
           } else {
