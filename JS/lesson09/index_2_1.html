@@ -8,53 +8,37 @@
   </head>
   <body>
     <form class="form">
-      <input type="radio" name="drink" id="radio1" />
-      <label class="label" for="radio1">“Чай”</label>
+      <input type="radio" value="tea" name="drink" />
+      <label class="label" for="tea">“Чай”</label>
 
-      <input type="radio" name="drink" id="radio2" />
-      <label class="label" for="radio2">“Кофе”</label>
+      <input type="radio" value="cofee" name="drink" />
+      <label class="label" for="cofee">“Кофе”</label>
 
-      <button type="submit">Отправить</button>
+      <button type="submit">Заказать</button>
     </form>
-    <pre id="log"></pre>
-
+    <p class="button-text"></p>
     <script>
       // ---------------------------------------------------
       // В html создать 2 элемента радио кнопки (input type=”radio”) и текст “Чай”, “Кофе” соответственно
       // Кнопка отправить
       // Если выбран чай, необходимо вывести сообщение “Чай закончился”
       // Если выбран кофе, необходимо вывести соообщение “кофе закончился”
+      // ---------------------------------------------------
       const form = document.querySelector("form");
-      const log = document.querySelector("#log");
+      const textButton = document.querySelector(".button-text");
 
       form.addEventListener(
         "submit",
-        function (event) {
+        function (e) {
           const data = new FormData(form);
-          const output = "";
-          for (const entry of data) {
-            output = entry[0] + "=" + entry[1] + "\r";
+          let output = "";
+          for (const iterator of data) {
+            textButton.innerText = iterator[1] + " закончился";
           }
-          console.log(output);
-          log.innerText = output;
-          event.preventDefault();
+          e.preventDefault();
         },
         false
       );
-
-      // form.addEventListener(
-      //   "submit",
-      //   function (event) {
-      //     var data = new FormData(form);
-      //     var output = "";
-      //     for (const entry of data) {
-      //       output = entry[0] + "=" + entry[1] + "\r";
-      //     }
-      //     log.innerText = output;
-      //     event.preventDefault();
-      //   },
-      //   false
-      // );
     </script>
   </body>
 </html>
