@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <title>Homework 5</title>
+    <style>
+      .message {
+        visibility: hidden;
+      }
+    </style>
   </head>
+
   <body>
     <input id="from" type="text" />
     В инпуте написано: <span></span>
@@ -42,9 +48,9 @@
       // 1. При изменении значения в input с id="from", значение содержащееся в нем должно моментально отображаться в span. То есть при печати в input'е тег span также должен меняться.
       const spanEl = document.querySelector("span");
       const inputText = document.querySelector("#from");
-      inputText.oninput = function () {
-        spanEl.innerHTML = inputText.value;
-      };
+      inputText.addEventListener("input", function (e) {
+        spanEl.textContent = e.target.value;
+      });
 
       // 2. При клике на кнопку с классом messageBtn необходимо элементу с классом message:
       // - добавить два класса: animate_animated и animate_fadeInLeftBig
@@ -68,11 +74,11 @@
             console.log("Заполните поле", element);
             element.style.border = "2px solid red";
             element.classList.add("error");
+            e.preventDefault();
           } else {
             element.style.border = "1px solid";
             element.classList.remove("error");
           }
-          e.preventDefault();
         });
       });
     </script>

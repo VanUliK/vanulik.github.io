@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .passw {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1 Создать поле ввода (пароль)
+    2 Кнопка отправить
+    3 Если пользователь вводит текст “пароль” то поле ввода должно быть подсвечено зеленым цветом
+    4 Если пароль неверный, у поля ввода появляется красная обводка и текст “пароль неверный” -->
+    <div class="content">
+        <form class="form">
+            <input type="password" class="passw">
+            <button class="submit">Отправить</button>
+        </form>
+        <script>
+            const inputEl = document.querySelector('.passw');
+            const buttonEl = document.querySelector('.submit');
+            const contentEl = document.querySelector('.content');
+            const errorEl = document.createElement('p');
+            errorEl.textContent = 'пароль неверный';
+
+            buttonEl.addEventListener('click', function (e) {
+                if (inputEl.value === 'пароль') {
+                    inputEl.style.border = '1px solid green';
+                    errorEl.remove();
+                } else {
+                    inputEl.style.border = '1px solid red';
+                    contentEl.appendChild(errorEl);
+                }
+            });
+            inputEl.addEventListener('input', function (e) {
+                inputEl.style.border = (inputEl.value === 'пароль') ? '1px solid green' : '1px solid red';
+            });
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <style>
+      li[data-visible="0"] {
+        display: none;
+      }
+      li[data-visible="1"] {
+        display: unset;
+      }
+    </style>
+    <ol>
+      <li id="li_5">
+        <label class="description" for="element_5">Служба доставки </label>
+        <span>
+          <input
+            id="element_5_1"
+            name="element_5"
+            class="element radio"
+            type="radio"
+            value="Новая почта"
+            data-target="li_4"
+          />
+          <label class="choice" for="element_5_1">Новая почта</label>
+          <input
+            id="element_5_2"
+            name="element_5"
+            class="element radio"
+            type="radio"
+            value="Укр почта"
+            data-target="li_3"
+          />
+          <label class="choice" for="element_5_2">Укр почта</label>
+        </span>
+        <p class="guidelines" id="guide_5">
+          <small>Выберите службу доставки</small>
+        </p>
+      </li>
+
+      <li id="li_3">
+        <label class="description" for="element_3">Адрес 1</label>
+        <div class="left">
+          <input
+            id="element_3_3"
+            name="element_3_3"
+            class="element text medium"
+            value=""
+            type="text"
+          />
+          <label for="element_3_3">Город</label>
+        </div>
+        <div class="right">
+          <input
+            id="element_3_4"
+            name="element_3_4"
+            class="element text medium"
+            value=""
+            type="text"
+          />
+          <label for="element_3_4">Область</label>
+        </div>
+        <div>
+          <input
+            id="element_3_1"
+            name="element_3_1"
+            class="element text large"
+            value=""
+            type="text"
+          />
+          <label for="element_3_1">Улица / Номер дома</label>
+        </div>
+        <div class="left">
+          <input
+            id="element_3_5"
+            name="element_3_5"
+            class="element text medium"
+            maxlength="15"
+            value=""
+            type="text"
+          />
+          <label for="element_3_5">Индекс</label>
+        </div>
+        <p class="guidelines" id="guide_3">
+          <small>Введите данные для доставки</small>
+        </p>
+      </li>
+
+      <li id="li_4">
+        <label class="description" for="element_4">Адрес 2</label>
+        <div class="left">
+          <input
+            id="element_4_3"
+            name="element_4_3"
+            class="element text medium"
+            value=""
+            type="text"
+          />
+          <label for="element_4_3">Город</label>
+        </div>
+        <div class="left">
+          <input
+            id="element_4_5"
+            name="element_4_5"
+            class="element text medium"
+            maxlength="15"
+            value=""
+            type="text"
+          />
+          <label for="element_4_5">Отделение новой почты</label>
+        </div>
+        <p class="guidelines" id="guide_4">
+          <small>Введите данные для доставки</small>
+        </p>
+      </li>
+    </ol>
+
+    <script>
+      let rchange = function (e) {
+        for (let li of document.querySelectorAll("#li_3,#li_4"))
+          li.dataset.visible = e && e.target.dataset.target == li.id ? 1 : 0;
+      };
+      rchange();
+      for (let radio of document.querySelectorAll("#li_5 input"))
+        radio.addEventListener("change", rchange);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .label {
+        display: none;
+      }
+      #r-1:checked ~ .l-1,
+      #r-2:checked ~ .l-2,
+      #r-3:checked ~ .l-3 {
+        display: block;
+      }
+    </style>
+    <form>
+      <input type="radio" name="name" id="r-1" class="input" checked />
+      <input type="radio" name="name" id="r-2" class="input" />
+      <input type="radio" name="name" id="r-3" class="input" />
+
+      <label for="r-1" class="label l-1">Текст 1</label>
+      <label for="r-2" class="label l-2">Текст 2</label>
+      <label for="r-3" class="label l-3">Текст 3</label>
+    </form>
+    <p class="button-text"></p>
+    <script>
+      // ---------------------------------------------------
+      // В html создать 2 элемента радио кнопки (input type=”radio”) и текст “Чай”, “Кофе” соответственно
+      // Кнопка отправить
+      // Если выбран чай, необходимо вывести сообщение “Чай закончился”
+      // Если выбран кофе, необходимо вывести соообщение “кофе закончился”
+      // ---------------------------------------------------
+    </script>
+  </body>
+</html>

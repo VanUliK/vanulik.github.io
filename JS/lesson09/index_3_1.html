@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      /* Стиль всех полей ввода */
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+      }
+
+      /* Стиль кнопки отправки */
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      /* Стиль контейнера для входных данных */
+      .container {
+        background-color: #f1f1f1;
+        padding: 20px;
+      }
+
+      /* Окно сообщения отображается, когда пользователь нажимает на поле пароля */
+      #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 20px;
+        margin-top: 10px;
+      }
+
+      #message p {
+        padding: 10px 35px;
+        font-size: 18px;
+      }
+
+      /* Добавьте зеленый цвет текста и галочку, когда требования верны */
+      .valid {
+        color: green;
+      }
+
+      .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✔";
+      }
+
+      /* Добавьте красный цвет текста и букву "x", когда требования неверны */
+      .invalid {
+        color: red;
+      }
+
+      .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "✖";
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Проверка пароля</h1>
+
+    <p>Попробуйте отправить форму.</p>
+
+    <div class="container">
+      <form action="../action_page.php">
+        <label for="usrname">Пользователь</label>
+        <input type="text" id="usrname" name="usrname" required />
+
+        <label for="psw">Пароль</label>
+        <input
+          type="password"
+          id="psw"
+          name="psw"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Должно содержать не менее одной цифры и одной прописной и строчной буквы, а также не менее 8 и более символов"
+          required
+        />
+
+        <input type="submit" value="Отправить" />
+      </form>
+    </div>
+
+    <div id="message">
+      <h3>Пароль должен содержать следующее:</h3>
+      <p id="letter" class="invalid"><b>Верхнем регистре</b> буквы</p>
+      <p id="capital" class="invalid"><b>Заглавные (прописные)</b> буквы</p>
+      <p id="number" class="invalid"><b>Числа</b></p>
+      <p id="length" class="invalid">Минимум <b>8 символов</b></p>
+    </div>
+
+    <script>
+      var myInput = document.getElementById("psw");
+      var letter = document.getElementById("letter");
+      var capital = document.getElementById("capital");
+      var number = document.getElementById("number");
+      var length = document.getElementById("length");
+
+      // Когда пользователь нажимает на поле пароль, появляется окно сообщения
+      myInput.onfocus = function () {
+        document.getElementById("message").style.display = "block";
+      };
+
+      // Когда пользователь щелкает за пределами поля пароля, скройте окно сообщения
+      myInput.onblur = function () {
+        document.getElementById("message").style.display = "none";
+      };
+
+      // Когда пользователь начинает вводить что-то в поле пароля
+      myInput.onkeyup = function () {
+        // Validate lowercase letters
+        var lowerCaseLetters = /[a-z]/g;
+        if (myInput.value.match(lowerCaseLetters)) {
+          letter.classList.remove("invalid");
+          letter.classList.add("valid");
+        } else {
+          letter.classList.remove("valid");
+          letter.classList.add("invalid");
+        }
+
+        // Проверка заглавных букв
+        var upperCaseLetters = /[A-Z]/g;
+        if (myInput.value.match(upperCaseLetters)) {
+          capital.classList.remove("invalid");
+          capital.classList.add("valid");
+        } else {
+          capital.classList.remove("valid");
+          capital.classList.add("invalid");
+        }
+
+        // Проверка чисел
+        var numbers = /[0-9]/g;
+        if (myInput.value.match(numbers)) {
+          number.classList.remove("invalid");
+          number.classList.add("valid");
+        } else {
+          number.classList.remove("valid");
+          number.classList.add("invalid");
+        }
+
+        // Проверка длины
+        if (myInput.value.length >= 8) {
+          length.classList.remove("invalid");
+          length.classList.add("valid");
+        } else {
+          length.classList.remove("valid");
+          length.classList.add("invalid");
+        }
+      };
+    </script>
+  </body>
+</html>

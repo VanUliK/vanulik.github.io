@@ -33,7 +33,7 @@
       buttonSubmit.addEventListener("click", function (e) {
         // for (const radio of inputRadio) {
         //   if (radio.checked) {
-        //     textButton.textContent = radio.value;
+        //     textButton.textContent = radio.nextElementSibling.textContent;
         //     e.preventDefault();
         //   }
         // }
@@ -41,7 +41,7 @@
         for (let i = 0; i < nameRadioEl.length; i++) {
           const element = nameRadioEl[i];
           if (element.checked) {
-            console.log(element.value);
+            // console.log(element.value);
             switch (element.value) {
               case "tea":
                 textButton.textContent = "Чай закончился";
@@ -50,10 +50,39 @@
                 textButton.textContent = "Кофе закончился";
                 break;
             }
-            e.preventDefault();
           }
         }
+        e.preventDefault();
+        // ----------------------------------------------
+        // array.forEach(element => {
+
+        // });
       });
+
+      // formEl.addEventListener("change", function (e) {
+      //   for (let i = 0; i < nameRadioEl.length; i++) {
+      //     const element = nameRadioEl[i];
+      //     if (element.checked) {
+      //       console.log(element.value);
+      //       switch (element.value) {
+      //         case "tea":
+      //           textButton.textContent = "Чай закончился";
+      //           textButton.innerHTML =
+      //             textButton.textContent +
+      //             '<div class="description">Всё о чае</div>';
+      //           textButton.innerHTML = '<img src="kartinka.jpg alt="картинка">';
+      //           break;
+      //         case "cofee":
+      //           textButton.textContent = "Кофе закончился";
+      //           textButton.innerHTML =
+      //             textButton.textContent +
+      //             '<div class="description">Всё о кофе</div>';
+      //           break;
+      //       }
+      //       e.preventDefault();
+      //     }
+      //   }
+      // });
     </script>
   </body>
 </html>
