@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .valid {
+        color: green;
+      }
+
+      .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✔";
+      }
+      .invalid {
+        color: red;
+      }
+
+      .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "✖";
+      }
+    </style>
+  </head>
+  <body>
+    <form class="form">
+      <p>
+        <input name="pass" type="password" placeholder="Пароль" />
+      </p>
+
+      <button type="submit">Отправить</button>
+    </form>
+    <div>
+      <p class="text"></p>
+    </div>
+    <script>
+      // ---------------------------------------------------
+      // Создать поле ввода (пароль)
+      // Кнопка отправить
+      // Если пользователь вводит текст “пароль” то поле ввода должно быть подсвечено зеленым цветом
+      // Если пароль неверный, у поля ввода появляется красная обводка и текст “пароль неверный”
+      // ---------------------------------------------------
+      const formEl = document.querySelector(".form");
+      const passText = formEl.getElementsByTagName("pass");
+
+      formEl.addEventListener("submit", function (e) {
+        e.preventDefault();
+        console.log(passText.value);
+      });
+
+      var ssn = document.getElementById("ssn");
+      var current = document.getElementById("current");
+
+      ssn.oninput = function (event) {
+        current.innerHTML = ssn.value;
+      };
+    </script>
+  </body>
+</html>

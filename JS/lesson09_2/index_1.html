@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form class="form">
+      <input id="checkbox" class="check" type="checkbox" />
+      <label for="checkbox">Согласен с условиями</label>
+      <div class="error"></div>
+      <button type="submit">Отправить</button>
+    </form>
+    <input id="checkbox" type="checkbox" class="check" />
+    <label for="checkbox">Согласен с условиями</label>
+    <div class="error"></div>
+    <div class="btn">
+      <button class="button">Отправить</button>
+    </div>
+    <script>
+      // ---------------------------------------------------
+      // В html создать элемент checkbox и текст рядом с ним “Согласен с условиями”
+      // Добавить кнопку отправить
+      // При клике на кнопку отправить нужно проверять выбран ли активным элемент checkbox
+      // Если элемент не выбран, добавить текст под чекбоксом “Необходимо согласиться с условиями”
+      // ---------------------------------------------------
+
+      const formEl = document.querySelector(".form");
+      const checkboxEl = document.querySelector("input[type=checkbox]");
+      const errorEl = formEl.querySelector(".error");
+
+      // checkboxEl.addEventListener("click", function (e) {
+      //   const target = e.target;
+      //   console.log(target.checked);
+      // });
+
+      formEl.addEventListener("submit", function (e) {
+        if (checkboxEl.checked) {
+          alert("good");
+        } else {
+          errorEl.textContent = "Необходимо согласиться с условиями";
+          e.preventDefault();
+        }
+
+        // checkboxEl.checked
+        //   ? alert("good")
+        //   : (errorEl.textContent = "Необходимо согласиться с условиями");
+      });
+      formEl.oninput = function () {
+        errorEl.innerHTML = "";
+      };
+      // ------------------------------------------------------------------------------------------
+      const inputEl = document.querySelector(".check");
+      const buttonEl = document.querySelector(".button");
+      const errorEl_ = document.querySelector(".error");
+
+      buttonEl.addEventListener("click", function (e) {
+        inputEl.checked
+          ? console.log("Отлично")
+          : (errorEl_.textContent = "Необходимо согласиться с условиями");
+      });
+      inputEl.addEventListener("click", function (e) {
+        if (errorEl_.textContent == "Необходимо согласиться с условиями") {
+          errorEl_.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
