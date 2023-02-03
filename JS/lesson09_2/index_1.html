@@ -7,6 +7,12 @@
     <title>Document</title>
   </head>
   <body>
+    <form action="" class="form">
+      <input type="checkbox" class="checkbox" name="checkbox" id=" " />Согласен
+      с условиями
+      <div class="error"></div>
+      <button type="submit" class="button">Submit</button>
+    </form>
     <script>
       // ---------------------------------------------------
       // В html создать элемент checkbox и текст рядом с ним “Согласен с условиями”
@@ -14,6 +20,19 @@
       // При клике на кнопку отправить нужно проверять выбран ли активным элемент checkbox
       // Если элемент не выбран, добавить текст под чекбоксом “Необходимо согласиться с условиями”
       // ---------------------------------------------------
+      const formEl = document.querySelector(".form");
+      const checkboxEl = document.querySelector(".checkbox");
+      const errorEl = document.querySelector(".error");
+
+      formEl.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (checkboxEl.checked) {
+          console.log("All good");
+          errorEl.textContent = "";
+        } else {
+          errorEl.textContent = "Необходимо согласиться с условиями";
+        }
+      });
     </script>
   </body>
 </html>

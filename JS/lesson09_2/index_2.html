@@ -7,6 +7,12 @@
     <title>Document</title>
   </head>
   <body>
+    <form action="" class="form">
+      <input type="radio" class="input" name="drink" value="Чай" checked />Чай
+      <input type="radio" class="input" name="drink" value="Кофе" />Кофе
+      <button class="button" type="submit">Submit</button>
+      <p class="text"></p>
+    </form>
     <script>
       // ---------------------------------------------------
       // В html создать 2 элемента радио кнопки (input type=”radio”) и текст “Чай”, “Кофе” соответственно
@@ -14,6 +20,23 @@
       // Если выбран чай, необходимо вывести сообщение “Чай закончился”
       // Если выбран кофе, необходимо вывести соообщение “кофе закончился”
       // ---------------------------------------------------
+      const formEl = document.querySelector(".form");
+      const inputEl = document.querySelectorAll(".input");
+      const textP = document.querySelector(".text");
+      formEl.addEventListener("submit", function (e) {
+        e.preventDefault();
+        // inputEl.forEach((radio) => {
+        //   console.log();
+        //   if (radio.value == "tea" && radio.checked) {
+        //     textP.textContent = "Чай закончился";
+        //   } else if (radio.value == "coffe" && radio.checked) {
+        //     textP.textContent = "Кофе закончился";
+        //   }
+        // });
+        const result = Array.from(inputEl);
+        const select = result.filter((radio) => radio.checked);
+        textP.textContent = select[0].value + " закончился";
+      });
     </script>
   </body>
 </html>
