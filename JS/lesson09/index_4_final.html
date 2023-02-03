@@ -7,8 +7,7 @@
     <title>Document</title>
   </head>
   <body>
-    <input class="input__field" id="input_form" type="text" />
-    <h1 class="header"></h1>
+   
     <form class="form">
       <input type="text" class="input">
       <h1 class="heading">
@@ -16,19 +15,12 @@
       // ---------------------------------------------------
       // Создать поле ввода и под ним заголовок h1 с текстом “Заголовок”
       // При вводе текста в поле ввода необходимо чтобы текст внутри заголовка менятся на введенный в поле ввода
-      const spanEl = document.querySelector(".header");
-      const inputText = document.querySelector("#input_form");
-      inputText.oninput = function () {
-        spanEl.innerHTML = inputText.value;
-      };
-
       // ---------------
       const inputEl = document.querySelector(".input");
       const textEl = document.querySelector(".heading");
 
       inputEl.addEventListener("input", function (e) {
-        // textEl.textContent = e.target.value;
-        textEl.innerText =  e.target.value;
+        textEl.textContent = e.target.value;
       });
     </script>
   </body>

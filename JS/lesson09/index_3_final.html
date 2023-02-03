@@ -31,17 +31,18 @@
 
         buttonEl.addEventListener("click", function (e) {
           if (inputEl.value === "пароль") {
-            inputEl.style.border = "1px solid green";
+            inputEl.style.border = "2px solid green";
             errorEl.remove();
           } else {
-            inputEl.style.border = "1px solid red";
+            inputEl.style.border = "2px solid red";
             contentEl.appendChild(errorEl);
+            e.preventDefault();
           }
         });
-        inputEl.addEventListener("input", function (e) {
-          inputEl.style.border =
-            inputEl.value === "пароль" ? "1px solid green" : "1px solid red";
-        });
+        // inputEl.addEventListener("input", function (e) {
+        //   inputEl.style.border =
+        //     inputEl.value === "пароль" ? "2px solid green" : "2px solid red";
+        // });
       </script>
     </div>
   </body>
