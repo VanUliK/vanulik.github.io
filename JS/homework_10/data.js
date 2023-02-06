@@ -8,7 +8,7 @@ const dataApi = `[
     "createdby": "",
     "active": "1",
     "comment": "",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/500/150"
   },
   {
     "number": "2095",
@@ -19,7 +19,7 @@ const dataApi = `[
     "createdby": "Martin Luther",
     "active": "1",
     "comment": "https://github.com/stechstudio/insult-service",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/500/150"
   },
   {
     "number": "1956",
