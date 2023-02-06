@@ -19,7 +19,7 @@ const dataApi = `[
     "createdby": "Martin Luther",
     "active": "1",
     "comment": "https://github.com/stechstudio/insult-service",
-    "image": "https://random.imagecdn.app/500/150"
+    "image": "https://random.imagecdn.app/455/155"
   },
   {
     "number": "1956",
@@ -30,7 +30,7 @@ const dataApi = `[
     "createdby": "",
     "active": "1",
     "comment": "",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/510/150"
   },
   {
     "number": "2287",
@@ -41,7 +41,7 @@ const dataApi = `[
     "createdby": "9GAG",
     "active": "1",
     "comment": "",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/412/150"
   },
   {
     "number": "2251",
@@ -52,7 +52,7 @@ const dataApi = `[
     "createdby": "No Sweat Shakespeare",
     "active": "1",
     "comment": "Richard III (Act 1 Scene 2)",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/220/153"
   },
   {
     "number": "2546",
@@ -63,7 +63,7 @@ const dataApi = `[
     "createdby": "Pussy Toot",
     "active": "1",
     "comment": "",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/405/151"
   },{
     "number": "2241",
     "language": "en",
@@ -73,7 +73,7 @@ const dataApi = `[
     "createdby": "No Sweat Shakespeare",
     "active": "1",
     "comment": "The Comedy of Erros (Act 5, Scene 4)",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/450/110"
   },
   {
     "number": "2256",
@@ -84,7 +84,7 @@ const dataApi = `[
     "createdby": "No Sweat Shakespeare",
     "active": "1",
     "comment": "Henry IV Part 1 (Act 2, Scene 4)",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/402/120"
   },
   {
     "number": "2252",
@@ -95,7 +95,7 @@ const dataApi = `[
     "createdby": "No Sweat Shakespeare",
     "active": "1",
     "comment": "Macbeth (Act 5, Scene 3)",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/410/350"
   },{
     "number": "235",
     "language": "en",
@@ -105,7 +105,7 @@ const dataApi = `[
     "createdby": "",
     "active": "1",
     "comment": "https://imgur.com/gallery/ph1VT",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/420/250"
   },{
     "number": "2287",
     "language": "en",
@@ -115,7 +115,7 @@ const dataApi = `[
     "createdby": "9GAG",
     "active": "1",
     "comment": "",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/402/150"
   },
   {
     "number": "2380",
@@ -126,6 +126,6 @@ const dataApi = `[
     "createdby": "",
     "active": "1",
     "comment": "",
-    "image": "https://bing.ioliu.cn/v1/rand"
+    "image": "https://random.imagecdn.app/410/150"
   }
 ]`
