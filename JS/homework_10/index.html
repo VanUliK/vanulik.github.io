@@ -19,9 +19,24 @@
         width: 250px;
       }
 
-      .image__API {
+      .image__api {
         height: 150px;
         width: 100%;
+      }
+      h3 {
+        text-align: right;
+        margin-top: 0;
+      }
+      .comment__api {
+        color: rgb(173, 173, 173);
+      }
+
+      .created__api {
+        text-align: right;
+      }
+
+      .insult__api {
+        text-align: justify;
       }
     </style>
   </head>
@@ -38,29 +53,29 @@
         contentEl.appendChild(apiEl);
 
         const numberApi = document.createElement("h3");
-        numberApi.classList.add("number__API");
+        numberApi.classList.add("number__api");
         numberApi.textContent = element.number;
         apiEl.appendChild(numberApi);
 
         const insultApi = document.createElement("p");
-        insultApi.classList.add("insult__API");
+        insultApi.classList.add("insult__api");
         insultApi.textContent = element.insult;
         apiEl.appendChild(insultApi);
 
         const createdApi = document.createElement("p");
-        createdApi.classList.add("created__API");
+        createdApi.classList.add("created__api");
         createdApi.textContent = element.created;
         apiEl.appendChild(createdApi);
 
-        const commentApi = document.createElement("div");
-        commentApi.classList.add("comment__API");
-        commentApi.textContent = element.comment;
-        apiEl.appendChild(commentApi);
-
         const imageApi = document.createElement("img");
-        imageApi.classList.add("image__API");
+        imageApi.classList.add("image__api");
         imageApi.src = element.image;
         apiEl.appendChild(imageApi);
+
+        const commentApi = document.createElement("div");
+        commentApi.classList.add("comment__api");
+        commentApi.textContent = element.comment;
+        apiEl.appendChild(commentApi);
       });
     </script>
   </body>
