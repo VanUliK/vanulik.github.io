@@ -1,0 +1,32 @@
+.content {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.api {
+  border: 1px solid;
+  padding: 16px;
+  width: 250px;
+}
+
+.image__api {
+  height: 150px;
+  width: 100%;
+}
+h3 {
+  text-align: right;
+  margin-top: 0;
+}
+.comment__api {
+  color: rgb(173, 173, 173);
+}
+
+.created__api {
+  text-align: right;
+}
+
+.insult__api {
+  text-align: justify;
+}
