@@ -1,3 +1,6 @@
+// https://dev-gang.ru/article/xmlhttprequest-protiv-fetch-api-czto-luczshe-dlja-otpravki-ajax-v-2019-godu-vd0qcrgiq5/
+// https://learn.javascript.ru/fetch
+// https://habr.com/ru/post/252941/
 const dataApi = `[
   {
     "number": "2660",
