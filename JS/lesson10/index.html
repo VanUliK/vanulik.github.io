@@ -20,7 +20,6 @@
       }
 
       .image__API {
-        width: 100px;
         height: 150px;
       }
     </style>
@@ -37,10 +36,10 @@
         apiEl.classList.add("api");
         contentEl.appendChild(apiEl);
 
-        const numberAPI = document.createElement("p");
-        numberAPI.classList.add("number__API");
-        numberAPI.textContent = element.number;
-        apiEl.appendChild(numberAPI);
+        const numberApi = document.createElement("h3");
+        numberApi.classList.add("number__API");
+        numberApi.textContent = element.number;
+        apiEl.appendChild(numberApi);
 
         const insultApi = document.createElement("p");
         insultApi.classList.add("insult__API");

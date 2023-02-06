@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .content {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .product__img {
+        width: 100px;
+      }
+
+      .product {
+        border: 1px solid;
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content"></div>
+    <script src="data.js"></script>
+    <script>
+      const contentEl = document.querySelector(".content");
+      const data = JSON.parse(dataApi);
+
+      data.forEach((element) => {
+        const productEl = document.createElement("div");
+        productEl.classList.add("product");
+        contentEl.appendChild(productEl);
+
+        const productImg = document.createElement("img");
+        productImg.classList.add("product__img");
+        productImg.src = element.image;
+        productEl.appendChild(productImg);
+
+        const productName = document.createElement("h3");
+        productName.classList.add("product__name");
+        productName.textContent = element.name;
+        productEl.appendChild(productName);
+
+        const productYear = document.createElement("p");
+        productYear.classList.add("product__year");
+        productYear.textContent = element.desc;
+        productEl.appendChild(productYear);
+
+        const productAbout = document.createElement("p");
+        productAbout.classList.add("product__about");
+        productAbout.textContent = element.about;
+        productEl.appendChild(productAbout);
+      });
+    </script>
+  </body>
+</html>
+<!-- Урок 10. Шаблонизация и работа с JSON
+Задание 1
+1. Поиск в интернете (бесплатные api примеры).
+2. Найти любые данные, на произвольную тему.
+3. Создать файл data.js.
+4. Создать переменную которая будет хранить данные из публичных api.
+
+Задание 2
+1. Создать файл index.html.
+2. Подключить data.js.
+3. Сформировать контент из данных (картинка загловок и параграф).
+4. Добавить данный контент в вёрстку.
+5. * Добавить стили при необходимости (по желанию). -->
