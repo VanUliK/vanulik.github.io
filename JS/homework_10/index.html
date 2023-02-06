@@ -1,3 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .content {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .product__img {
+        width: 100px;
+      }
+
+      .product {
+        border: 1px solid;
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content"></div>
+    <script src="data.js"></script>
+    <script>
+      const contentEl = document.querySelector(".content");
+
+      data.forEach((element) => {
+        const productEl = document.createElement("div");
+        productEl.classList.add("product");
+        contentEl.appendChild(productEl);
+
+        const productImg = document.createElement("img");
+        productImg.classList.add("product__img");
+        productImg.src = element.img;
+        productEl.appendChild(productImg);
+
+        const productName = document.createElement("h3");
+        productName.classList.add("product__name");
+        productName.textContent = element.name;
+        productEl.appendChild(productName);
+
+        const productDesc = document.createElement("p");
+        productDesc.classList.add("product__desc");
+        productDesc.textContent = element.desc;
+        productEl.appendChild(productDesc);
+
+        const productAbout = document.createElement("p");
+        productAbout.classList.add("product__about");
+        productAbout.textContent = element.about;
+        productEl.appendChild(productAbout);
+      });
+    </script>
+  </body>
+</html>
 <!-- Урок 10. Шаблонизация и работа с JSON
 Задание 1
 1. Поиск в интернете (бесплатные api примеры).
