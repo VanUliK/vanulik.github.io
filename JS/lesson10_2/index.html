@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="data.js"></script>
+    <style>
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .card {
+        width: 300px;
+        border: 1px solid black;
+        padding: 10px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+      }
+      img {
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content"></div>
+    <template class="card_template">
+      <div class="card">
+        <h1 class="heading">Margarita</h1>
+        <p class="type">Alcoholic</p>
+        <p class="info">
+          Rub the rim of the glass with the lime slice to make the salt stick to
+          it. Take care to moisten only the outer rim and sprinkle the salt on
+          it. The salt should present to the lips of the imbiber and never mix
+          into the cocktail. Shake the other ingredients with ice, then
+          carefully pour into the glass.
+        </p>
+        <img
+          class="img"
+          src="https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg"
+        />
+      </div>
+    </template>
+
+    <script>
+      const contentEl = document.querySelector(".content");
+      const templateEl = document.querySelector(".card_template");
+
+      dataInfo.drinks.forEach((drink) => {
+        const cardEl = templateEl.content
+          .querySelector(".card")
+          .cloneNode(true);
+
+        const headingEl = cardEl.querySelector(".heading");
+        headingEl.textContent = drink.strDrink;
+
+        const typeEl = cardEl.querySelector(".type");
+        typeEl.textContent = drink.strAlcoholic;
+
+        const infoEl = cardEl.querySelector('.info');
+        infoEl.textContent = drink.strInstructions;
+
+        const imgEl = cardEl.querySelector('.img');
+        imgEl.src = drink.strDrinkThumb;
+
+        contentEl.appendChild(cardEl);
+      });
+
+      //   dataInfo.drinks.forEach((drink) => {
+      //     const cardEl = document.createElement("div");
+      //     cardEl.classList.add("card");
+
+      //     const nameEl = document.createElement("h1");
+      //     nameEl.textContent = drink.strDrink;
+      //     cardEl.appendChild(nameEl);
+
+      //     const alcoholicEl = document.createElement("p");
+      //     alcoholicEl.textContent = drink.strAlcoholic;
+      //     cardEl.appendChild(alcoholicEl);
+
+      //     const instructionsEl = document.createElement("p");
+      //     instructionsEl.textContent = drink.strInstructions;
+      //     cardEl.appendChild(instructionsEl);
+
+      //     const drinkFirstImgEl = document.createElement("img");
+      //     drinkFirstImgEl.src = drink.strDrinkThumb;
+      //     cardEl.appendChild(drinkFirstImgEl);
+
+      //     contentEl.appendChild(cardEl);
+      //   });
+    </script>
+  </body>
+</html>
