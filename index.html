@@ -1,49 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="content"></div>
-    <script src="data.js"></script>
-    <script>
-      const contentEl = document.querySelector(".content");
-      const data = JSON.parse(dataApi);
-      console.log(data);
-      data.forEach((element) => {
-        const apiEl = document.createElement("div");
-        apiEl.classList.add("api");
-        contentEl.appendChild(apiEl);
 
-        const numberApi = document.createElement("h3");
-        numberApi.classList.add("number__api");
-        numberApi.textContent = element.number;
-        apiEl.appendChild(numberApi);
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
 
-        const insultApi = document.createElement("p");
-        insultApi.classList.add("insult__api");
-        insultApi.textContent = element.insult;
-        apiEl.appendChild(insultApi);
+</style>
 
-        const createdApi = document.createElement("p");
-        createdApi.classList.add("created__api");
-        createdApi.textContent = element.created;
-        apiEl.appendChild(createdApi);
+<body>
+  <!-- <div class="content">
+    <a href="JS/homework_6/index.html" class="btn">Домашняя работа №6</a>
+    <a href="JS/homework_7/index.html" class="btn">Домашняя работа №7</a>
+  </div>
+  <div class="content">
+    <a href="JS/homework_8/index.html" class="btn">Домашняя работа №8</a>
+    <a href="JS/homework_9/index.html" class="btn">Домашняя работа №9</a>
+  </div> -->
+  <div class="content">
+    <a href="JS/homework_10/index.html" class="btn">Домашняя работа №10</a>
+    <a href="JS/homework_11/index.html" class="btn">Домашняя работа №11</a>
+  </div>
 
-        const imageApi = document.createElement("img");
-        imageApi.classList.add("image__api");
-        imageApi.src = element.image;
-        apiEl.appendChild(imageApi);
+  <script></script>
+</body>
 
-        const commentApi = document.createElement("div");
-        commentApi.classList.add("comment__api");
-        commentApi.textContent = element.comment;
-        apiEl.appendChild(commentApi);
-      });
-    </script>
-  </body>
 </html>

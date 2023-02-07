@@ -1,32 +1,17 @@
 .content {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-.api {
-  border: 1px solid;
-  padding: 16px;
-  width: 250px;
-}
-
-.image__api {
-  height: 150px;
-  width: 100%;
-}
-h3 {
-  text-align: right;
-  margin-top: 0;
-}
-.comment__api {
-  color: rgb(173, 173, 173);
-}
-
-.created__api {
-  text-align: right;
-}
-
-.insult__api {
-  text-align: justify;
+.btn {
+  font-size: 24px;
+  display: inline-block;
+  background: #1968ad;
+  color: #fff;
+  padding: 40px 150px;
+  text-decoration: none;
+  border-radius: 10px;
 }
