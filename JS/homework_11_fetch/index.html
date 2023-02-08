@@ -81,7 +81,20 @@
       </h3>
     </div>
     <section class="item-group center">
+      <template class="item">
+        <a class="item-url" href="#">
+          <div class="item-img">
+            <img class="item-img__width" src="" alt="" />
+          </div>
+          <div class="item-txt">
+            <div class="item-head"></div>
+            <div class="item-dsc">
 
+            </div>
+            <div class="item-price"></div>
+          </div>
+        </a>
+      </template>
     </section>
   </main>
   <div class="down">
@@ -176,56 +189,39 @@
       </div>
     </div>
   </footer>
-  <script src="data.js"></script>
-
   <script>
-    const blok = document.querySelector('.item-group');
-    const item = JSON.parse(itemJson);
-    console.log(item);
-    item.forEach((element) => {
-
-      const itemBlock = document.createElement("div");
-      itemBlock.classList.add("item");
-      blok.appendChild(itemBlock);
-
-      const itemUrl = document.createElement("a");
-      itemUrl.classList.add("item-url");
-      itemUrl.href = '#';
-      itemBlock.appendChild(itemUrl);
-
-      const imageBlock = document.createElement("div");
-      imageBlock.classList.add("item-img");
-      itemUrl.appendChild(imageBlock);
-
-      const imageApi = document.createElement("img");
-      imageApi.classList.add("item-img__width");
-      imageApi.src = element.image;
-      imageBlock.appendChild(imageApi);
 
 
-      const textBlock = document.createElement("div");
-      textBlock.classList.add("item-txt");
-      itemUrl.appendChild(textBlock);
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((data) => showItem(data))
+      .catch((error) => console.error(error));
 
-      const headApi = document.createElement("div");
-      headApi.classList.add("item-head");
-      headApi.textContent = element.head;
-      textBlock.appendChild(headApi);
-
-      const dscApi = document.createElement("div");
-      dscApi.classList.add("item-dsc");
-      dscApi.textContent = element.description;
-      textBlock.appendChild(dscApi);
-
-      const priceApi = document.createElement("div");
-      priceApi.classList.add("item-price");
-      priceApi.textContent = element.price;
-      textBlock.appendChild(priceApi);
+    function showItem(data) {
+      const templateEl = document.querySelector('.item');
+      const itemGroup = document.querySelector('.item-group');
 
 
+      data.forEach(element => {
+        const itemEl = templateEl.content
+          .querySelector(".item-url")
+          .cloneNode(true);
+        const headingEl = itemEl.querySelector(".item-head");
+        headingEl.textContent = element.head;
 
+        const dscItem = itemEl.querySelector(".item-dsc");
+        dscItem.textContent = element.description;
 
-    });
+        const infoEl = itemEl.querySelector(".item-price");
+        infoEl.textContent = element.price;
+
+        const imgEl = itemEl.querySelector(".item-img__width");
+        imgEl.src = element.image;
+        itemGroup.appendChild(itemEl)
+
+      });
+
+    }
 
   </script>
 </body>
