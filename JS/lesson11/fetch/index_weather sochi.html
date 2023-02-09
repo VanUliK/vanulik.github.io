@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Домашняя работа</title>
+  <style>
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .temp,
+    .pressure,
+    .humidity,
+    .feelslike {
+      font-size: 30px;
+    }
+
+    .heading1 {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .card {
+      width: 300px;
+      border: 1px solid black;
+      padding: 10px;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="current__conditions">
+    <h1 class="heading"></h1>
+    <div class="pressure"></div>
+    <div class="temp"></div>
+    <div class="feelslike"></div>
+
+    <div class="humidity"></div>
+  </div>
+  <div class="content">
+
+
+    <template class="card_template">
+      <div class="card">
+        <div class="heading1"></div>
+        <h1 class="temp1"></h1>
+        <div class="feelslike1"></div>
+        <div class="type"></div>
+        <div class="pressure1"></div>
+        <div class="humidity1"></div>
+        <p class="info"></p>
+      </div>
+    </template>
+  </div>
+
+  <script>
+    fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Sochi?unitGroup=metric&include=events%2Chours%2Calerts%2Cdays%2Ccurrent&key=QBW24M5XRRLML9JPUNEREPDJ8&contentType=json")
+
+
+      .then((response) => response.json())
+      .then((data) => showCardsSovetsk(data))
+      .catch((error) => console.error(error));
+
+
+    function showCardsSovetsk(data) {
+      console.log(data.currentConditions);
+
+      const currentConditionsEl = document.querySelector(".current__conditions");
+
+      const headingEl = currentConditionsEl.querySelector(".heading");
+      headingEl.textContent = data.resolvedAddress;
+
+      const pressureEl = currentConditionsEl.querySelector(".pressure");
+      let pressure = (data.currentConditions.pressure / 133.3 * 100).toFixed(2);
+      pressureEl.textContent = pressure + ' мм рт. ст.';
+
+      const tempEl = currentConditionsEl.querySelector(".temp");
+      let temp = data.currentConditions.temp;
+      tempEl.textContent = 'Температура: ' + temp + ' °C';
+
+      const feelslikeEl = currentConditionsEl.querySelector(".feelslike");
+      feelslikeEl.textContent = 'Ощущается как: ' + data.currentConditions.feelslike + ' °C';
+
+      const humidityEl = currentConditionsEl.querySelector(".humidity");
+      let humidity = data.currentConditions.humidity;
+      humidityEl.textContent = 'Влажность: ' + humidity + '%';
+
+
+      const contentEl = document.querySelector(".content");
+      const templateEl = document.querySelector(".card_template");
+
+      data.days.forEach((element) => {
+        const cardEl = templateEl.content.querySelector(".card").cloneNode(true);
+        console.log(element);
+
+        const heading1El = cardEl.querySelector(".heading1");
+        heading1El.textContent = element.datetime;
+
+        const infoEl = cardEl.querySelector(".pressure1");
+        infoEl.textContent = (element.pressure / 133.3 * 100).toFixed(2) + ' мм рт. ст.';
+
+        const typeEl = cardEl.querySelector(".type");
+        typeEl.textContent = element.description;
+
+        const tempEl1 = cardEl.querySelector(".temp1");
+        tempEl1.textContent = element.temp + ' °C';
+
+        const feelslikeEl1 = cardEl.querySelector(".feelslike1");
+        feelslikeEl1.textContent = 'Ощущается как: ' + element.feelslike + ' °C';
+
+
+        const humidityEl1 = cardEl.querySelector(".humidity1");
+        humidityEl1.textContent = 'Влажность: ' + element.humidity + '%';
+
+
+        contentEl.appendChild(cardEl);
+      });
+    }
+
+
+  </script>
+</body>
+
+</html>

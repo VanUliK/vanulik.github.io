@@ -45,8 +45,8 @@
   <script>
 
 
-    fetch("https://api.publicapis.org/entries")
-      // fetch("https://openlibrary.org/api/volumes/brief/isbn/9780525440987.json")
+    // fetch("https://api.publicapis.org/entries")
+    fetch("https://openlibrary.org/api/volumes/brief/isbn/9780525440987.json")
 
       .then((response) => response.json())
       .then((data) => showCards(data))
