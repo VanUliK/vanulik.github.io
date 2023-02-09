@@ -33,11 +33,19 @@
 }
 .price {
   color: #575757;
-  color: #ef5b70;
   font-weight: 400;
   font-size: 22px;
   line-height: 26px;
   padding-bottom: 6px;
+}
+.price_color {
+  color: #ef5b70;
+}
+.input {
+  width: 43px;
+  height: 24px;
+  text-align: center;
+  border: 1px solid #eaeaea;
 }
 .color {
   font-weight: 400;

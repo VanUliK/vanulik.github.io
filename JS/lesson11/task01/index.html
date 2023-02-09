@@ -10,79 +10,87 @@
 </head>
 
 <body>
-  <div class="content center">
+  <!-- <div class="content center">
     <div class="image">
       <img src="./img/img_1.jpg" alt="">
     </div>
     <div class="item">
-      <p class="name">MANGO PEOPLE T-SHIRT</p>
-      <p class="price">Price: $300 </p>
+      <h2 class="name">MANGO PEOPLE T-SHIRT</h2>
+      <p class="price">Price: <span class="price_color">$300</span> </p>
       <p class="color">Color: Red</p>
       <p class="size">Size: Xl </p>
-      <p class="quantity">Quantity: <input type="text"> </p>
+      <p class="quantity">Quantity: <input class="input" type="number" value="2"> </p>
     </div>
-  </div>
-
+  </div> -->
   <div class="content center">
-    <div class="image">
-      <img src="./img/img_2.jpg" alt="">
-    </div>
-    <div class="item">
-      <p class="name">ELLERY X M'O CAPSULE</p>
-      <p class="price">Price: $52 </p>
-      <p class="color">Color: Black</p>
-      <p class="size">Size: Xl </p>
-      <p class="quantity">Quantity: <input type="text"> </p>
-    </div>
+    <template class="template_content">
+
+      <div class="test">
+        <div class="image__block">
+          <img class="image" src="./img/img_2.jpg" alt="">
+        </div>
+        <div class="item">
+          <h2 class="name">ELLERY X M'O CAPSULE</h2>
+          <p class="price">Price: <span class="price_color">$52</span> </p>
+          <p class="color">Color: Black</p>
+          <p class="size">Size: Xl </p>
+          <p class="quantity">Quantity: <input class="input" type="number" value="1"> </p>
+        </div>
+      </div>
+    </template>
   </div>
 
 
-
-  <script src="data.js"></script>
   <script>
-    // const contentEl = document.querySelector(".content");
-    // const data = JSON.parse(item);
-    // console.log(data);
-    // data.forEach((element) => {
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((data) => showItem(data))
+      .catch((error) => console.error(error));
 
-    //   const divImg = document.createElement("div");
-    //   divImg.classList.add("div__image");
-    //   contentEl.appendChild(divImg);
+    function showItem(data) {
 
-    //   const imageApi = document.createElement("img");
-    //   imageApi.classList.add("image__API");
-    //   imageApi.src = element.image;
-    //   divImg.appendChild(imageApi);
+      const templateEl = document.querySelector('.template_content');
+      const contentEl = document.querySelector('.content');
+      const itemEl = document.querySelector('.item');
+      // const testEl = document.querySelector('.test');
 
-    //   const apiEl = document.createElement("div");
-    //   apiEl.classList.add("api");
-    //   contentEl.appendChild(apiEl);
+      data.forEach(element => {
+
+        const imgEl = templateEl.content
+          .querySelector(".image__block")
+          .cloneNode(true);
+        const boxEl = document.createElement('div');
+        boxEl.classList.add('box__class');
+        const imagepicEl = imgEl.querySelector(".image");
+        imagepicEl.src = element.image;
+
+        const itemEl = templateEl.content
+          .querySelector(".item")
+          .cloneNode(true);
+
+        const nameEl = itemEl.querySelector(".name");
+        nameEl.textContent = element.head;
+
+        const priceEl = itemEl.querySelector(".price");
+        priceEl.textContent = 'Price = ' + element.price;
+
+        const colorEl = itemEl.querySelector(".color");
+        colorEl.textContent = element.color;
+
+        const sizeEl = itemEl.querySelector(".size");
+        sizeEl.textContent = element.size;
+
+        const quantityEl = itemEl.querySelector(".quantity");
+        quantityEl.textContent = element.quantity;
+
+        boxEl.appendChild(imgEl)
+        boxEl.appendChild(itemEl)
+        contentEl.appendChild(boxEl)
 
 
+      });
+    }
 
-
-    //   const numberApi = document.createElement("h3");
-    //   numberApi.classList.add("number__API");
-    //   numberApi.textContent = "Price: $" + element.price;
-    //   apiEl.appendChild(numberApi);
-
-    //   const insultApi = document.createElement("p");
-    //   insultApi.classList.add("insult__API");
-    //   insultApi.textContent = element.head;
-    //   apiEl.appendChild(insultApi);
-
-    //   const createdApi = document.createElement("p");
-    //   createdApi.classList.add("created__API");
-    //   createdApi.textContent = "Color: " + element.color;
-    //   apiEl.appendChild(createdApi);
-
-    //   const commentApi = document.createElement("div");
-    //   commentApi.classList.add("comment__API");
-    //   commentApi.textContent = "Size: " + element.size;
-    //   apiEl.appendChild(commentApi);
-
-
-    // });
   </script>
 
 </body>
