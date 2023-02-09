@@ -22,18 +22,17 @@
       <p class="quantity">Quantity: <input class="input" type="number" value="2"> </p>
     </div>
   </div> -->
-  <div class="content center">
+  <div class="content ">
     <template class="template_content">
-
-      <div class="test">
+      <div class="block center">
         <div class="image__block">
           <img class="image" src="./img/img_2.jpg" alt="">
         </div>
         <div class="item">
-          <h2 class="name">ELLERY X M'O CAPSULE</h2>
+          <h2 class="name"></h2>
           <p class="price">Price: <span class="price_color">$52</span> </p>
           <p class="color">Color: Black</p>
-          <p class="size">Size: Xl </p>
+          <p class="size">Size: </span></p>
           <p class="quantity">Quantity: <input class="input" type="number" value="1"> </p>
         </div>
       </div>
@@ -51,41 +50,39 @@
 
       const templateEl = document.querySelector('.template_content');
       const contentEl = document.querySelector('.content');
-      const itemEl = document.querySelector('.item');
-      // const testEl = document.querySelector('.test');
 
       data.forEach(element => {
 
-        const imgEl = templateEl.content
-          .querySelector(".image__block")
+        const testEl = templateEl.content
+          .querySelector(".block")
           .cloneNode(true);
-        const boxEl = document.createElement('div');
-        boxEl.classList.add('box__class');
-        const imagepicEl = imgEl.querySelector(".image");
+
+
+        const imagepicEl = testEl.querySelector(".image");
         imagepicEl.src = element.image;
 
-        const itemEl = templateEl.content
-          .querySelector(".item")
-          .cloneNode(true);
 
-        const nameEl = itemEl.querySelector(".name");
+
+        const nameEl = testEl.querySelector(".name");
         nameEl.textContent = element.head;
 
-        const priceEl = itemEl.querySelector(".price");
-        priceEl.textContent = 'Price = ' + element.price;
+        const priceEl = testEl.querySelector(".price");
+        const redSize = priceEl.querySelector('.price_color');
+        redSize.textContent = '$' + element.price;
 
-        const colorEl = itemEl.querySelector(".color");
-        colorEl.textContent = element.color;
+        const colorEl = testEl.querySelector(".color");
+        colorEl.textContent = 'Color: ' + element.color;
 
-        const sizeEl = itemEl.querySelector(".size");
-        sizeEl.textContent = element.size;
+        const sizeEl = testEl.querySelector(".size");
+        sizeEl.textContent = 'Size: ' + element.size;
 
-        const quantityEl = itemEl.querySelector(".quantity");
-        quantityEl.textContent = element.quantity;
 
-        boxEl.appendChild(imgEl)
-        boxEl.appendChild(itemEl)
-        contentEl.appendChild(boxEl)
+        const quantityEl = testEl.querySelector(".quantity");
+        const inputEl = quantityEl.querySelector(".input");
+
+        inputEl.textContent = 'Quantity:	' + element.quantity;
+
+        contentEl.appendChild(testEl)
 
 
       });

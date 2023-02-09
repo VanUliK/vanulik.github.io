@@ -5,7 +5,8 @@
     "price": "300",
     "color": "Red",
     "size": "XL",
-    "image": "img/img_1.jpg"
+    "image": "img/img_1.jpg",
+    "quantity": "2"
   },
   {
     "head": "ELLERY X M'O CAPSULE",
@@ -13,6 +14,7 @@
     "price": "52",
     "color": "Black",
     "size": "XL",
-    "image": "img/img_2.jpg"
+    "image": "img/img_2.jpg",
+    "quantity": "1"
   }
 ]
