@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- 1 Дан макет https://www.figma.com/file/mZwLT9fKktsWuVyfQRoST1/shop-(Copy)-(Copy)?node-id=73%3A140 в котором
+    представлены товары на странице корзины
+    2 Необходимо создать файл data.js в котором создать переменную dataProducts в которую присвоить JSON данные по
+    товарам. 
+    3 Вам нужно самостоятельно создать JSON данные (не забыть про кавычки для ключей и значений
+    4 Добавить все данные из макета, чтобы в дальнейшем по ним мы смогли создать вёрстку -->
+
+  <!-- 1 Создаём вёрстку по данному макету
+    2 Добавляем все теги и стили для них, чтобы получилось один в один как в макете
+    3 Пока данные для шаблонизации использовать не нужно -->
+
+  <!-- 1 Создаём блоки с помощью javascript для этого используем данные из dataProducts
+    2 Формируем товары на основе нашей вёрстки
+    3 Проверяем, как будет выглядеть сайт, если в json данных, добавить еще один объект с товаром (в вёрстке должен
+    появиться еще один блок, на основе этих данных) -->
+
+
+  <!-- <div class="product-box">
+        <div class="product-img">
+            <img class= "image" src="img/img1.png" alt="T-SHIRT">
+        </div>
+        <div class="product-dsc">
+            <h2 class="product-name">MANGO PEOPLE T-SHIRT </h2>
+            <div class="product-features">
+                <p class="product-price">Price: <span class="price">$300</span> </p>
+                <p class="product-color">Color: Red </p>
+                <p class="product-size">Size: Xl </p>
+                <p class="product-quantity">Quantity: <input class="quantity" type="number" value="2"></p>
+            </div>
+        </div>
+    </div>
+    <div class="product-box">
+        <div class="product-img">
+            <img class= "image" src="img/img2.png" alt="T-SHIRT">
+        </div>
+        <div class="product-dsc">
+            <h2 class="product-name">ELLERY X M'O CAPSULE </h2>
+            <div class="product-features">
+                <p class="product-price">Price: <span class="price">$52</span> </p>
+                <p class="product-color">Color: Black </p>
+                <p class="product-size">Size: Xl </p>
+                <p class="product-quantity">Quantity: <input class="quantity" type="number" value="1"></p>
+            </div>
+        </div>
+    </div> -->
+  <main class="main"></main>
+  <script src="data.js"></script>
+  <script>
+    const data = JSON.parse(dataProducts)
+
+
+    data.forEach(element => {
+      const mainEl = document.querySelector('.main');
+      const productBoxEl = document.createElement('div');
+      productBoxEl.classList.add('product-box');
+      mainEl.appendChild(productBoxEl);
+
+      const productImgEl = document.createElement('div');
+      productImgEl.classList.add('product-img');
+      productBoxEl.appendChild(productImgEl);
+
+      const imgEl = document.createElement('img');
+      imgEl.classList.add('image');
+      imgEl.src = element.image;
+      productBoxEl.appendChild(imgEl);
+
+      const productDsc = document.createElement('div');
+      productDsc.classList.add('product-dsc');
+      productBoxEl.appendChild(productDsc);
+
+      const productNameEl = document.createElement('h2');
+      productNameEl.classList.add('product-name');
+      productNameEl.textContent = element.name;
+      productDsc.appendChild(productNameEl);
+
+      const productFeaturesEl = document.createElement('div');
+      productFeaturesEl.classList.add('product-features');
+      productDsc.appendChild(productFeaturesEl);
+
+      const productPriceEl = document.createElement('p');
+      productPriceEl.classList.add('product-price');
+      productPriceEl.textContent = `Price ${element.price}`;
+      productFeaturesEl.appendChild(productPriceEl);
+
+      const productColorEl = document.createElement('p');
+      productColorEl.classList.add('product-color');
+      productColorEl.textContent = `Color ${element.color}`;
+      productFeaturesEl.appendChild(productColorEl);
+
+      const productSizeEl = document.createElement('p');
+      productSizeEl.classList.add('product-size');
+      productSizeEl.textContent = `Size ${element.size}`;
+      productFeaturesEl.appendChild(productSizeEl);
+
+      const productQuantityEl = document.createElement('p');
+      productQuantityEl.classList.add('product-quantity');
+      productQuantityEl.textContent = `Quantity ${element.quantity}`;
+      productFeaturesEl.appendChild(productQuantityEl);
+    });
+  </script>
+</body>
+
+</html>
