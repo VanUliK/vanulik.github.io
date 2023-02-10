@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="head ">
+    <p class="one">Text1</p>
+    <p class="two">Text2</p>
+    <p class="three">Text3</p>
+
+  </header>
+  <div class="content center"> </div>
+  <template class="template">
+
+    <div class="block">
+      <img src="./img/Vector.png" alt="" class="close">
+      <div class="block__image">
+        <img src="./img/img_1.jpg" alt="" class="image">
+      </div>
+
+      <div class="block__text">
+        <h1 class="name">MANGO PEOPLE T-SHIRT</h1>
+        <p class="price">Price: <span class="color__red"></span></p>
+        <p class="color">Color: Red</p>
+        <p class="size">Size: Xl </p>
+        <p class="quantity">Quantity: <input type="number" class="input"></p>
+      </div>
+    </div>
+  </template>
+  <script src="data.js"></script>
+  <script>
+    const data = JSON.parse(dataProductsJson);
+    console.log(data);
+    const contentEl = document.querySelector('.content');
+    const templateEl = document.querySelector('.template');
+
+    data.forEach(element => {
+      const blockEl = templateEl.content.querySelector('.block').cloneNode(true);
+
+      const blockImage = blockEl.querySelector('.image');;
+      blockImage.src = element.img;
+
+      const nameEl = blockEl.querySelector('.name');
+      nameEl.textContent = element.name;
+
+      const priceColorEl = blockEl.querySelector('.color__red');
+      priceColorEl.textContent = "$" + element.price;
+
+      const colorEl = blockEl.querySelector('.color');
+      colorEl.textContent = "Color: " + element.color;
+
+      const sizeEl = blockEl.querySelector('.size');
+      sizeEl.textContent = "Size: " + element.size;
+
+      const quantityInputEl = blockEl.querySelector('.input');
+      quantityInputEl.value = element.quantity;
+
+      contentEl.appendChild(blockEl)
+
+      const closeButton = blockEl.querySelector('.close');
+      closeButton.addEventListener('click', function (e) {
+        blockEl.classList.add('close_block');
+      });
+    });
+    const headEl = document.querySelector('.head');
+    window.addEventListener('scroll', function (e) {
+      const headHeight = headEl.getBoundingClientRect().height;
+      if (window.pageYOffset > 0) {
+        console.log(window.pageYOffset);
+        headEl.classList.add('fix__head');
+
+        contentEl.style.paddingTop = headHeight + 30 + "px";
+      }
+      else {
+        headEl.classList.remove('fix__head');
+        contentEl.style.paddingTop = 0;
+      }
+    });
+  </script>
+</body>
+
+</html>
