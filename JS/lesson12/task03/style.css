@@ -1,0 +1,27 @@
+
+body {
+    background-color: rgb(96, 240, 240);
+}
+
+.videoplayer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls {    
+    text-align: center;
+}
+
+.play {
+    width: 50px;
+}
+
+.pause {
+    width: 50px;
+}
+
+.duration {
+    
+    width: 450px;
+}

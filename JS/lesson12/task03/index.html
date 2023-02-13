@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="videoplayer">
+        <div class="video">
+            <video class="vid" height="350" width="500">
+                <source src="images/coverr-villas-by-the-sea-7295-1080p.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="time-range">
+            0:00
+        </div>
+        <div class="controls">
+            <img class="play" src="images/play.png" alt="play" class="play">
+            <img class="pause" src="images/pause.png" alt="pause" class="pause">
+            <input type="range" class="duration">
+            <input type="range" class="volume">
+        </div>
+    </div>
+    <script>
+        const videoEl = document.querySelector('.vid');
+        const playVideoEl = document.querySelector('.play');
+        const pauseVideoEl = document.querySelector('.pause');
+
+        playVideoEl.addEventListener('click', function (e) {
+            if (videoEl.paused) {
+                videoEl.play();
+            } else {
+                videoEl.pause();
+            }
+        });
+        pauseVideoEl.addEventListener('click', function (e) {
+            console.log(videoEl.played);
+            console.log(videoEl.paused);
+            if (!videoEl.paused) {
+                videoEl.pause();
+            } else {
+                videoEl.play();
+            }
+        });
+
+    </script>
+</body>
+
+</html>

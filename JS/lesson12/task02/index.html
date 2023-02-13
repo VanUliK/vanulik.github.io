@@ -1,0 +1,71 @@
+<!-- Создание медиа плеера
+Создать файл index.html
+Создать папку img в которую загрузить изображение кнопок play, pause
+Скачать произвольное видео из интернета
+Добавить Тег видео в html
+Продумать внешний вид progress и volume
+Продумать время проигрывателя
+Реализовать функционал своего собственного видео-плеера
+https://webcode.tools/
+http://www.fontawesome.com 
+https://www.codewars.com/
+https://www.codewars.com/
+@devsbattlebot
+https://kwork.ru
+https://fl.ru
+https://t.me/+QGE3hx4OiUo3MDYy
+
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <script src="https://kit.fontawesome.com/39d9b5c200.js" crossorigin="anonymous"></script>
+  <div>
+    Текущее время: <span class="currentTime">0</span>
+  </div>
+  <div class="player">
+    <video src="https://webcode.tools/media/video.mp4"></video>
+    <input type="range" class="timing" value="0" step="0.001">
+  </div>
+
+  <i class="fas fa-play fasf"></i>
+  <i class="fas fa-pause"></i>
+  <i class="play_pic"></i>
+  <input type="range" class="volume" min="0" max="1" step="0.01">
+  <script>
+    const videoEl = document.querySelector('video');
+    const playBtnEl = document.querySelector('.fa-play');
+    const pauseBtnEl = document.querySelector('.fa-pause');
+    const volumeEl = document.querySelector('.volume');
+    const timingEl = document.querySelector('.timing');
+    const currentimeEl = document.querySelector('.currentTime');
+    playBtnEl.addEventListener('click', () => {
+      videoEl.play();
+    });
+    pauseBtnEl.addEventListener('click', () => {
+      videoEl.pause();
+    });
+    videoEl.addEventListener('timeupdate', event => {
+      currentimeEl.innerText = videoEl.currentTime;
+      timingEl.value = videoEl.currentTime / videoEl.duration * 100;
+    });
+    volumeEl.addEventListener('input', () => {
+      videoEl.volume = volumeEl.value;
+    });
+    timingEl.addEventListener('input', () => {
+      videoEl.currentTime = timingEl.value / 100 * videoEl.duration;
+    });
+  </script>
+</body>
+
+</html>
