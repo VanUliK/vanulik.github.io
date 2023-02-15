@@ -7,24 +7,30 @@ function showItem(data) {
   const templateEl = document.querySelector('.template');
   const itemGroup = document.querySelector('.featuredItems');
 
-
   data.forEach(element => {
     const itemEl = templateEl.content
-      .querySelector(".featuredItem")
+      .querySelector(".item_block")
       .cloneNode(true);
+
+    const featuredItemAttribute = itemEl.querySelector(".featuredItem");
+    console.log('featuredItem');
+    featuredItemAttribute.setAttribute('data-id', element.id);
+    featuredItemAttribute.setAttribute('data-name', element.head);
+    featuredItemAttribute.setAttribute('data-price', element.price);
+
     const headingEl = itemEl.querySelector(".featuredName");
     headingEl.textContent = element.head;
 
     const dscItem = itemEl.querySelector(".featuredText");
     dscItem.textContent = element.description;
 
-    const infoEl = itemEl.querySelector(".featuredPrice");
-    infoEl.textContent = element.price;
 
-    const imgEl = itemEl.querySelector(".item-img");
+    const priceEl = itemEl.querySelector(".featuredPrice");
+    const redSize = priceEl.querySelector('.featuredPrice_color');
+    redSize.textContent = '$' + element.price.toFixed(2);
+
+    const imgEl = itemEl.querySelector(".featuredImg");
     imgEl.src = element.image;
     itemGroup.appendChild(itemEl)
-
   });
-
 }
