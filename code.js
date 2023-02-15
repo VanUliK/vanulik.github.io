@@ -67,20 +67,20 @@ function addItemToCart(buttons) {
   });
 }
 
-
+const mainEl = document.querySelector('.main');
 const headEl = document.querySelector('.head');
 window.addEventListener('scroll', function (e) {
   const headHeight = headEl.getBoundingClientRect().height;
-      if (window.pageYOffset > 0) {
-        console.log(window.pageYOffset);
-        headEl.classList.add('fix__head');
+  if (window.pageYOffset > 0) {
+    console.log(window.pageYOffset);
+    headEl.classList.add('fix__head');
 
-        contentEl.style.paddingTop = headHeight + 20 + "px";
-      }
-      else {
-        headEl.classList.remove('fix__head');
-        contentEl.style.paddingTop = 0;
-      }
+    mainEl.style.paddingTop = headHeight + "px";
+  }
+  else {
+    headEl.classList.remove('fix__head');
+    mainEl.style.paddingTop = 0;
+  }
 });
 
 // let end = 6;
