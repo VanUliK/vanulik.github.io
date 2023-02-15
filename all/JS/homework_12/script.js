@@ -33,3 +33,19 @@ function showItem(data) {
     itemGroup.appendChild(itemEl)
   });
 }
+
+const mainEl = document.querySelector('.main');
+const headEl = document.querySelector('.header');
+window.addEventListener('scroll', function (e) {
+  const headHeight = headEl.getBoundingClientRect().height;
+  if (window.pageYOffset > 0) {
+    console.log(window.pageYOffset);
+    headEl.classList.add('fix__head');
+
+    mainEl.style.paddingTop = headHeight + "px";
+  }
+  else {
+    headEl.classList.remove('fix__head');
+    mainEl.style.paddingTop = 0;
+  }
+});

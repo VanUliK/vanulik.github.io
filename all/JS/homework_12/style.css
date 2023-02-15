@@ -34,7 +34,14 @@ body {
 .header i {
   color: #e8e8e8;
 }
-
+.fix__head {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: #222222;
+}
 .userIcon,
 .cartIcon {
   display: none;
