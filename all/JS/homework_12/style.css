@@ -102,6 +102,26 @@ body {
   }
 }
 
+.view_all {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #f26376;
+  padding: 14px 38px;
+  border: 1px solid #ff6a6a;
+  background-color: #fff;
+  cursor: pointer;
+}
+.view_all:hover {
+  background: #f16d7f;
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
 .basketRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
