@@ -21,7 +21,7 @@ function showItem(data) {
     const infoEl = itemEl.querySelector(".featuredPrice");
     infoEl.textContent = element.price;
 
-    const imgEl = itemEl.querySelector(".item-img__width");
+    const imgEl = itemEl.querySelector(".item-img");
     imgEl.src = element.image;
     itemGroup.appendChild(itemEl)
 
