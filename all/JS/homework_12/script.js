@@ -13,7 +13,6 @@ function showItem(data) {
       .cloneNode(true);
 
     const featuredItemAttribute = itemEl.querySelector(".featuredItem");
-    console.log('featuredItem');
     featuredItemAttribute.setAttribute('data-id', element.id);
     featuredItemAttribute.setAttribute('data-name', element.head);
     featuredItemAttribute.setAttribute('data-price', element.price);
