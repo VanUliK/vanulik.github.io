@@ -1,8 +1,7 @@
-fetch("./data.json")
+let array = fetch("./data.json")
   .then((response) => response.json())
   .then((data) => showItem(data))
   .catch((error) => console.error(error));
-
 function showItem(data) {
   const templateEl = document.querySelector('.template');
   const itemGroup = document.querySelector('.featuredItems');
