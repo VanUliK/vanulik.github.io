@@ -43,12 +43,11 @@ body {
   background: #222222;
 }
 .userIcon,
-.barIcon {
+.cartIcon {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .barIcon,
   .userIcon,
   .cartIcon {
     display: inline;
@@ -57,7 +56,7 @@ body {
 
 .userIcon {
   margin-left: 25px;
-  margin-right: 20px;
+  margin-right: 42px;
 }
 
 .searchIcon {
@@ -129,6 +128,7 @@ body {
 .buttons {
   display: flex;
   justify-content: center;
+  margin-bottom: 50px;
 }
 
 .basketRow {

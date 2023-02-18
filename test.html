@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="test.css">
+</head>
+
+<body>
+
+  <div class="main">
+
+
+
+    <div class="featured container">
+      <h2 class="featuredHeader">Fetured Items</h2>
+      <div class="featuredTitle">Shop for items based on what we featured in this week</div>
+
+      <e class="featuredItems">
+        <template class="template">
+          <div class="item_block">
+            <div class="featuredItem">
+              <div class="featuredImgWrap">
+                <!-- json .image -->
+                <img class="featuredImg" src="" alt="">
+
+                <div class="featuredImgDark">
+                  <button class="addToCart">
+                    <img src="images/cart.svg" alt="">
+                    Добавить в корзину
+                  </button>
+                </div>
+              </div>
+
+              <div class="featuredData">
+                <div class="featuredName">
+                  <!-- json .head -->
+                </div>
+                <div class="featuredText">
+                  <!-- json .description -->
+                </div>
+                <div class="featuredPrice">Цена: <span class="featuredPrice_color"></span>
+                  <!-- json .price -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+    </div>
+    <div class="buttons">
+      <button class="view_all">Browse All Product</button>
+    </div>
+
+
+
+  </div>
+  <!-- <script src="app.js"></script> -->
+  <!-- <script src="basket.js"></script> -->
+  <!-- <script src="script.js"></script> -->
+  <script>
+    // const main = document.querySelectorAll('.featured ');
+    const clickButton = document.querySelector('.view_all');
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((data) => showItemsBlock(data))
+      .catch((error) => console.error(error));
+
+
+    function showItemsBlock(data) {
+      const templateEl = document.querySelector('.template');
+      const itemGroup = document.querySelector('.featuredItems');
+
+      for (let index = 0; index < 6; index++) {
+
+        const element = data[index];
+        const itemEl = templateEl.content
+          .querySelector(".item_block")
+          .cloneNode(true);
+
+        const featuredItemAttribute = itemEl.querySelector(".featuredItem");
+        featuredItemAttribute.setAttribute('data-id', element.id);
+        featuredItemAttribute.setAttribute('data-name', element.head);
+        featuredItemAttribute.setAttribute('data-price', element.price);
+        const headingEl = itemEl.querySelector(".featuredName");
+        headingEl.textContent = element.head;
+        const dscItem = itemEl.querySelector(".featuredText");
+        dscItem.textContent = element.description;
+        const priceEl = itemEl.querySelector(".featuredPrice");
+        const redSize = priceEl.querySelector('.featuredPrice_color');
+        redSize.textContent = '$' + element.price.toFixed(2);
+        const imgEl = itemEl.querySelector(".featuredImg");
+        imgEl.src = element.image;
+        itemGroup.appendChild(itemEl)
+
+      };
+
+
+
+
+      clickButton.addEventListener('click', function (e) {
+        const templateEl = document.querySelector('.template');
+        const itemGroup = document.querySelector('.featuredItems');
+        for (let index = 6; index < 12; index++) {
+
+          const element = data[index];
+          const itemEl = templateEl.content
+            .querySelector(".item_block")
+            .cloneNode(true);
+
+          const featuredItemAttribute = itemEl.querySelector(".featuredItem");
+          featuredItemAttribute.setAttribute('data-id', element.id);
+          featuredItemAttribute.setAttribute('data-name', element.head);
+          featuredItemAttribute.setAttribute('data-price', element.price);
+          const headingEl = itemEl.querySelector(".featuredName");
+          headingEl.textContent = element.head;
+          const dscItem = itemEl.querySelector(".featuredText");
+          dscItem.textContent = element.description;
+          const priceEl = itemEl.querySelector(".featuredPrice");
+          const redSize = priceEl.querySelector('.featuredPrice_color');
+          redSize.textContent = '$' + element.price.toFixed(2);
+          const imgEl = itemEl.querySelector(".featuredImg");
+          imgEl.src = element.image;
+          itemGroup.appendChild(itemEl)
+
+        };
+
+        clickButton.classList = 'hidden'
+      });
+
+    }
+  </script>
+</body>
+
+</html>
