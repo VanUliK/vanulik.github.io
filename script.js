@@ -6,37 +6,11 @@ fetch("./data.json")
 
 
 function showItemsBlock(data) {
-  const templateEl = document.querySelector('.template');
-  const itemGroup = document.querySelector('.featuredItems');
-
-  for (let index = 0; index < 6; index++) {
-
-    const element = data[index];
-    const itemEl = templateEl.content
-      .querySelector(".item_block")
-      .cloneNode(true);
-
-    const featuredItemAttribute = itemEl.querySelector(".featuredItem");
-    featuredItemAttribute.setAttribute('data-id', element.id);
-    featuredItemAttribute.setAttribute('data-name', element.head);
-    featuredItemAttribute.setAttribute('data-price', element.price);
-    const headingEl = itemEl.querySelector(".featuredName");
-    headingEl.textContent = element.head;
-    const dscItem = itemEl.querySelector(".featuredText");
-    dscItem.textContent = element.description;
-    const priceEl = itemEl.querySelector(".featuredPrice");
-    const redSize = priceEl.querySelector('.featuredPrice_color');
-    redSize.textContent = '$' + element.price.toFixed(2);
-    const imgEl = itemEl.querySelector(".featuredImg");
-    imgEl.src = element.image;
-    itemGroup.appendChild(itemEl)
-  };
-
-
-  clickButton.addEventListener('click', function (e) {
+  function name(index, length) {
     const templateEl = document.querySelector('.template');
     const itemGroup = document.querySelector('.featuredItems');
-    for (let index = 6; index < 12; index++) {
+
+    for (index; index < length; index++) {
 
       const element = data[index];
       const itemEl = templateEl.content
@@ -58,7 +32,12 @@ function showItemsBlock(data) {
       imgEl.src = element.image;
       itemGroup.appendChild(itemEl)
     };
+  }
 
+  name(0, 6)
+
+  clickButton.addEventListener('click', function () {
+    name(6, data.length)
     clickButton.classList = 'hidden'
   });
 }
@@ -69,9 +48,8 @@ const headEl = document.querySelector('.header');
 window.addEventListener('scroll', function (e) {
   const headHeight = headEl.getBoundingClientRect().height;
   if (window.pageYOffset > 0) {
-    console.log(window.pageYOffset);
+    // console.log(window.pageYOffset);
     headEl.classList.add('fix__head');
-
     mainEl.style.paddingTop = headHeight + "px";
   }
   else {
