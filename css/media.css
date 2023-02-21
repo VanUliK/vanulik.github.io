@@ -48,8 +48,21 @@
     background: none;
     border-radius: 4px;
   }
-
-  .form__authorization {
+  .companies__column-inner {
+    position: static;
+    left: 26px;
+    top: -42px;
+    padding: 32px 40.5px;
+    width: auto;
+    background-color: #fff;
+    box-shadow: 4px 4px 12px rgba(137, 137, 162, 0.122);
+    border-radius: 8px;
+  }
+  .companies__column {
+    position: static;
+    width: 100%;
+  }
+  .companies__column-inner .form__authorization {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -185,6 +198,9 @@
     align-items: center;
   }
 
+  .features__column {
+    width: 100%;
+  }
   .footer {
     display: flex;
     justify-content: space-around;
