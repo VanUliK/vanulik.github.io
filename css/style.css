@@ -311,13 +311,20 @@ body {
 }
 
 .price__top > p {
-  width: 650px;
+  max-width: 650px;
   margin: 0 auto 15px;
 }
 
 .price__card {
   display: flex;
   justify-content: space-between;
+  overflow-x: scroll;
+  gap: 80px;
+}
+.price__card::-webkit-scrollbar {
+  display: none;
+  width: 1px;
+  background-color: #1f1f88;
 }
 
 .card {

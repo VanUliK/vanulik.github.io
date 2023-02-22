@@ -6,9 +6,13 @@
 }
 
 @media (max-width: 1115px) {
+  .features {
+    padding-bottom: 71px;
+  }
+
   .features__row {
     column-gap: 0;
-    gap: 5px;
+    gap: 35px;
   }
 
   .header__logo {
@@ -41,6 +45,11 @@
   .automated {
     padding-bottom: 0px;
   }
+
+  .price__card {
+    gap: 40px;
+  }
+
   .companies__column-inner {
     padding: 36px 30px;
   }
@@ -60,7 +69,7 @@
   }
   .companies__column {
     position: static;
-    width: 100%;
+    max-width: 100%;
   }
   .companies__column-inner .form__authorization {
     display: flex;
@@ -69,6 +78,11 @@
   }
   .form__auth-btn {
     width: 100%;
+  }
+
+  .form__auth-btn {
+    padding-left: 89px;
+    padding-right: 90px;
   }
 
   .rating-area {
@@ -92,6 +106,7 @@
   }
   .companies__icons {
     width: auto;
+    padding: 0 25px;
   }
 
   .header__row {
@@ -103,26 +118,19 @@
 }
 
 @media (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
   .title {
     font-size: 30px;
     line-height: 35px;
-  }
-  .header__title {
-    font-size: 31px;
-  }
-  .header {
-    height: 900px;
   }
 
   .container {
     display: flex;
     justify-content: space-around;
-    /* padding: 0; */
     margin: 0;
     padding: 0 20px;
-  }
-  .menu {
-    /* display: none; */
   }
 
   .sign__up-btn {
@@ -151,7 +159,7 @@
   }
 
   .header__title {
-    font-size: 35px;
+    font-size: 31px;
     padding-top: 20px;
   }
 
@@ -166,11 +174,13 @@
 
   .btn {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto 10px;
+    /* margin: auto 10px; */
     font-size: 16px;
-    line-height: 19px;
+    /* line-height: 19px; */
+    /* align-content: center; */
+    align-items: center;
+    justify-content: space-around;
+    padding: 0;
   }
 
   .main {
@@ -182,6 +192,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+  }
+
+  .companies {
+    padding-top: 34px;
   }
 
   .companies__column--mini-size {
@@ -201,6 +215,32 @@
   .features__column {
     width: 100%;
   }
+
+  .price__card {
+    gap: 20px;
+  }
+
+  .card {
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card__content {
+    padding: 35px 37px 47px 37px;
+  }
+
+  .card__title {
+    font-size: 25px;
+  }
+  .card__text {
+    font-size: 13px;
+  }
+  .card__inner-descr {
+    font-size: 13px;
+  }
+
   .footer {
     display: flex;
     justify-content: space-around;
