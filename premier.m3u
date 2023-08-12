@@ -1,0 +1,3 @@
+#EXTM3U url-tvg="https://iptvx.one/epg/epg_lite.xml.gz,https://iptvx.site/epg_lite.xml.gz,http://epg.it999.ru/epg.xml.gz" 
+#EXTINF:-1 tvg-id="match-premier" tvg-logo="https://iptvxpix.ml/match-premiere.png" group-title="Без сортування",Матч! Премьер
+http://109.200.130.124:7005/play/a00d
