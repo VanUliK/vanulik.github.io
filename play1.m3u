@@ -1,0 +1,13 @@
+#EXTM3U url-tvg="https://iptvx.one/epg/epg_lite.xml.gz,https://iptvx.site/epg_lite.xml.gz,http://epg.it999.ru/epg.xml.gz" 
+#EXTINF:-1 tvg-id="match-premier" tvg-logo="https://iptvxpix.ml/match-premiere.png" group-title="Без сортування",Матч! Премьер
+http://109.200.130.124:7005/play/a00d
+#EXTINF:-1 group-title="Olimp Telecom",КХЛ
+http://91.234.255.18:8000/play/a04x/index.m3u8
+#EXTINF:-1 group-title="НКТВ (VPN)",HD Life
+http://46.174.83.66/HDL/index.m3u8
+#EXTINF:-1 group-title="Без групи",National Geographic Abu Dhabi HD
+http://admdn2.cdn.mangomolo.com/nagtv/nagtv.stream_720p/chunklist.m3u8
+#EXTINF:-1 tvg-id="NationalGeographicRussia.ru" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/512px-Natgeologo.svg.png" group-title="Пізнавальні",National Geographic (1080p) [Geo-blocked]
+https://okkotv-live.cdnvideo.ru/channel/NGC_HD.m3u8
+#EXTINF:-1 group-title="Без групи",Kino (German)
+https://rakuten-deutsches-kino-1-eu.rakuten.wurl.tv/playlist.m3u8
