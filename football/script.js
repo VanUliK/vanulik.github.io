@@ -469,12 +469,29 @@ function updateRowColors(row, index, matches, predictions, realScores, users) {
   const realScore = realScores[index];
 
   cells.forEach((cell, i) => {
-    const prediction = userPredictions[i] || "";
+    const prediction = userPredictions[i];
+    const hasPrediction = prediction && prediction.trim() !== "";
+    const hasResult = realScore && realScore.trim() !== "";
+
+    // Класс зависит от наличия реального результата
     const newClass = getResultClass(prediction, realScore, matchName);
     cell.className = `result-cell ${newClass}`;
-    cell.textContent = prediction ? prediction : "—";
+
+    if (!hasResult) {
+      // Нет результата матча: серая ячейка, но прогноз показываем
+      cell.textContent = hasPrediction ? prediction : "—";
+    } else {
+      // Результат есть: цвет по точности прогноза
+      if (hasPrediction) {
+        cell.textContent = prediction;
+      } else {
+        // Прогноз не сделан, хотя результат есть
+        cell.textContent = "—";
+      }
+    }
   });
 }
+
 
 /**
  * Отрисовка итоговой таблицы с очками.
