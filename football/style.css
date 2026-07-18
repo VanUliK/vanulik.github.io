@@ -393,3 +393,9 @@ th {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+.result-cell-neutral {
+  background-color: #f1f1f1;
+  color: #888;
+  font-style: italic;
+}

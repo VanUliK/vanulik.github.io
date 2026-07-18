@@ -56,14 +56,22 @@ function isStageHeader(text) {
     "1/",
     "четвертьфинал",
     "полуфинал",
+    "чемпион",
     "место",
     "отборочный",
     "групповой",
     "стадия",
     "раунд",
+    "этап",
   ];
 
   return triggers.some((trigger) => t.includes(trigger));
+}
+
+function isChampionStage(stageName) {
+  if (!stageName) return false;
+  const t = String(stageName).trim().toLowerCase();
+  return t.includes("чемпион");
 }
 
 /**
@@ -74,9 +82,9 @@ function isStageHeader(text) {
 function parseScore(scoreStr) {
   if (!scoreStr) return null;
   const s = scoreStr.trim();
-  if (s === '') return null;
+  if (s === "") return null;
 
-  const parts = s.split(/[-:]/).map(x => x.trim());
+  const parts = s.split(/[-:]/).map((x) => x.trim());
   if (parts.length !== 2) return null;
 
   const h = parseInt(parts[0], 10);
@@ -88,35 +96,51 @@ function parseScore(scoreStr) {
 
 /**
  * Определяет тип прогноза: 'exact', 'win', 'lose'.
- * exact — точный счёт совпал
- * win — угадан исход (победа/ничья)
- * lose — не угадан
+ * Для обычных матчей — по счёту.
+ * Для «ЧЕМПИОН»/«Кто победит» — по совпадению текста.
  */
-function getPredictionType(prediction, realScore) {
-  if (!prediction || !realScore) return 'lose';
+function getPredictionType(prediction, realScore, matchName) {
+  if (!prediction || !realScore) return "lose";
 
+  // Если в названии матча есть намёк на угадывание победителя — считаем как текстовый прогноз
+  const cleanName = String(matchName || "").toLowerCase();
+  const isTextMatch =
+    cleanName.includes("чемпион") ||
+    cleanName.includes("кто победит") ||
+    cleanName.includes("победитель");
+
+  if (isTextMatch) {
+    const pNorm = (prediction || "").trim().toLowerCase();
+    const rNorm = realScore.trim().toLowerCase();
+    return pNorm && pNorm === rNorm ? "exact" : "lose";
+  }
+
+  // Обычный матч: счёт цифрами
   const pParts = parseScore(prediction);
   const rParts = parseScore(realScore);
 
-  if (!pParts || !rParts) return 'lose';
+  if (!pParts || !rParts) return "lose";
 
   const pH = parseInt(pParts[0], 10);
   const pA = parseInt(pParts[1], 10);
   const rH = parseInt(rParts[0], 10);
   const rA = parseInt(rParts[1], 10);
 
-  if (Number.isNaN(pH) || Number.isNaN(pA) || Number.isNaN(rH) || Number.isNaN(rA)) {
-    return 'lose';
+  if (
+    Number.isNaN(pH) ||
+    Number.isNaN(pA) ||
+    Number.isNaN(rH) ||
+    Number.isNaN(rA)
+  ) {
+    return "lose";
   }
 
-  // Точный счёт
-  if (pH === rH && pA === rA) return 'exact';
+  if (pH === rH && pA === rA) return "exact";
 
-  // Исход
-  const pWin = (pH === pA) ? 0 : (pH > pA ? 1 : 2);
-  const rWin = (rH === rA) ? 0 : (rH > rA ? 1 : 2);
+  const pWin = pH === pA ? 0 : pH > pA ? 1 : 2;
+  const rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
 
-  return (pWin === rWin) ? 'win' : 'lose';
+  return pWin === rWin ? "win" : "lose";
 }
 
 /**
@@ -125,11 +149,16 @@ function getPredictionType(prediction, realScore) {
  * team-win — светло-зелёный (угадан исход)
  * loss — красный (не угадан)
  */
-function getResultClass(prediction, realScore) {
-  const type = getPredictionType(prediction, realScore);
-  if (type === 'exact') return 'exact-win';
-  if (type === 'win') return 'team-win';
-  return 'loss';
+function getResultClass(prediction, realScore, matchName) {
+  // Если реального результата ещё нет — серая ячейка
+  if (!realScore || realScore.trim() === "") {
+    return "result-cell-neutral";
+  }
+
+  const type = getPredictionType(prediction, realScore, matchName);
+  if (type === "exact") return "exact-win";
+  if (type === "win") return "team-win";
+  return "loss";
 }
 
 /**
@@ -144,17 +173,42 @@ function calculateScoresWithUsers(matches, predictions, realScores, users) {
 
   matches.forEach((matchName, index) => {
     if (isStageHeader(matchName)) return;
+
     const realScore = realScores[index];
     if (!realScore) return;
 
+    const cleanName = String(matchName).toLowerCase();
+    const isTextMatch =
+      cleanName.includes("чемпион") ||
+      cleanName.includes("кто победит") ||
+      cleanName.includes("победитель");
+
+    if (isTextMatch) {
+      // Текстовый прогноз: совпадение имени = точный прогноз
+      const actualWinner = realScore.trim().toLowerCase();
+      if (!actualWinner) return;
+
+      const userPredictions = predictions[index] || [];
+      users.forEach((user, userIdx) => {
+        const prediction = (userPredictions[userIdx] || "")
+          .trim()
+          .toLowerCase();
+        if (prediction && prediction === actualWinner) {
+          userStats[user].points += 3;
+          userStats[user].exact++;
+        } else {
+          userStats[user].losses++;
+        }
+      });
+      return;
+    }
+
+    // Обычный матч: счёт цифрами
     const rParts = parseScore(realScore);
     if (!rParts) return;
 
-    const rH = parseInt(rParts[0], 10);
-    const rA = parseInt(rParts[1], 10);
-    if (Number.isNaN(rH) || Number.isNaN(rA)) return;
-
-    let rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
+    const [rH, rA] = rParts;
+    const rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
     const userPredictions = predictions[index] || [];
 
     users.forEach((user, userIdx) => {
@@ -177,9 +231,8 @@ function calculateScoresWithUsers(matches, predictions, realScores, users) {
         return;
       }
 
-      let pWin = pH === pA ? 0 : pH > pA ? 1 : 2;
+      const pWin = pH === pA ? 0 : pH > pA ? 1 : 2;
 
-      // Очки
       if (pH === rH && pA === rA) {
         userStats[user].points += 3;
         userStats[user].exact++;
@@ -201,21 +254,42 @@ function calculateScoresWithUsers(matches, predictions, realScores, users) {
  * - Если есть хотя бы один exact: exact получает от win (10₽) и от lose (20₽)
  * - Иначе: win получает от lose (10₽)
  */
-function calcMatchChange(type, exactCount, winCount, loserCount) {
+function calcMatchChange(
+  type,
+  exactCount,
+  winCount,
+  loserCount,
+  isChampionStage,
+) {
   let change = 0;
 
+  if (isChampionStage) {
+    // ЭТАП «ЧЕМПИОН»: перераспределение денег
+    if (type === "exact") {
+      // Угадавший забирает по 100₽ с каждого проигравшего
+      change = loserCount * 100;
+    } else {
+      // Проигравший платит по 100₽ каждому, кто угадал (в нашем случае exactCount всегда 0 или 1)
+      // Но так как exactCount может быть >1 (если несколько угадали), платим всем угадавшим
+      change = -(exactCount * 100);
+    }
+    return change;
+  }
+
+  // ОБЫЧНЫЕ ЭТАПЫ (старая логика)
   if (exactCount > 0) {
-    if (type === 'exact') {
+    if (type === "exact") {
       change += winCount * 10;
       change += loserCount * 20;
-    } else if (type === 'win') {
+    } else if (type === "win") {
       change -= exactCount * 10;
       change += loserCount * 10;
-    } else { // lose
-      change -= (exactCount * 20) + (winCount * 10);
+    } else {
+      // lose
+      change -= exactCount * 20 + winCount * 10;
     }
   } else if (winCount > 0) {
-    if (type === 'win') {
+    if (type === "win") {
       change += loserCount * 10;
     } else {
       change -= winCount * 10;
@@ -238,49 +312,56 @@ function calculateMoneyTable(matches, predictions, realScores, users) {
     result[u] = { total: 0, stages: {} };
   });
 
-  let currentStage = "Общий"; 
+  let currentStage = "Общий";
 
   matches.forEach((matchName, idx) => {
-    // 1. Определяем этап
+    // Если это заголовок этапа — обновляем currentStage
     if (isStageHeader(matchName)) {
       currentStage = matchName.trim();
       return;
     }
 
     const realScore = realScores[idx];
-    if (!realScore) return; // Пропускаем матчи без счёта
+    if (!realScore) return;
 
-    const rParts = parseScore(realScore);
-    if (!rParts) return;
+    const isChampStage = isChampionStage(currentStage);
 
-    const [rH, rA] = rParts;
-    const rWin = (rH === rA) ? 0 : (rH > rA ? 1 : 2);
-    
+    // Для обычных матчей парсим счёт, для текстовых (внутри ЧЕМПИОН) это не обязательно
+    let rWin = null;
+    if (!isChampStage) {
+      const rParts = parseScore(realScore);
+      if (!rParts) return;
+      const [rH, rA] = rParts;
+      rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
+    }
+
     const userPredictions = predictions[idx] || [];
 
-    // 2. Сначала определяем типы прогнозов ВСЕХ игроков в этом матче
     const guesses = users.map((u, i) => {
       const pred = userPredictions[i];
-      const type = getPredictionType(pred, realScore);
+      const type = getPredictionType(pred, realScore, matchName);
       return { user: u, type };
     });
 
-    const exactGuessers = guesses.filter(g => g.type === 'exact');
-    const winGuessers = guesses.filter(g => g.type === 'win');
-    const losers = guesses.filter(g => g.type === 'lose');
+    const exactGuessers = guesses.filter((g) => g.type === "exact");
+    const winGuessers = guesses.filter((g) => g.type === "win");
+    const losers = guesses.filter((g) => g.type === "lose");
 
     const countExact = exactGuessers.length;
     const countWin = winGuessers.length;
     const countLosers = losers.length;
 
-    // 3. Применяем ЕДИНУЮ формулу начисления для каждого игрока
-    guesses.forEach(g => {
-      const change = calcMatchChange(g.type, countExact, countWin, countLosers);
+    guesses.forEach((g) => {
+      const change = calcMatchChange(
+        g.type,
+        countExact,
+        countWin,
+        countLosers,
+        isChampStage,
+      );
 
-      // Обновляем итог
       result[g.user].total += change;
 
-      // Обновляем этап (инициализируем, если нет)
       if (!result[g.user].stages[currentStage]) {
         result[g.user].stages[currentStage] = 0;
       }
@@ -377,20 +458,19 @@ function renderMoneyTable(data, users) {
   container.appendChild(table);
 }
 
-
-
 /**
  * Перекраска ячеек в строке при изменении счёта.
  * Обновляет классы (exact-win / team-win / loss) и текст.
  */
-function updateRowColors(row, index, predictions, realScores, users) {
+function updateRowColors(row, index, matches, predictions, realScores, users) {
   const cells = row.querySelectorAll(".result-cell");
+  const matchName = matches[index];
   const userPredictions = predictions[index] || [];
   const realScore = realScores[index];
 
   cells.forEach((cell, i) => {
     const prediction = userPredictions[i] || "";
-    const newClass = getResultClass(prediction, realScore);
+    const newClass = getResultClass(prediction, realScore, matchName);
     cell.className = `result-cell ${newClass}`;
     cell.textContent = prediction ? prediction : "—";
   });
@@ -417,7 +497,15 @@ function renderScoresTable(userStats, users) {
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
 
-  ["Место", "Участник", "Очки", "Точные", "Победы", "Ничьи", "Поражения"].forEach((text) => {
+  [
+    "Место",
+    "Участник",
+    "Очки",
+    "Точные",
+    "Победы",
+    "Ничьи",
+    "Поражения",
+  ].forEach((text) => {
     const th = document.createElement("th");
     th.textContent = text;
     headerRow.appendChild(th);
@@ -459,7 +547,18 @@ function renderScoresTable(userStats, users) {
   container.appendChild(table);
 }
 
-
+/**
+ * По индексу матча возвращает название текущего этапа (последний встреченный заголовок).
+ */
+function getCurrentStageForMatch(index, matches) {
+  let stage = "Общий";
+  for (let i = 0; i <= index; i++) {
+    if (isStageHeader(matches[i])) {
+      stage = matches[i].trim();
+    }
+  }
+  return stage;
+}
 
 /**
  * Отрисовка основной таблицы матчей и прогнозов.
@@ -529,7 +628,7 @@ function buildTable(data) {
       realScores[index] = e.target.value.trim();
 
       // Перекрашиваем ячейки в этой строке
-      updateRowColors(tr, index, predictions, realScores, users);
+      updateRowColors(tr, index, matches, predictions, realScores, users);
 
       // Считаем и рисуем таблицу очков
       const stats = calculateScoresWithUsers(
@@ -559,62 +658,133 @@ function buildTable(data) {
     users.forEach((userName, userIndex) => {
       const td = document.createElement("td");
       const card = document.createElement("div");
-      card.className = `result-cell ${getResultClass(userPredictions[userIndex], realScores[index])}`;
-      card.textContent = userPredictions[userIndex] ? userPredictions[userIndex] : "—";
+
+      // matchName уже доступен из замыкания (из matches.forEach), ничего заново не объявляем
+      const realScore = realScores[index];
+const hasResult = realScore && realScore.trim() !== "";
+const userPrediction = userPredictions[userIndex];
+const hasPrediction = userPrediction && userPrediction.trim() !== "";
+
+// Класс: серый, если нет результата; иначе — по типу прогноза
+card.className = `result-cell ${getResultClass(userPrediction, realScore, matchName)}`;
+
+if (!hasResult) {
+  // Нет результата матча: серая ячейка, прогноз всё равно показываем
+  card.textContent = hasPrediction ? userPrediction : "—";
+} else {
+  // Результат есть: цвет по точности прогноза
+  if (hasPrediction) {
+    card.textContent = userPrediction;
+  } else {
+    // Прогноз не сделан, хотя результат есть
+    card.textContent = "—";
+  }
+}
+
 
       // --- КЛИК: показываем выигрыш за матч во всплывашке ---
       card.addEventListener("click", () => {
         const inputEl = tr.querySelector(".real-score-input");
         const scoreVal = inputEl ? inputEl.value.trim() : "";
 
-        // Если счёт не введён — сразу показываем подсказку
         if (!scoreVal) {
           showTooltip(card, "Счёт ещё не задан");
           return;
         }
 
-        const matchResult = parseScore(scoreVal);
-        if (!matchResult) {
-          showTooltip(card, "Неверный формат счёта (нужно: 2-1 или 2:1)");
-          return;
+        // --- ОПРЕДЕЛЯЕМ ЭТАП ---
+        const currentStage = getCurrentStageForMatch(index, matches);
+        const isChampStage = isChampionStage(currentStage);
+
+        let userType;
+        let exactGuessers = [];
+        let winGuessers = [];
+        let losers = [];
+
+        // --- ПРОВЕРКА СЧЁТА И ТИПЫ ПРОГНОЗОВ ---
+        if (isChampStage) {
+          // ДЛЯ ЭТАПА «ЧЕМПИОН»: считаем по тексту (имя победителя)
+          const actualWinner = scoreVal.toLowerCase(); // Реальный победитель из инпута
+
+          users.forEach((u, i) => {
+            const p = (predictions[index] || [])[i] || "";
+            const pNorm = p.trim().toLowerCase();
+
+            // Если угадал имя — это 'exact', иначе 'lose' (для ЧЕМПИОН нет типа 'win')
+            const t = pNorm && pNorm === actualWinner ? "exact" : "lose";
+
+            if (t === "exact") exactGuessers.push({ user: u, type: t });
+            else losers.push({ user: u, type: t });
+          });
+
+          // Тип прогноза текущего пользователя
+          const myPrediction = userPredictions[userIndex] || "";
+          userType =
+            myPrediction.trim().toLowerCase() === actualWinner
+              ? "exact"
+              : "lose";
+        } else {
+          // ОБЫЧНЫЙ МАТЧ: парсим цифры
+          const matchResult = parseScore(scoreVal);
+          if (!matchResult) {
+            showTooltip(card, "Неверный формат счёта (нужно: 2-1 или 2:1)");
+            return;
+          }
+
+          const [rH, rA] = matchResult;
+          const rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
+
+          // Собираем типы прогнозов всех пользователей
+          users.forEach((u, i) => {
+            const p = (predictions[index] || [])[i];
+            const t = getPredictionType(p, scoreVal, matchName);
+
+            if (t === "exact") exactGuessers.push({ user: u, type: t });
+            else if (t === "win") winGuessers.push({ user: u, type: t });
+            else losers.push({ user: u, type: t });
+          });
+
+          userType = getPredictionType(
+            userPredictions[userIndex],
+            scoreVal,
+            matchName,
+          );
         }
 
-        const [rH, rA] = matchResult;
-        const rWin = (rH === rA) ? 0 : (rH > rA ? 1 : 2);
-
-        const prediction = userPredictions[userIndex] || "";
-        const userType = getPredictionType(prediction, scoreVal);
-
-        // Собираем типы прогнозов всех пользователей в этом матче
-        const guesses = users.map((u, i) => {
-          const p = (predictions[index] || [])[i];
-          const t = getPredictionType(p, scoreVal);
-          return { user: u, type: t };
-        });
-
-        const exactGuessers = guesses.filter((g) => g.type === "exact");
-        const winGuessers = guesses.filter((g) => g.type === "win");
-        const losers = guesses.filter((g) => g.type === "lose");
-
+        // --- РАСЧЁТ ВЫИГРЫША ---
         let netResult = 0;
+        const countExact = exactGuessers.length;
+        const countWin = winGuessers.length;
+        const countLosers = losers.length;
 
-        // Считаем именно тот выигрыш/проигрыш, который этот пользователь получил в этом матче
-        if (exactGuessers.length > 0) {
+        if (isChampStage) {
           if (userType === "exact") {
-            netResult += winGuessers.length * 10;
-            netResult += losers.length * 20;
-          } else if (userType === "win") {
-            netResult -= exactGuessers.length * 10;
-            netResult += losers.length * 10;
+            // Получает по 100₽ с каждого, кто ошибся
+            netResult = countLosers * 100;
           } else {
-            // lose
-            netResult -= (exactGuessers.length * 20) + (winGuessers.length * 10);
+            // Платит по 100₽ каждому, кто угадал
+            netResult = -(countExact * 100);
           }
-        } else if (winGuessers.length > 0) {
-          if (userType === "win") {
-            netResult += losers.length * 10;
-          } else {
-            netResult -= winGuessers.length * 10;
+        } else {
+          // Обычная логика
+          if (countExact > 0) {
+            if (userType === "exact") {
+              netResult += countWin * 10 + countLosers * 20;
+            } else if (userType === "win") {
+              netResult -= countExact * 10 + countWin * -10 + countLosers * 10;
+              // Упрощённо из твоего старого кода:
+              netResult = 0; // Пересчитаем ниже правильно
+              netResult -= countExact * 10;
+              netResult += countLosers * 10;
+            } else {
+              netResult -= countExact * 20 + countWin * 10;
+            }
+          } else if (countWin > 0) {
+            if (userType === "win") {
+              netResult += countLosers * 10;
+            } else {
+              netResult -= countWin * 10;
+            }
           }
         }
 
@@ -707,7 +877,6 @@ function showTooltip(element, text) {
     );
   }
 }
-
 
 /**
  * Инициализация всего приложения.
