@@ -337,6 +337,54 @@ function renderMoneyTable(data, users) {
   container.appendChild(table);
 }
 
+/**
+ * Отрисовка яркой финальной таблицы финансов.
+ */
+function renderFinalResults(moneyData, users) {
+  const container = document.getElementById('final-results');
+  if (!container) return;
+
+  // Сортируем пользователей по убыванию общего заработка
+  const sortedUsers = [...users].sort((a, b) => moneyData[b].total - moneyData[a].total);
+
+  let html = '<table>';
+
+  // Заголовки
+  html += `
+    <tr>
+      <th><span class="place-number">Место</span></th>
+      <th><span class="participant-name">Участник</span></th>
+      <th><span class="total-balance"><span class="coin-icon"></span>Итоговый баланс ₽</span></th>
+    </tr>
+  `;
+
+  // Строки
+  sortedUsers.forEach((user, index) => {
+    const rowData = moneyData[user];
+    const total = formatMoneyValue(rowData.total);
+
+    // Определяем класс для цвета баланса
+    let balanceClass = 'zero';
+    if (rowData.total > 0) balanceClass = 'positive';
+    else if (rowData.total < 0) balanceClass = 'negative';
+
+    html += `
+      <tr>
+        <td class="place-number">${index + 1}</td>
+        <td class="participant-name">${user}</td>
+        <td class="total-balance ${balanceClass}"><span>${total}</span></td>
+      </tr>
+    `;
+  });
+
+  html += '</table>';
+
+  container.innerHTML = html;
+}
+
+// Вызовите эту функцию сразу после renderMoneyTable() в initApp()
+
+
 function formatMoneyValue(value) {
   if (value > 0) return `+${value} ₽`;
   if (value < 0) return `${value} ₽`;
@@ -718,7 +766,7 @@ function showTooltip(targetEl, textContent) {
 
   // Компенсация отступов таблицы (подобрано под ваш дизайн)
   const xOffset = 0; // Горизонтальный центр
-  let yOffset = -600; // Смещение вверх
+  let yOffset = -700; // Смещение вверх
 
   let left = rect.left + scrollX + rect.width / 2 + xOffset;
   let top = rect.top + scrollY + yOffset;
@@ -843,20 +891,24 @@ async function initApp() {
       appData.matches,
       appData.predictions,
       appData.realScores,
-      appData.users,
+      appData.users
     );
     renderScoresTable(stats, appData.users);
 
-    const money = calculateMoneyTable(
+    // ⚡️ ВАЖНО: ЗДЕСЬ НУЖЕН ДОПОЛНИТЕЛЬНЫЙ БЛОК!
+    const money = calculateMoneyTable(   // <--- ЭТОГО НЕ ХВАТАЛО
       appData.matches,
       appData.predictions,
       appData.realScores,
-      appData.users,
+      appData.users
     );
-    renderMoneyTable(money, appData.users);
+    renderMoneyTable(money, appData.users);  // Это уже есть?
+    
+    // И вот новая строка для вашей яркой таблицы:
+    renderFinalResults(money, appData.users); // <-- ДОБАВЬТЕ ЕЁ СЮДА!
   } catch (err) {
-    console.error("Ошибка инициализации:", err);
-    alert("Не удалось загрузить данные. Проверьте консоль.");
+    console.error('Ошибка инициализации:', err);
+    alert('Не удалось загрузить данные. Проверьте консоль.');
   }
 }
 /* ⚙️ СЛУШАТЕЛИ НА ПРОКРУТКУ/РЕСАЙЗ: передвигаем тултип или скрываем его */
