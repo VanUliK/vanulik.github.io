@@ -1,19 +1,19 @@
 :root {
   --primary: #1a2a6c;
   --accent: #ffd900;
-  
-  --exact-win-bg: #62b066; /* Твой цвет */
+
+  --exact-win-bg: #62b066;
   --exact-win-text: #ffffff;
-  
+
   --team-win-bg: #d0e7d2;
   --team-win-text: #2e7d32;
-  
+
   --loss-bg: #f6dade;
   --loss-text: #c62828;
-  
+
   --neutral-bg: #e9e9e9;
   --neutral-text: #757575;
-  
+
   --border: #e0e0e0;
   --bg: #f3f6f9;
 }
@@ -34,31 +34,25 @@ body {
   max-width: 1400px;
   width: 100%;
   box-sizing: border-box;
-  margin: 0 auto; 
-  padding: 20px; /* Отступы по бокам */
+  margin: 0 auto;
+  padding: 20px;
 }
 
-/* --- ЗАГОЛОВОК СТРАНИЦЫ --- */
 .header {
   text-align: center;
   margin-bottom: 24px;
 }
-
 .header h1 {
   margin: 0;
   color: var(--primary);
-  font-size: 2.2rem; /* Десктоп */
+  font-size: 2.2rem;
   line-height: 1.1;
 }
-
-/* Адаптив: на экранах меньше 768px уменьшаем заголовок */
 @media (max-width: 768px) {
-  .header h1 {
-    font-size: 1.5rem;
-  }
+  .header h1 { font-size: 1.5rem; }
 }
 
-/* --- ОБЁРТКА ТАБЛИЦЫ --- */
+/* Обёртка таблицы прогнозов */
 .table-wrapper {
   position: relative;
   background: #fff;
@@ -66,12 +60,12 @@ body {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   max-height: 85vh;
   overflow: auto;
-  margin: 0 auto;
+  margin: 0 auto 24px auto;
 }
 
 table {
   width: 100%;
-  table-layout: fixed; /* Фиксированная ширина колонок */
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 15px;
   margin: 0;
@@ -86,26 +80,17 @@ th, td {
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
-
 th:first-child, td:first-child { border-left: none; }
 th:last-child, td:last-child { border-right: none; }
 
-/* --- ШИРИНА КОЛОНОК --- */
 th:first-child, td:first-child {
-  width: 26%;       /* Чуть больше места для названий матчей */
+  width: 26%;
   min-width: 180px;
   text-align: left;
   padding-left: 12px;
   padding-right: 8px;
 }
 
-/* Колонка счёта ещё уже */
-th:nth-child(2), td:nth-child(2) {
-  width: 8%;
-  text-align: center;
-}
-
-/* Шапка таблицы: липкая и адаптивная */
 th {
   background-color: var(--primary);
   color: var(--accent);
@@ -118,32 +103,23 @@ th {
   height: 44px;
   line-height: 44px;
   border-bottom: 2px solid var(--primary);
-  font-size: 11px; /* Мелкий шрифт для десктопа */
+  font-size: 11px;
 }
-
-/* На мобильных делаем шапку чуть выше и шрифт крупнее для удобства нажатия */
 @media (max-width: 768px) {
   th {
     height: 52px;
     line-height: 52px;
     font-size: 13px;
   }
-  
-  /* На мобильном первая колонка занимает почти всё место, прогнозы скроллируются */
   th:first-child, td:first-child {
     width: 35%;
     min-width: 200px;
     padding-left: 8px;
   }
-  
-  th:nth-child(2), td:nth-child(2) {
-    width: 12%;
-  }
 }
 
-/* Заголовки этапов (1/8, ФИНАЛ и т.д.) */
 .stage-header {
-  background-color: #eef2f7 !important;
+  background-color: #eef2f7;
   color: var(--primary);
   font-weight: 700;
   font-size: 14px;
@@ -153,7 +129,6 @@ th {
   border-right: none;
   white-space: nowrap;
 }
-
 @media (max-width: 768px) {
   .stage-header {
     padding-left: 12px;
@@ -161,10 +136,7 @@ th {
   }
 }
 
-/* Ячейки с результатами */
 .result-cell {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,27 +147,29 @@ th {
   padding: 4px;
   background-color: var(--neutral-bg);
   color: var(--neutral-text);
-  white-space: nowrap; /* Чтобы счёт не переносился */
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
 }
 
-/* Цвета статусов */
 .result-cell.exact-win {
   background-color: var(--exact-win-bg) !important;
   color: var(--exact-win-text) !important;
   box-shadow: 0 2px 4px rgba(101, 176, 105, 0.3);
 }
-
 .result-cell.team-win {
   background-color: var(--team-win-bg) !important;
   color: var(--team-win-text) !important;
 }
-
 .result-cell.loss {
   background-color: var(--loss-bg) !important;
   color: var(--loss-text) !important;
 }
+.result-cell.result-cell-neutral {
+  background-color: var(--neutral-bg);
+  color: var(--neutral-text);
+}
 
-/* Поле ввода счёта */
 .real-score-input {
   width: 100%;
   padding: 4px;
@@ -207,219 +181,213 @@ th {
   box-sizing: border-box;
   background: transparent;
 }
-
 .real-score-input:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(26, 42, 108, 0.2);
 }
 
-/* Горизонтальная прокрутка на мобильных (если колонок очень много) */
 @media (max-width: 768px) {
-  .table-wrapper {
-    overflow-x: auto; /* Разрешаем горизонтальный скролл */
-  }
-  
-  table {
-    min-width: 600px; /* Минимальная ширина, чтобы не сплющилось */
-  }
+  .table-wrapper { overflow-x: auto; }
+  table { min-width: 600px; }
 }
 
-.money-table {
-  width: 100%;
+/* Две таблицы в ряд на десктопе, одна под другой на мобильном */
+.stats-and-money-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) {
+  .stats-and-money-wrapper { grid-template-columns: 1fr; }
+}
+
+.money-table, .standings-table {
   border-collapse: collapse;
-  margin-top: 20px;
-  font-family: Arial, sans-serif;
+  width: 100%;
+  font-size: 14px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
-
-.money-table th, .money-table td {
+.money-table th, .money-table td,
+.standings-table th, .standings-table td {
   border: 1px solid #ddd;
-  padding: 8px 12px;
+  padding: 10px 12px;
+  text-align: right;
+}
+.money-table th:first-child, .money-table td:first-child,
+.standings-table th:first-child, .standings-table td:first-child {
+  text-align: center;
+  min-width: 40px;
+  width: 5%;
+}
+.money-table th:nth-child(2), .money-table td:nth-child(2),
+.standings-table th:nth-child(2), .standings-table td:nth-child(2) {
   text-align: left;
+  width: 25%;
+  white-space: nowrap;
 }
-
-.money-table th {
+.money-table th, .standings-table th {
   background-color: #f5f5f5;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
-.money-table tr:hover {
-  background-color: #f9f9f9;
-}
+.money-cell-positive { color: #4caf50; font-weight: bold; }
+.money-cell-negative { color: #f44336; font-weight: bold; }
+.money-cell-zero { color: #757575; }
 
-/* Жирный лидер */
+.standings-table tbody tr:hover,
+.money-table tbody tr:hover { background-color: #fafafa; }
 .money-table tbody tr:first-child {
   font-weight: bold;
   background-color: #e8f5e9;
 }
 
-.result-cell {
-  padding: 6px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-  user-select: none;
+#stage-money-rows .stage-row { margin: 16px 0; }
+#stage-money-rows .stage-header-line {
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--primary);
 }
-.exact-win { background-color: #4caf50; color: #fff; font-weight: bold; }
-.team-win { background-color: #81c784; color: #333; }
-.loss { background-color: #ffebee; color: #c62828; }
+#stage-money-rows .stage-users-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#stage-money-rows .stage-user-item { font-size: 14px; }
+#stage-money-rows .money-cell-positive { color: #4caf50; }
+#stage-money-rows .money-cell-negative { color: #f44336; }
+#stage-money-rows .money-cell-zero { color: #757575; }
 
-.stage-header {
-  background-color: #f5f5f5;
-  font-weight: bold;
-  padding: 8px;
+#tooltip {
+  position: fixed;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+  z-index: 9999;
+  max-width: 300px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  white-space: normal;
+}
+
+.stage-summary-row td {
+  background-color: #eef2f7;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border);
+}
+
+.stage-title-cell {
+  color: var(--primary);
   text-align: left;
+  padding-left: 16px;
+  white-space: nowrap;
 }
 
-.real-score-input {
-  width: 60px;
+.stage-score-empty {
+  background-color: #eef2f7;
+}
+
+.stage-money-cell {
   text-align: center;
-  padding: 4px;
-}
-
-/* Таблица денег */
-.money-table, .standings-table {
-  border-collapse: collapse;
-  margin: 16px 0;
-  width: 100%;
-}
-.money-table th, .money-table td,
-.standings-table th, .standings-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: right;
-}
-.money-table th:first-child, .money-table td:first-child,
-.standings-table th:first-child, .standings-table td:first-child {
-  text-align: left;
-  min-width: 200px;
-}
-
-/* Таблица денег */
-.money-table {
-  border-collapse: collapse;
-  margin: 16px 0;
-  width: 100%;
-}
-
-.money-table th, .money-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: right;
-}
-
-/* Шапка — такой же стиль, как и в других таблицах */
-.money-table th {
-  background-color: #f5f5f5;
-  font-weight: 600;
-  color: #333;
-}
-
-/* Колонка «Место» — узкая */
-.money-table th:first-child,
-.money-table td:first-child {
-  text-align: center;        /* место обычно по центру */
-  min-width: 40px;            /* фиксируем минимальную ширину */
-  width: 5%;                 /* примерно 5% ширины таблицы */
-}
-
-/* Колонка «Участник» — пошире */
-.money-table th:nth-child(2),
-.money-table td:nth-child(2) {
-  text-align: left;          /* фамилия/имя — слева */
-  width: 25%;                /* делаем заметно шире */
-  white-space: nowrap;       /* чтобы имя не переносилось */
-}
-
-/* Ячейки с деньгами: зелёный если > 0, красный если < 0, серый если 0 */
-.money-cell-positive {
-  color: #4caf50;             /* зелёный */
-  font-weight: bold;
-}
-.money-cell-negative {
-  color: #f44336;             /* красный */
-  font-weight: bold;
-}
-.money-cell-zero {
-  color: #757575;             /* нейтральный серый */
-}
-
-/* Общие стили для всех таблиц */
-.standings-table, .money-table {
-  border-collapse: collapse;
-  margin: 16px 0;
-  width: 100%;
+  white-space: nowrap;
   font-size: 14px;
 }
 
-.standings-table th, .money-table th {
-  background-color: #f5f5f5;
+.stage-money-cell.money-cell-positive {
+  color: #4caf50 !important;
+  font-weight: 800;
+}
+
+.stage-money-cell.money-cell-negative {
+  color: #f44336 !important;
+  font-weight: 800;
+}
+
+.stage-money-cell.money-cell-zero {
+  color: #757575 !important;
   font-weight: 600;
-  color: #333;
-  text-align: center;          /* центрируем заголовки во всех таблицах */
-  padding: 10px 8px;
-  border: 1px solid #ddd;
 }
 
-/* Колонка «Место» — узкая и по центру */
-.standings-table th:first-child,
-.standings-table td:first-child,
-.money-table th:first-child,
-.money-table td:first-child {
-  text-align: center;
-  min-width: 40px;
-  width: 5%;                   /* узкая колонка */
+.stage-header {
+  background-color: #eef2f7;
+  font-weight: bold;
+  padding: 8px;
 }
 
-/* Колонка «Участник» — пошире */
-.standings-table th:nth-child(2),
-.standings-table td:nth-child(2),
-.money-table th:nth-child(2),
-.money-table td:nth-child(2) {
-  text-align: left;
-  width: 25%;                  /* широкая колонка для ФИО */
-  white-space: nowrap;         /* чтобы имя не переносилось */
+.predictions-table-wrapper {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  max-height: 85vh;
+  overflow: auto;
+  margin: 0 auto;
 }
 
-/* Ячейки с деньгами: цвет по значению */
-.money-cell-positive { color: #4caf50; font-weight: bold; }
-.money-cell-negative { color: #f44336; font-weight: bold; }
-.money-cell-zero     { color: #757575; }
+.cell-tooltip {
+  position: fixed;
+  z-index: 9999;
+  max-width: min(320px, calc(100vw - 24px));
+  padding: 10px 12px;
+  background: #222;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.35;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  word-break: break-word;
+}
 
-/* Адаптив: на мобильных делаем таблицу прокручиваемой */
-@media (max-width: 768px) {
-  .standings-table, .money-table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+.cell-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cell-tooltip::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #222;
+  transform: rotate(45deg);
+}
+
+.cell-tooltip.tooltip-bottom::after {
+  top: -5px;
+  left: var(--arrow-left, 20px);
+}
+
+.cell-tooltip.tooltip-top::after {
+  bottom: -5px;
+  left: var(--arrow-left, 20px);
+}
+
+.has-tooltip {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .has-tooltip:hover {
+    background-color: rgba(33, 150, 243, 0.08);
   }
 }
 
-.result-cell-neutral {
-  background-color: #f1f1f1;
-  color: #888;
-  font-style: italic;
+.stage-table {
+  display: block;
+  overflow-x: auto;
 }
-.tooltip {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* центрирует точно по центру */
-  background-color: #333;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 15px;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  max-width: 280px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  pointer-events: none; /* чтобы не мешал кликам */
-}
-
-.tooltip.visible {
-  opacity: 1;
-}
-
-

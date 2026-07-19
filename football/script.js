@@ -372,6 +372,26 @@ function calculateMoneyTable(matches, predictions, realScores, users) {
   return result;
 }
 
+
+function getStageMoneyForDisplay(matches, predictions, realScores, users) {
+  const moneyData = calculateMoneyTable(matches, predictions, realScores, users);
+  const stageMoney = {};
+
+  users.forEach((user) => {
+    Object.entries(moneyData[user].stages).forEach(([stage, value]) => {
+      if (!stageMoney[stage]) {
+        stageMoney[stage] = {};
+      }
+
+      stageMoney[stage][user] = value;
+    });
+  });
+
+  return stageMoney;
+}
+
+
+
 /**
  * Отрисовка таблицы денег (баланс по этапам и итого).
  * Показывает: Место, Участник, этапы, Итого (₽)
@@ -383,6 +403,7 @@ function calculateMoneyTable(matches, predictions, realScores, users) {
  * - Суммы: зелёный (+), красный (-), серый (0)
  * - Шапка: в стиле остальных таблиц
  */
+
 function renderMoneyTable(data, users) {
   const container = document.getElementById("money-container");
   if (!container) return;
@@ -458,6 +479,51 @@ function renderMoneyTable(data, users) {
   container.appendChild(table);
 }
 
+
+
+/**
+ * Рисует строки с заработком по этапам под таблицей статистики.
+ * Показывает: Этап: 1/16 — Участник: +120 ₽, Участник: -30 ₽ и т.д.
+ */
+function renderStageMoneyRows(moneyData, users) {
+  const container = document.getElementById("stage-money-rows");
+  if (!container) return;
+
+  // Собираем все этапы из всех пользователей
+  const allStages = new Set();
+  users.forEach((u) => {
+    Object.keys(moneyData[u].stages).forEach((st) => allStages.add(st));
+  });
+  const stagesList = Array.from(allStages);
+
+  const htmlParts = [];
+
+  stagesList.forEach((stage) => {
+    // Пропускаем «Общий», если он есть — это не этап турнира
+    if (stage.toLowerCase().includes("общий")) return;
+
+    const rowUsers = users.map((u) => {
+      const val = moneyData[u].stages[stage] || 0;
+      const sign = val >= 0 ? "+" : "";
+      const colorClass = val > 0 ? "money-cell-positive"
+                       : val < 0 ? "money-cell-negative"
+                       : "money-cell-zero";
+      return `<span class="stage-user-item">${u}: <span class="${colorClass}">${sign}${val} ₽</span></span>`;
+    });
+
+    htmlParts.push(`
+      <div class="stage-row">
+        <div class="stage-header-line">
+          <span class="stage-name">Этап: ${stage}</span>
+        </div>
+        <div class="stage-users-list">${rowUsers.join("")}</div>
+      </div>
+    `);
+  });
+
+  container.innerHTML = htmlParts.join("");
+}
+
 /**
  * Перекраска ячеек в строке при изменении счёта.
  * Обновляет классы (exact-win / team-win / loss) и текст.
@@ -510,6 +576,9 @@ function renderScoresTable(userStats, users) {
 
   const table = document.createElement("table");
   table.className = "standings-table";
+
+
+
 
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
@@ -616,16 +685,52 @@ function buildTable(data) {
   matches.forEach((matchName, index) => {
     const tr = document.createElement("tr");
 
-    // Если это заголовок этапа — делаем одну ячейку на всю ширину
-    if (isStageHeader(matchName)) {
-      const td = document.createElement("td");
-      td.colSpan = 2 + users.length;
-      td.className = "stage-header";
-      td.textContent = matchName.trim();
-      tr.appendChild(td);
-      tbody.appendChild(tr);
-      return;
-    }
+// Если это заголовок этапа — показываем название этапа + суммы по участникам
+if (isStageHeader(matchName)) {
+  tr.className = "stage-summary-row";
+  tr.dataset.stage = matchName.trim();
+
+  const stageMoney = getStageMoneyForDisplay(
+    matches,
+    predictions,
+    realScores,
+    users
+  );
+
+  const stageName = matchName.trim();
+
+  // Первая колонка — название этапа
+  const tdStage = document.createElement("td");
+  tdStage.className = "stage-header stage-title-cell";
+  tdStage.textContent = stageName;
+  tr.appendChild(tdStage);
+
+  // Вторая колонка — под «Реальный счёт», оставляем пустой
+  const tdScore = document.createElement("td");
+  tdScore.className = "stage-header stage-score-empty";
+  tdScore.textContent = "";
+  tr.appendChild(tdScore);
+
+  // Дальше — суммы по каждому пользователю
+  users.forEach((user) => {
+    const val = stageMoney[stageName]?.[user] || 0;
+
+    const td = document.createElement("td");
+    td.className = "stage-header stage-money-cell";
+    td.dataset.user = user;
+
+    td.textContent = formatMoneyValue(val);
+
+    if (val > 0) td.classList.add("money-cell-positive");
+    else if (val < 0) td.classList.add("money-cell-negative");
+    else td.classList.add("money-cell-zero");
+
+    tr.appendChild(td);
+  });
+
+  tbody.appendChild(tr);
+  return;
+}
 
     // Ячейка с названием матча
     const tdMatch = document.createElement("td");
@@ -656,14 +761,17 @@ function buildTable(data) {
       );
       renderScoresTable(stats, users);
 
-      // Считаем и рисуем таблицу денег
-      const money = calculateMoneyTable(
-        matches,
-        predictions,
-        realScores,
-        users,
-      );
-      renderMoneyTable(money, users);
+// Считаем и рисуем таблицу денег
+const money = calculateMoneyTable(
+  matches,
+  predictions,
+  realScores,
+  users,
+);
+renderMoneyTable(money, users);
+
+// Обновляем суммы в строках этапов основной таблицы
+updateStageSummaryRows(matches, predictions, realScores, users);
     };
 
     tdScore.appendChild(input);
@@ -818,11 +926,125 @@ if (!hasResult) {
 
   table.appendChild(tbody);
 }
+
+
+function formatMoneyValue(value) {
+  if (value > 0) return `+${value} ₽`;
+  if (value < 0) return `${value} ₽`;
+  return `0 ₽`;
+}
+
+function updateStageSummaryRows(matches, predictions, realScores, users) {
+  const stageMoney = getStageMoneyForDisplay(
+    matches,
+    predictions,
+    realScores,
+    users
+  );
+
+  const rows = document.querySelectorAll(".stage-summary-row");
+
+  rows.forEach((row) => {
+    const stageName = row.dataset.stage;
+
+    users.forEach((user) => {
+      const td = row.querySelector(`.stage-money-cell[data-user="${user}"]`);
+      if (!td) return;
+
+      const val = stageMoney[stageName]?.[user] || 0;
+
+      td.textContent = formatMoneyValue(val);
+
+      td.classList.remove(
+        "money-cell-positive",
+        "money-cell-negative",
+        "money-cell-zero"
+      );
+
+      if (val > 0) td.classList.add("money-cell-positive");
+      else if (val < 0) td.classList.add("money-cell-negative");
+      else td.classList.add("money-cell-zero");
+    });
+  });
+}
 /**
  * Универсальная функция всплывашки (ПК + мобильные).
  * element — элемент, по которому кликнули/навели
  * text — текст подсказки
  */
+
+const tooltip = document.getElementById('cellTooltip');
+
+let activeTooltipCell = null;
+
+function showTooltipNearCell(cell, content) {
+  if (!tooltip || !cell) return;
+
+  tooltip.innerHTML = content;
+  tooltip.classList.add('is-visible');
+
+  tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
+
+  activeTooltipCell = cell;
+
+  requestAnimationFrame(() => {
+    positionTooltipNearCell(cell);
+  });
+  
+}
+
+function positionTooltipNearCell(cell) {
+  if (!tooltip || !cell || !tooltip.classList.contains('is-visible')) return;
+
+  const gap = 10;
+  const screenPadding = 12;
+
+  const cellRect = cell.getBoundingClientRect();
+
+  const tooltipRect = tooltip.getBoundingClientRect();
+
+  let left = cellRect.left + cellRect.width / 2 - tooltipRect.width / 2;
+  let top = cellRect.bottom + gap;
+
+  let placement = 'bottom';
+
+  if (top + tooltipRect.height > window.innerHeight - screenPadding) {
+    top = cellRect.top - tooltipRect.height - gap;
+    placement = 'top';
+  }
+
+  if (top < screenPadding) {
+    top = screenPadding;
+  }
+
+  if (left < screenPadding) {
+    left = screenPadding;
+  }
+
+  if (left + tooltipRect.width > window.innerWidth - screenPadding) {
+    left = window.innerWidth - tooltipRect.width - screenPadding;
+  }
+
+  const cellCenterX = cellRect.left + cellRect.width / 2;
+  let arrowLeft = cellCenterX - left - 5;
+
+  arrowLeft = Math.max(12, Math.min(tooltipRect.width - 22, arrowLeft));
+
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+  tooltip.style.setProperty('--arrow-left', `${arrowLeft}px`);
+
+  tooltip.classList.add(placement === 'top' ? 'tooltip-top' : 'tooltip-bottom');
+}
+
+function hideTooltip() {
+  if (!tooltip) return;
+
+  tooltip.classList.remove('is-visible', 'tooltip-top', 'tooltip-bottom');
+  tooltip.innerHTML = '';
+  activeTooltipCell = null;
+}
+
 function showTooltip(element, text) {
   const tooltip = document.getElementById("tooltip");
   if (!tooltip) {
@@ -977,3 +1199,75 @@ async function initApp() {
 
 // Запуск после загрузки DOM
 document.addEventListener("DOMContentLoaded", initApp);
+
+document.addEventListener('click', function (event) {
+  const cell = event.target.closest('.has-tooltip');
+
+  if (!cell) {
+    hideTooltip();
+    return;
+  }
+
+  event.stopPropagation();
+
+  const content = cell.dataset.tooltip;
+
+  if (!content) return;
+
+  if (activeTooltipCell === cell && tooltip.classList.contains('is-visible')) {
+    hideTooltip();
+    return;
+  }
+
+  showTooltipNearCell(cell, content);
+});
+
+window.addEventListener('resize', () => {
+  if (activeTooltipCell) {
+    positionTooltipNearCell(activeTooltipCell);
+  }
+});
+
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    if (activeTooltipCell) {
+      positionTooltipNearCell(activeTooltipCell);
+    }
+  }, 250);
+});
+
+window.addEventListener(
+  'scroll',
+  () => {
+    if (activeTooltipCell) {
+      positionTooltipNearCell(activeTooltipCell);
+    }
+  },
+  true
+);
+
+document.addEventListener('mouseover', function (event) {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const cell = event.target.closest('.has-tooltip');
+
+  if (!cell) return;
+
+  const content = cell.dataset.tooltip;
+
+  if (!content) return;
+
+  showTooltipNearCell(cell, content);
+});
+
+document.addEventListener('mouseout', function (event) {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const cell = event.target.closest('.has-tooltip');
+
+  if (!cell) return;
+
+  if (!cell.contains(event.relatedTarget)) {
+    hideTooltip();
+  }
+});
