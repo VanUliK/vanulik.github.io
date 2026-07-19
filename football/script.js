@@ -3,11 +3,9 @@ let appData = null;
 
 /**
  * Загрузка JSON-файлов параллельно.
- * Возвращает объект { matches, predictions, users, realScores }
  */
 async function loadData() {
   const basePath = "./data/";
-
   try {
     const [matchesRes, predictionsRes, usersRes, realScoresRes] =
       await Promise.all([
@@ -43,29 +41,14 @@ async function loadData() {
   }
 }
 
-/**
- * Проверка: является ли строка заголовком этапа.
- * Примеры: "Группа A", "1/8 финала", "Финал" и т.п.
- */
 function isStageHeader(text) {
   if (!text) return false;
   const t = String(text).trim().toLowerCase();
-
   const triggers = [
-    "финал",
-    "1/",
-    "четвертьфинал",
-    "полуфинал",
-    "чемпион",
-    "место",
-    "отборочный",
-    "групповой",
-    "стадия",
-    "раунд",
-    "этап",
+    "финал", "1/", "четвертьфинал", "полуфинал", 
+    "чемпион", "место", "отборочный", "групповой", "стадия", "раунд", "этап"
   ];
-
-  return triggers.some((trigger) => t.includes(trigger));
+  return triggers.some(trigger => t.includes(trigger));
 }
 
 function isChampionStage(stageName) {
@@ -74,40 +57,22 @@ function isChampionStage(stageName) {
   return t.includes("чемпион");
 }
 
-/**
- * Парсит строку счёта в массив [home, away].
- * Поддерживает форматы: "2-1", "2:1", с пробелами и без.
- * Если не удалось распарсить — возвращает null.
- */
 function parseScore(scoreStr) {
   if (!scoreStr) return null;
   const s = scoreStr.trim();
   if (s === "") return null;
-
-  const parts = s.split(/[-:]/).map((x) => x.trim());
+  const parts = s.split(/[-:]/).map(x => x.trim());
   if (parts.length !== 2) return null;
-
   const h = parseInt(parts[0], 10);
   const a = parseInt(parts[1], 10);
-
   if (Number.isNaN(h) || Number.isNaN(a)) return null;
   return [h, a];
 }
 
-/**
- * Определяет тип прогноза: 'exact', 'win', 'lose'.
- * Для обычных матчей — по счёту.
- * Для «ЧЕМПИОН»/«Кто победит» — по совпадению текста.
- */
 function getPredictionType(prediction, realScore, matchName) {
   if (!prediction || !realScore) return "lose";
-
-  // Если в названии матча есть намёк на угадывание победителя — считаем как текстовый прогноз
   const cleanName = String(matchName || "").toLowerCase();
-  const isTextMatch =
-    cleanName.includes("чемпион") ||
-    cleanName.includes("кто победит") ||
-    cleanName.includes("победитель");
+  const isTextMatch = cleanName.includes("чемпион") || cleanName.includes("кто победит") || cleanName.includes("победитель");
 
   if (isTextMatch) {
     const pNorm = (prediction || "").trim().toLowerCase();
@@ -115,10 +80,8 @@ function getPredictionType(prediction, realScore, matchName) {
     return pNorm && pNorm === rNorm ? "exact" : "lose";
   }
 
-  // Обычный матч: счёт цифрами
   const pParts = parseScore(prediction);
   const rParts = parseScore(realScore);
-
   if (!pParts || !rParts) return "lose";
 
   const pH = parseInt(pParts[0], 10);
@@ -126,12 +89,7 @@ function getPredictionType(prediction, realScore, matchName) {
   const rH = parseInt(rParts[0], 10);
   const rA = parseInt(rParts[1], 10);
 
-  if (
-    Number.isNaN(pH) ||
-    Number.isNaN(pA) ||
-    Number.isNaN(rH) ||
-    Number.isNaN(rA)
-  ) {
+  if (Number.isNaN(pH) || Number.isNaN(pA) || Number.isNaN(rH) || Number.isNaN(rA)) {
     return "lose";
   }
 
@@ -143,56 +101,36 @@ function getPredictionType(prediction, realScore, matchName) {
   return pWin === rWin ? "win" : "lose";
 }
 
-/**
- * Определение класса раскраски ячейки прогноза.
- * exact-win — зелёный (точный счёт)
- * team-win — светло-зелёный (угадан исход)
- * loss — красный (не угадан)
- */
 function getResultClass(prediction, realScore, matchName) {
-  // Если реального результата ещё нет — серая ячейка
   if (!realScore || realScore.trim() === "") {
     return "result-cell-neutral";
   }
-
   const type = getPredictionType(prediction, realScore, matchName);
   if (type === "exact") return "exact-win";
   if (type === "win") return "team-win";
   return "loss";
 }
 
-/**
- * Расчёт статистики (очки, точные, победы и т.д.) для таблицы очков.
- * Очки: 3 за точный счёт, 1 за угаданный исход.
- */
 function calculateScoresWithUsers(matches, predictions, realScores, users) {
   const userStats = {};
-  users.forEach((user) => {
+  users.forEach(user => {
     userStats[user] = { points: 0, exact: 0, wins: 0, losses: 0, draws: 0 };
   });
 
   matches.forEach((matchName, index) => {
     if (isStageHeader(matchName)) return;
-
     const realScore = realScores[index];
     if (!realScore) return;
 
     const cleanName = String(matchName).toLowerCase();
-    const isTextMatch =
-      cleanName.includes("чемпион") ||
-      cleanName.includes("кто победит") ||
-      cleanName.includes("победитель");
+    const isTextMatch = cleanName.includes("чемпион") || cleanName.includes("кто победит") || cleanName.includes("победитель");
 
     if (isTextMatch) {
-      // Текстовый прогноз: совпадение имени = точный прогноз
       const actualWinner = realScore.trim().toLowerCase();
       if (!actualWinner) return;
-
       const userPredictions = predictions[index] || [];
       users.forEach((user, userIdx) => {
-        const prediction = (userPredictions[userIdx] || "")
-          .trim()
-          .toLowerCase();
+        const prediction = (userPredictions[userIdx] || "").trim().toLowerCase();
         if (prediction && prediction === actualWinner) {
           userStats[user].points += 3;
           userStats[user].exact++;
@@ -203,10 +141,8 @@ function calculateScoresWithUsers(matches, predictions, realScores, users) {
       return;
     }
 
-    // Обычный матч: счёт цифрами
     const rParts = parseScore(realScore);
     if (!rParts) return;
-
     const [rH, rA] = rParts;
     const rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
     const userPredictions = predictions[index] || [];
@@ -217,20 +153,17 @@ function calculateScoresWithUsers(matches, predictions, realScores, users) {
         userStats[user].losses++;
         return;
       }
-
       const pParts = parseScore(prediction);
       if (!pParts) {
         userStats[user].losses++;
         return;
       }
-
       const pH = parseInt(pParts[0], 10);
       const pA = parseInt(pParts[1], 10);
       if (Number.isNaN(pH) || Number.isNaN(pA)) {
         userStats[user].losses++;
         return;
       }
-
       const pWin = pH === pA ? 0 : pH > pA ? 1 : 2;
 
       if (pH === rH && pA === rA) {
@@ -248,35 +181,17 @@ function calculateScoresWithUsers(matches, predictions, realScores, users) {
   return userStats;
 }
 
-/**
- * Вспомогательная функция: считает изменение баланса для ОДНОГО пользователя в ОДНОМ матче.
- * Правила:
- * - Если есть хотя бы один exact: exact получает от win (10₽) и от lose (20₽)
- * - Иначе: win получает от lose (10₽)
- */
-function calcMatchChange(
-  type,
-  exactCount,
-  winCount,
-  loserCount,
-  isChampionStage,
-) {
+function calcMatchChange(type, exactCount, winCount, loserCount, isChampionStage) {
   let change = 0;
-
   if (isChampionStage) {
-    // ЭТАП «ЧЕМПИОН»: перераспределение денег
     if (type === "exact") {
-      // Угадавший забирает по 100₽ с каждого проигравшего
       change = loserCount * 100;
     } else {
-      // Проигравший платит по 100₽ каждому, кто угадал (в нашем случае exactCount всегда 0 или 1)
-      // Но так как exactCount может быть >1 (если несколько угадали), платим всем угадавшим
       change = -(exactCount * 100);
     }
     return change;
   }
 
-  // ОБЫЧНЫЕ ЭТАПЫ (старая логика)
   if (exactCount > 0) {
     if (type === "exact") {
       change += winCount * 10;
@@ -285,7 +200,6 @@ function calcMatchChange(
       change -= exactCount * 10;
       change += loserCount * 10;
     } else {
-      // lose
       change -= exactCount * 20 + winCount * 10;
     }
   } else if (winCount > 0) {
@@ -298,35 +212,22 @@ function calcMatchChange(
   return change;
 }
 
-/**
- * РАСЧЁТ ДЕНЕГ (ИТОГОВЫЙ И ПО ЭТАПАМ)
- * Возвращает структуру:
- * {
- *   user: { total: number, stages: { "Этап": number, ... } }
- * }
- */
 function calculateMoneyTable(matches, predictions, realScores, users) {
   const result = {};
-
-  users.forEach((u) => {
+  users.forEach(u => {
     result[u] = { total: 0, stages: {} };
   });
-
   let currentStage = "Общий";
 
   matches.forEach((matchName, idx) => {
-    // Если это заголовок этапа — обновляем currentStage
     if (isStageHeader(matchName)) {
       currentStage = matchName.trim();
       return;
     }
-
     const realScore = realScores[idx];
     if (!realScore) return;
-
     const isChampStage = isChampionStage(currentStage);
 
-    // Для обычных матчей парсим счёт, для текстовых (внутри ЧЕМПИОН) это не обязательно
     let rWin = null;
     if (!isChampStage) {
       const rParts = parseScore(realScore);
@@ -336,43 +237,35 @@ function calculateMoneyTable(matches, predictions, realScores, users) {
     }
 
     const userPredictions = predictions[idx] || [];
-
     const guesses = users.map((u, i) => {
       const pred = userPredictions[i];
       const type = getPredictionType(pred, realScore, matchName);
       return { user: u, type };
     });
 
-    const exactGuessers = guesses.filter((g) => g.type === "exact");
-    const winGuessers = guesses.filter((g) => g.type === "win");
-    const losers = guesses.filter((g) => g.type === "lose");
+    const exactGuessers = guesses.filter(g => g.type === "exact");
+    const winGuessers = guesses.filter(g => g.type === "win");
+    const losers = guesses.filter(g => g.type === "lose");
 
     const countExact = exactGuessers.length;
     const countWin = winGuessers.length;
     const countLosers = losers.length;
 
-    guesses.forEach((g) => {
-      const change = calcMatchChange(
-        g.type,
-        countExact,
-        countWin,
-        countLosers,
-        isChampStage,
-      );
-
+    guesses.forEach(g => {
+      const change = calcMatchChange(g.type, countExact, countWin, countLosers, isChampStage);
       result[g.user].total += change;
-
       if (!result[g.user].stages[currentStage]) {
         result[g.user].stages[currentStage] = 0;
       }
       result[g.user].stages[currentStage] += change;
     });
   });
-
   return result;
 }
 
-
+/**
+ * Готовит данные о деньгах по этапам для отображения в строках-суммаризаторах.
+ */
 function getStageMoneyForDisplay(matches, predictions, realScores, users) {
   const moneyData = calculateMoneyTable(matches, predictions, realScores, users);
   const stageMoney = {};
@@ -382,7 +275,6 @@ function getStageMoneyForDisplay(matches, predictions, realScores, users) {
       if (!stageMoney[stage]) {
         stageMoney[stage] = {};
       }
-
       stageMoney[stage][user] = value;
     });
   });
@@ -390,41 +282,21 @@ function getStageMoneyForDisplay(matches, predictions, realScores, users) {
   return stageMoney;
 }
 
-
-
-/**
- * Отрисовка таблицы денег (баланс по этапам и итого).
- * Показывает: Место, Участник, этапы, Итого (₽)
- */
-/**
- * Отрисовка таблицы денег (баланс по этапам и итого).
- * - Колонка «Место»: узкая, по центру
- * - Колонка «Участник»: широкая, слева
- * - Суммы: зелёный (+), красный (-), серый (0)
- * - Шапка: в стиле остальных таблиц
- */
-
 function renderMoneyTable(data, users) {
   const container = document.getElementById("money-container");
   if (!container) return;
-
   const allStages = new Set();
-  users.forEach((u) => {
-    Object.keys(data[u].stages).forEach((st) => allStages.add(st));
-  });
+  users.forEach(u => Object.keys(data[u].stages).forEach(st => allStages.add(st)));
   const stagesList = Array.from(allStages);
 
   const table = document.createElement("table");
   table.className = "money-table";
-
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
-
   const headers = ["Место", "Участник"];
-  stagesList.forEach((st) => headers.push(st));
+  stagesList.forEach(st => headers.push(st));
   headers.push("Итого (₽)");
-
-  headers.forEach((text) => {
+  headers.forEach(text => {
     const th = document.createElement("th");
     th.textContent = text;
     headerRow.appendChild(th);
@@ -434,208 +306,101 @@ function renderMoneyTable(data, users) {
 
   const tbody = document.createElement("tbody");
   const sortedUsers = [...users].sort((a, b) => data[b].total - data[a].total);
-
   sortedUsers.forEach((user, index) => {
     const rowData = data[user];
     const tr = document.createElement("tr");
-
-    // Место (узкая колонка)
     const tdPlace = document.createElement("td");
     tdPlace.textContent = index + 1;
     tr.appendChild(tdPlace);
-
-    // Участник (широкая колонка)
     const tdUser = document.createElement("td");
     tdUser.textContent = user;
     tr.appendChild(tdUser);
-
-    // Этапы
-    stagesList.forEach((stage) => {
+    stagesList.forEach(stage => {
       const val = rowData.stages[stage] || 0;
       const td = document.createElement("td");
       td.textContent = val;
-
       if (val > 0) td.classList.add("money-cell-positive");
       else if (val < 0) td.classList.add("money-cell-negative");
       else td.classList.add("money-cell-zero");
-
       tr.appendChild(td);
     });
-
-    // Итого
     const totalTd = document.createElement("td");
     totalTd.textContent = rowData.total;
-
     if (rowData.total > 0) totalTd.classList.add("money-cell-positive");
     else if (rowData.total < 0) totalTd.classList.add("money-cell-negative");
     else totalTd.classList.add("money-cell-zero");
-
     tr.appendChild(totalTd);
     tbody.appendChild(tr);
   });
-
   table.appendChild(tbody);
   container.innerHTML = "";
   container.appendChild(table);
 }
 
+function formatMoneyValue(value) {
+  if (value > 0) return `+${value} ₽`;
+  if (value < 0) return `${value} ₽`;
+  return `0 ₽`;
+}
 
-
-/**
- * Рисует строки с заработком по этапам под таблицей статистики.
- * Показывает: Этап: 1/16 — Участник: +120 ₽, Участник: -30 ₽ и т.д.
- */
-function renderStageMoneyRows(moneyData, users) {
-  const container = document.getElementById("stage-money-rows");
-  if (!container) return;
-
-  // Собираем все этапы из всех пользователей
-  const allStages = new Set();
-  users.forEach((u) => {
-    Object.keys(moneyData[u].stages).forEach((st) => allStages.add(st));
-  });
-  const stagesList = Array.from(allStages);
-
-  const htmlParts = [];
-
-  stagesList.forEach((stage) => {
-    // Пропускаем «Общий», если он есть — это не этап турнира
-    if (stage.toLowerCase().includes("общий")) return;
-
-    const rowUsers = users.map((u) => {
-      const val = moneyData[u].stages[stage] || 0;
-      const sign = val >= 0 ? "+" : "";
-      const colorClass = val > 0 ? "money-cell-positive"
-                       : val < 0 ? "money-cell-negative"
-                       : "money-cell-zero";
-      return `<span class="stage-user-item">${u}: <span class="${colorClass}">${sign}${val} ₽</span></span>`;
+function updateStageSummaryRows(matches, predictions, realScores, users) {
+  const stageMoney = getStageMoneyForDisplay(matches, predictions, realScores, users);
+  const rows = document.querySelectorAll(".stage-summary-row");
+  rows.forEach(row => {
+    const stageName = row.dataset.stage;
+    users.forEach(user => {
+      const td = row.querySelector(`.stage-money-cell[data-user="${user}"]`);
+      if (!td) return;
+      const val = stageMoney[stageName]?.[user] || 0;
+      td.textContent = formatMoneyValue(val);
+      td.classList.remove("money-cell-positive", "money-cell-negative", "money-cell-zero");
+      if (val > 0) td.classList.add("money-cell-positive");
+      else if (val < 0) td.classList.add("money-cell-negative");
+      else td.classList.add("money-cell-zero");
     });
-
-    htmlParts.push(`
-      <div class="stage-row">
-        <div class="stage-header-line">
-          <span class="stage-name">Этап: ${stage}</span>
-        </div>
-        <div class="stage-users-list">${rowUsers.join("")}</div>
-      </div>
-    `);
-  });
-
-  container.innerHTML = htmlParts.join("");
-}
-
-/**
- * Перекраска ячеек в строке при изменении счёта.
- * Обновляет классы (exact-win / team-win / loss) и текст.
- */
-function updateRowColors(row, index, matches, predictions, realScores, users) {
-  const cells = row.querySelectorAll(".result-cell");
-  const matchName = matches[index];
-  const userPredictions = predictions[index] || [];
-  const realScore = realScores[index];
-
-  cells.forEach((cell, i) => {
-    const prediction = userPredictions[i];
-    const hasPrediction = prediction && prediction.trim() !== "";
-    const hasResult = realScore && realScore.trim() !== "";
-
-    // Класс зависит от наличия реального результата
-    const newClass = getResultClass(prediction, realScore, matchName);
-    cell.className = `result-cell ${newClass}`;
-
-    if (!hasResult) {
-      // Нет результата матча: серая ячейка, но прогноз показываем
-      cell.textContent = hasPrediction ? prediction : "—";
-    } else {
-      // Результат есть: цвет по точности прогноза
-      if (hasPrediction) {
-        cell.textContent = prediction;
-      } else {
-        // Прогноз не сделан, хотя результат есть
-        cell.textContent = "—";
-      }
-    }
   });
 }
 
-
-/**
- * Отрисовка итоговой таблицы с очками.
- * Столбцы: Место, Участник, Очки, Точные, Победы, Ничьи, Поражения
- */
 function renderScoresTable(userStats, users) {
   const container = document.getElementById("scores-container");
   if (!container) return;
-
   const sortedUsers = [...users].sort((a, b) => {
     if (userStats[b].points !== userStats[a].points) {
       return userStats[b].points - userStats[a].points;
     }
     return userStats[b].exact - userStats[a].exact;
   });
-
   const table = document.createElement("table");
   table.className = "standings-table";
-
-
-
-
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
-
-  [
-    "Место",
-    "Участник",
-    "Очки",
-    "Точные",
-    "Победы",
-    "Ничьи",
-    "Поражения",
-  ].forEach((text) => {
+  ["Место", "Участник", "Очки", "Точные", "Победы", "Ничьи", "Поражения"].forEach(text => {
     const th = document.createElement("th");
     th.textContent = text;
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
   table.appendChild(thead);
-
   const tbody = document.createElement("tbody");
-
   sortedUsers.forEach((user, index) => {
     const stats = userStats[user];
     const tr = document.createElement("tr");
-
-    [
-      index + 1,
-      user,
-      stats.points,
-      stats.exact,
-      stats.wins,
-      stats.draws,
-      stats.losses,
-    ].forEach((val) => {
+    [index + 1, user, stats.points, stats.exact, stats.wins, stats.draws, stats.losses].forEach(val => {
       const td = document.createElement("td");
       td.textContent = val;
       tr.appendChild(td);
     });
-
-    // Выделение первого места
     if (index === 0) {
       tr.style.fontWeight = "bold";
       tr.style.backgroundColor = "#e8f5e9";
     }
-
     tbody.appendChild(tr);
   });
-
   table.appendChild(tbody);
   container.innerHTML = "";
   container.appendChild(table);
 }
 
-/**
- * По индексу матча возвращает название текущего этапа (последний встреченный заголовок).
- */
 function getCurrentStageForMatch(index, matches) {
   let stage = "Общий";
   for (let i = 0; i <= index; i++) {
@@ -645,14 +410,6 @@ function getCurrentStageForMatch(index, matches) {
   }
   return stage;
 }
-
-/**
- * Отрисовка основной таблицы матчей и прогнозов.
- * Включает:
- * - ввод реального счёта (input)
- * - ячейки прогнозов (с раскраской)
- * - клик по ячейке → показывает выигрыш за матч во всплывашке
- */
 function buildTable(data) {
   const { matches, predictions, users, realScores } = data;
   const table = document.getElementById("predictions-table");
@@ -661,7 +418,7 @@ function buildTable(data) {
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
 
-  // Заголовки: Матч / Этап, Реальный счёт, потом каждый пользователь
+  // Заголовки
   const thMatch = document.createElement("th");
   thMatch.textContent = "Матч / Этап";
   headerRow.appendChild(thMatch);
@@ -670,7 +427,7 @@ function buildTable(data) {
   thScore.textContent = "Реальный счёт";
   headerRow.appendChild(thScore);
 
-  users.forEach((user) => {
+  users.forEach(user => {
     const th = document.createElement("th");
     th.textContent = user;
     headerRow.appendChild(th);
@@ -685,130 +442,102 @@ function buildTable(data) {
   matches.forEach((matchName, index) => {
     const tr = document.createElement("tr");
 
-// Если это заголовок этапа — показываем название этапа + суммы по участникам
-if (isStageHeader(matchName)) {
-  tr.className = "stage-summary-row";
-  tr.dataset.stage = matchName.trim();
+    // Строка заголовка этапа с суммами денег
+    if (isStageHeader(matchName)) {
+      tr.className = "stage-summary-row";
+      tr.dataset.stage = matchName.trim();
 
-  const stageMoney = getStageMoneyForDisplay(
-    matches,
-    predictions,
-    realScores,
-    users
-  );
+      const stageMoney = getStageMoneyForDisplay(matches, predictions, realScores, users);
+      const stageName = matchName.trim();
 
-  const stageName = matchName.trim();
+      const tdStage = document.createElement("td");
+      tdStage.className = "stage-header stage-title-cell";
+      tdStage.textContent = stageName;
+      tr.appendChild(tdStage);
 
-  // Первая колонка — название этапа
-  const tdStage = document.createElement("td");
-  tdStage.className = "stage-header stage-title-cell";
-  tdStage.textContent = stageName;
-  tr.appendChild(tdStage);
+      const tdScore = document.createElement("td");
+      tdScore.className = "stage-header stage-score-empty";
+      tdScore.textContent = "";
+      tr.appendChild(tdScore);
 
-  // Вторая колонка — под «Реальный счёт», оставляем пустой
-  const tdScore = document.createElement("td");
-  tdScore.className = "stage-header stage-score-empty";
-  tdScore.textContent = "";
-  tr.appendChild(tdScore);
+      users.forEach(user => {
+        const val = stageMoney[stageName]?.[user] || 0;
+        const td = document.createElement("td");
+        td.className = "stage-header stage-money-cell";
+        td.dataset.user = user;
+        td.textContent = formatMoneyValue(val);
+        if (val > 0) td.classList.add("money-cell-positive");
+        else if (val < 0) td.classList.add("money-cell-negative");
+        else td.classList.add("money-cell-zero");
+        tr.appendChild(td);
+      });
 
-  // Дальше — суммы по каждому пользователю
-  users.forEach((user) => {
-    const val = stageMoney[stageName]?.[user] || 0;
+      tbody.appendChild(tr);
+      return;
+    }
 
-    const td = document.createElement("td");
-    td.className = "stage-header stage-money-cell";
-    td.dataset.user = user;
-
-    td.textContent = formatMoneyValue(val);
-
-    if (val > 0) td.classList.add("money-cell-positive");
-    else if (val < 0) td.classList.add("money-cell-negative");
-    else td.classList.add("money-cell-zero");
-
-    tr.appendChild(td);
-  });
-
-  tbody.appendChild(tr);
-  return;
-}
-
-    // Ячейка с названием матча
+    // Ячейка названия матча
     const tdMatch = document.createElement("td");
     tdMatch.textContent = matchName;
     tr.appendChild(tdMatch);
 
-    // Ячейка с реальным счётом (input для редактирования)
+    // Инпут реального счёта
     const tdScore = document.createElement("td");
     const input = document.createElement("input");
     input.type = "text";
     input.className = "real-score-input";
-    const scoreVal = realScores[index] || "";
-    input.value = scoreVal;
-
-    // При изменении счёта — пересчитываем всё: раскраску, очки, деньги
+    input.value = realScores[index] || "";
+    
     input.onchange = (e) => {
       realScores[index] = e.target.value.trim();
-
-      // Перекрашиваем ячейки в этой строке
       updateRowColors(tr, index, matches, predictions, realScores, users);
-
-      // Считаем и рисуем таблицу очков
-      const stats = calculateScoresWithUsers(
-        matches,
-        predictions,
-        realScores,
-        users,
-      );
+      
+      const stats = calculateScoresWithUsers(matches, predictions, realScores, users);
       renderScoresTable(stats, users);
 
-// Считаем и рисуем таблицу денег
-const money = calculateMoneyTable(
-  matches,
-  predictions,
-  realScores,
-  users,
-);
-renderMoneyTable(money, users);
+      const money = calculateMoneyTable(matches, predictions, realScores, users);
+      renderMoneyTable(money, users);
 
-// Обновляем суммы в строках этапов основной таблицы
-updateStageSummaryRows(matches, predictions, realScores, users);
+      updateStageSummaryRows(matches, predictions, realScores, users);
     };
+
+    // Защита инпута от закрытия глобальным кликом по body
+    input.addEventListener('mousedown', function(e) {
+      e.stopPropagation();
+    });
+    input.addEventListener('pointerdown', function(e) {
+      e.stopPropagation();
+    });
 
     tdScore.appendChild(input);
     tr.appendChild(tdScore);
 
-    // Для каждого пользователя — ячейка прогноза
+     // Ячейки прогнозов пользователей
     const userPredictions = predictions[index] || [];
-
     users.forEach((userName, userIndex) => {
       const td = document.createElement("td");
       const card = document.createElement("div");
 
-      // matchName уже доступен из замыкания (из matches.forEach), ничего заново не объявляем
       const realScore = realScores[index];
-const hasResult = realScore && realScore.trim() !== "";
-const userPrediction = userPredictions[userIndex];
-const hasPrediction = userPrediction && userPrediction.trim() !== "";
+      const hasResult = realScore && realScore.trim() !== "";
+      const userPrediction = userPredictions[userIndex];
+      const hasPrediction = userPrediction && userPrediction.trim() !== "";
 
-// Класс: серый, если нет результата; иначе — по типу прогноза
-card.className = `result-cell ${getResultClass(userPrediction, realScore, matchName)}`;
+      /* --- ИСПРАВЛЕНИЕ: Добавляем класс .has-tooltip для работы делегата --- */
+      card.className = `result-cell ${getResultClass(userPrediction, realScore, matchName)} has-tooltip`;
+      
+      if (!hasResult) {
+        card.textContent = hasPrediction ? userPrediction : "—";
+      } else {
+        card.textContent = hasPrediction ? userPrediction : "—";
+      }
 
-if (!hasResult) {
-  // Нет результата матча: серая ячейка, прогноз всё равно показываем
-  card.textContent = hasPrediction ? userPrediction : "—";
-} else {
-  // Результат есть: цвет по точности прогноза
-  if (hasPrediction) {
-    card.textContent = userPrediction;
-  } else {
-    // Прогноз не сделан, хотя результат есть
-    card.textContent = "—";
-  }
-}
+      // --- ЕДИНЫЙ КЛИК ПО ЯЧЕЙКЕ ДЛЯ ВСПЛЫВАШКИ ---
+      card.addEventListener("click", (event) => {
+        window.lastClickedCell = event.target; 
+  
+        event.stopPropagation(); // ВАЖНО: останавливаем всплытие до документа
 
-
-      // --- КЛИК: показываем выигрыш за матч во всплывашке ---
-      card.addEventListener("click", () => {
         const inputEl = tr.querySelector(".real-score-input");
         const scoreVal = inputEl ? inputEl.value.trim() : "";
 
@@ -817,95 +546,62 @@ if (!hasResult) {
           return;
         }
 
-        // --- ОПРЕДЕЛЯЕМ ЭТАП ---
         const currentStage = getCurrentStageForMatch(index, matches);
         const isChampStage = isChampionStage(currentStage);
 
-        let userType;
-        let exactGuessers = [];
-        let winGuessers = [];
-        let losers = [];
-
-        // --- ПРОВЕРКА СЧЁТА И ТИПЫ ПРОГНОЗОВ ---
+        let exactGuessers = [], winGuessers = [], losers = [];
+        
         if (isChampStage) {
-          // ДЛЯ ЭТАПА «ЧЕМПИОН»: считаем по тексту (имя победителя)
-          const actualWinner = scoreVal.toLowerCase(); // Реальный победитель из инпута
-
+          const actualWinner = scoreVal.toLowerCase();
           users.forEach((u, i) => {
             const p = (predictions[index] || [])[i] || "";
             const pNorm = p.trim().toLowerCase();
-
-            // Если угадал имя — это 'exact', иначе 'lose' (для ЧЕМПИОН нет типа 'win')
             const t = pNorm && pNorm === actualWinner ? "exact" : "lose";
-
             if (t === "exact") exactGuessers.push({ user: u, type: t });
             else losers.push({ user: u, type: t });
           });
-
-          // Тип прогноза текущего пользователя
-          const myPrediction = userPredictions[userIndex] || "";
-          userType =
-            myPrediction.trim().toLowerCase() === actualWinner
-              ? "exact"
-              : "lose";
         } else {
-          // ОБЫЧНЫЙ МАТЧ: парсим цифры
           const matchResult = parseScore(scoreVal);
           if (!matchResult) {
             showTooltip(card, "Неверный формат счёта (нужно: 2-1 или 2:1)");
             return;
           }
-
           const [rH, rA] = matchResult;
           const rWin = rH === rA ? 0 : rH > rA ? 1 : 2;
-
-          // Собираем типы прогнозов всех пользователей
           users.forEach((u, i) => {
             const p = (predictions[index] || [])[i];
             const t = getPredictionType(p, scoreVal, matchName);
-
             if (t === "exact") exactGuessers.push({ user: u, type: t });
             else if (t === "win") winGuessers.push({ user: u, type: t });
             else losers.push({ user: u, type: t });
           });
-
-          userType = getPredictionType(
-            userPredictions[userIndex],
-            scoreVal,
-            matchName,
-          );
         }
 
-        // --- РАСЧЁТ ВЫИГРЫША ---
-        let netResult = 0;
         const countExact = exactGuessers.length;
         const countWin = winGuessers.length;
         const countLosers = losers.length;
 
+        let netResult = 0;
+        const myPred = userPredictions[userIndex];
+        const myType = isChampStage 
+          ? ((myPred?.trim().toLowerCase() === scoreVal.toLowerCase()) ? "exact" : "lose")
+          : getPredictionType(myPred, scoreVal, matchName);
+
         if (isChampStage) {
-          if (userType === "exact") {
-            // Получает по 100₽ с каждого, кто ошибся
-            netResult = countLosers * 100;
-          } else {
-            // Платит по 100₽ каждому, кто угадал
-            netResult = -(countExact * 100);
-          }
+          if (myType === "exact") netResult = countLosers * 100;
+          else netResult = -(countExact * 100);
         } else {
-          // Обычная логика
           if (countExact > 0) {
-            if (userType === "exact") {
+            if (myType === "exact") {
               netResult += countWin * 10 + countLosers * 20;
-            } else if (userType === "win") {
-              netResult -= countExact * 10 + countWin * -10 + countLosers * 10;
-              // Упрощённо из твоего старого кода:
-              netResult = 0; // Пересчитаем ниже правильно
+            } else if (myType === "win") {
               netResult -= countExact * 10;
               netResult += countLosers * 10;
             } else {
               netResult -= countExact * 20 + countWin * 10;
             }
           } else if (countWin > 0) {
-            if (userType === "win") {
+            if (myType === "win") {
               netResult += countLosers * 10;
             } else {
               netResult -= countWin * 10;
@@ -927,253 +623,220 @@ if (!hasResult) {
   table.appendChild(tbody);
 }
 
-
-function formatMoneyValue(value) {
-  if (value > 0) return `+${value} ₽`;
-  if (value < 0) return `${value} ₽`;
-  return `0 ₽`;
-}
-
-function updateStageSummaryRows(matches, predictions, realScores, users) {
-  const stageMoney = getStageMoneyForDisplay(
-    matches,
-    predictions,
-    realScores,
-    users
-  );
-
-  const rows = document.querySelectorAll(".stage-summary-row");
-
-  rows.forEach((row) => {
-    const stageName = row.dataset.stage;
-
-    users.forEach((user) => {
-      const td = row.querySelector(`.stage-money-cell[data-user="${user}"]`);
-      if (!td) return;
-
-      const val = stageMoney[stageName]?.[user] || 0;
-
-      td.textContent = formatMoneyValue(val);
-
-      td.classList.remove(
-        "money-cell-positive",
-        "money-cell-negative",
-        "money-cell-zero"
-      );
-
-      if (val > 0) td.classList.add("money-cell-positive");
-      else if (val < 0) td.classList.add("money-cell-negative");
-      else td.classList.add("money-cell-zero");
-    });
-  });
-}
 /**
- * Универсальная функция всплывашки (ПК + мобильные).
- * element — элемент, по которому кликнули/навели
- * text — текст подсказки
+ * Перемещает тултип к новой цели.
+ * Используется при прокрутке страницы.
  */
+function updateTooltipPosition(targetEl) {
+  if (!tooltip || !targetEl) return;
 
-const tooltip = document.getElementById('cellTooltip');
+  const rect = targetEl.getBoundingClientRect();
+  const scrollY = window.pageYOffset;
+  const scrollX = window.pageXOffset;
 
-let activeTooltipCell = null;
+  // Те же самые константы смещения из showTooltip()
+  const xOffset = -118;
+  let yOffset = -415;
 
-function showTooltipNearCell(cell, content) {
-  if (!tooltip || !cell) return;
+  let left = rect.left + scrollX + rect.width / 2 + xOffset;
+  let top = rect.top + scrollY + yOffset;
 
-  tooltip.innerHTML = content;
-  tooltip.classList.add('is-visible');
+  // Корректировка по ширине экрана
+  const tipWidth = tooltip.offsetWidth;
+  if (left < 0) left = tipWidth / 2;
+  else if (left > window.innerWidth - tipWidth / 2)
+    left = window.innerWidth - tipHeight / 2;
 
-  tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
+  // Корректировка по высоте
+  const tipHeight = tooltip.offsetHeight;
+  if (top + tipHeight > window.innerHeight + scrollY) {
+    top -= tipHeight * 2;
+    tooltip.classList.add('tooltip-top');
+  } else {
+    tooltip.classList.remove('tooltip-top');
+  }
 
-  activeTooltipCell = cell;
-
-  requestAnimationFrame(() => {
-    positionTooltipNearCell(cell);
+  Object.assign(tooltip.style, {
+    left: `${left}px`,
+    top: `${top}px`
   });
+}
+
+/* Обновление цветов ячеек при изменении счета */
+function updateRowColors(row, index, matches, predictions, realScores, users) {
+  const cells = row.querySelectorAll(".result-cell");
+  const matchName = matches[index];
+  const userPredictions = predictions[index] || [];
+  const realScore = realScores[index];
+
+  cells.forEach((cell, i) => {
+    const prediction = userPredictions[i];
+    const newClass = getResultClass(prediction, realScore, matchName);
+    cell.className = `result-cell ${newClass}`;
+    
+    if (!realScore || realScore.trim() === "") {
+      cell.textContent = prediction && prediction.trim() !== "" ? prediction : "—";
+    } else {
+      cell.textContent = prediction && prediction.trim() !== "" ? prediction : "—";
+    }
+  });
+}
+
+/* --- УНИВЕРСАЛЬНЫЙ МОДУЛЬ ВСПЛЫВАЮЩИХ ОКОН --- */
+// 🔹 ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ ПОДСКАЗКИ
+const tooltip = document.getElementById('cellTooltip');
+let activeTooltipTimer = null;
+let activeTooltipCell = null;
+let isManuallyHidden = true; // Флаг: закрыли ли мы тултип вручную или он просто скроллится
+
+function showTooltip(targetEl, textContent) {
+  if (!tooltip || !targetEl) return;
   
+  clearTimeout(window._ttTimer); // Очищаем таймер от hover-эффекта
+  activeTooltipCell = targetEl;
+
+  /* --- ФЛАГ: подсказка открыта через клик ---
+     Если она открылась при клике, она должна закрываться только 
+     если пользователь нажал вне ячейки.
+   */
+  isManuallyHidden = false; // <--- КЛЮЧЕВОЙ МОМЕНТ!
+
+  tooltip.textContent = textContent;
+
+  // ✅ НАХОДИМ КОНТЕЙНЕР С ПРОГНОЗОМ (если это не заголовок)
+  let textContainer = targetEl.closest('.result-cell'); // <-- НОВАЯ СТРОКА
+  if (!textContainer) {                               // <-- НОВЫЙ БЛОК
+    // Если это не ячейка прогноза (например, заголовок), берём сам элемент
+    textContainer = targetEl;
+  }
+
+  // ⚙️ ПОЛУЧАЕМ ТОЧНЫЕ КООРДИНАТЫ ТЕКСТА, А НЕ ВСЕЙ ЯЧЕЙКИ
+  const rect = textContainer.getClientRects()[0]; // <-- ЗАМЕНА
+
+  const scrollY = window.pageYOffset;
+  const scrollX = window.pageXOffset;
+
+  // Компенсация отступов таблицы (подобрано под ваш дизайн)
+  const xOffset = 0; // Горизонтальный центр
+  let yOffset = -600; // Смещение вверх
+
+  let left = rect.left + scrollX + rect.width / 2 + xOffset;
+  let top = rect.top + scrollY + yOffset;
+
+  // Не даем улететь вправо за экран
+  const tipWidth = tooltip.offsetWidth;
+  if (left < 0) left = tipWidth / 2;
+  else if (left > window.innerWidth - tipWidth / 2)
+    left = window.innerWidth - tipHeight / 2;
+
+  // Проверяем вылезание снизу страницы
+  const tipHeight = tooltip.offsetHeight;
+  if (top + tipHeight > window.innerHeight + scrollY) {
+    // Переворачиваем тултип НАД элементом
+    top -= tipHeight * 2; // Учитываем высоту самой ячейки
+    tooltip.classList.add('tooltip-top');
+  } else {
+    tooltip.classList.remove('tooltip-top');
+  }
+
+  Object.assign(tooltip.style, {
+    position: 'fixed',
+    display: 'block', // Обязательно показываем
+    opacity: '1',
+    pointerEvents: 'auto',
+    
+    left: `${left}px`,
+    top: `${top}px`,
+    zIndex: '999999', /* Максимальный приоритет поверх всего */
+    
+    background: '#2c3e50',
+    color: '#fff',
+    padding: '12px 16px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    whiteSpace: 'nowrap',
+    boxShadow: '0 6px 20px rgba(0,0,0,0.4)',
+    
+    transform: 'translate(-50%, 0)' /* Центрируем строго над центром элемента */,
+  });
 }
 
-function positionTooltipNearCell(cell) {
-  if (!tooltip || !cell || !tooltip.classList.contains('is-visible')) return;
 
-  const gap = 10;
-  const screenPadding = 12;
-
-  const cellRect = cell.getBoundingClientRect();
-
-  const tooltipRect = tooltip.getBoundingClientRect();
-
-  let left = cellRect.left + cellRect.width / 2 - tooltipRect.width / 2;
-  let top = cellRect.bottom + gap;
-
-  let placement = 'bottom';
-
-  if (top + tooltipRect.height > window.innerHeight - screenPadding) {
-    top = cellRect.top - tooltipRect.height - gap;
-    placement = 'top';
-  }
-
-  if (top < screenPadding) {
-    top = screenPadding;
-  }
-
-  if (left < screenPadding) {
-    left = screenPadding;
-  }
-
-  if (left + tooltipRect.width > window.innerWidth - screenPadding) {
-    left = window.innerWidth - tooltipRect.width - screenPadding;
-  }
-
-  const cellCenterX = cellRect.left + cellRect.width / 2;
-  let arrowLeft = cellCenterX - left - 5;
-
-  arrowLeft = Math.max(12, Math.min(tooltipRect.width - 22, arrowLeft));
-
-  tooltip.style.left = `${left}px`;
-  tooltip.style.top = `${top}px`;
-  tooltip.style.setProperty('--arrow-left', `${arrowLeft}px`);
-
-  tooltip.classList.add(placement === 'top' ? 'tooltip-top' : 'tooltip-bottom');
-}
-
-function hideTooltip() {
+/**
+ * Скрывает всплывающее окно ИЛИ передвигает его при прокрутке.
+ * @param {boolean} force - принудительно скрыть без проверки флага
+ */
+function hideTooltip(force = false) {
   if (!tooltip) return;
 
-  tooltip.classList.remove('is-visible', 'tooltip-top', 'tooltip-bottom');
-  tooltip.innerHTML = '';
-  activeTooltipCell = null;
-}
-
-function showTooltip(element, text) {
-  const tooltip = document.getElementById("tooltip");
-  if (!tooltip) {
-    console.error("Нет элемента #tooltip в HTML!");
+  // Если тултип закрыт вручную (кликом вне ячейки),
+  // или если передан параметр force,
+  // то удаляем все стили и прячем его навсегда.
+  if (force || isManuallyHidden) {
+    clearTimeout(window._ttTimer);
+    tooltip.classList.remove('is-visible', 'tooltip-top');
+    Object.assign(tooltip.style, {
+      display: 'none',
+      opacity: '0',
+      pointerEvents: 'none'
+    });
+    activeTooltipCell = null;
     return;
   }
 
-  // 1. Сразу ставим текст
-  tooltip.textContent = text;
-
-  // 2. Принудительно задаём все стили, чтобы перебить любой CSS
-   Object.assign(tooltip.style, {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    background: "#2c3e50",        // чуть светлее, чем чёрный
-    color: "#fff",
-    padding: "10px 16px",         // чуть меньше отступы
-    borderRadius: "8px",
-    fontSize: "15px",            // чуть меньше шрифт
-    zIndex: "99999",
-    opacity: "0",
-    pointerEvents: "none",
-    boxShadow: "0 6px 20px rgba(0,0,0,0.4)",
-    maxWidth: "280px",          // чтобы на широких экранах не был огромным
-    textAlign: "center",
-    fontFamily: "Arial, sans-serif",
-    whiteSpace: "nowrap"
-  });
-
-
-  // 3. Даём браузеру применить стили, потом включаем видимость
-  requestAnimationFrame(() => {
-    tooltip.style.opacity = "1";
-  });
-}
-
-function hideTooltip() {
-  const tooltip = document.getElementById("tooltip");
-  if (tooltip) {
-    tooltip.style.opacity = "0";
-    // Можно оставить элемент на странице, он просто прозрачный
+  // Если тултип открыт и НЕ скрыт вручную,
+  // значит, страница просто прокручивается.
+  // Пересчитываем его положение.
+  if (activeTooltipCell && tooltip.classList.contains('is-visible')) {
+    updateTooltipPosition(activeTooltipCell);
   }
 }
 
-// Скрываем при клике в любое место, скролле и ресайзе
-document.addEventListener("click", hideTooltip);
+// Глобальные слушатели событий (очищены от дублей)
+document.removeEventListener("click", globalClickHandler);
+window.removeEventListener("scroll", hideTooltip);
+window.removeEventListener("resize", hideTooltip);
+
+function globalClickHandler(event) {
+  const cell = event.target.closest('.result-cell');
+  if (!cell) {
+    hideTooltip();
+    return;
+  }
+  event.stopPropagation();
+  const content = `Подсказка для ячейки. Вы можете вставить сюда расчет.`; 
+  // Логика расчета уже внутри buildTable, здесь заглушка на случай вызова извне
+  showTooltip(cell, content);
+}
+
+document.addEventListener("click", globalClickHandler);
 window.addEventListener("scroll", hideTooltip, { passive: true });
 window.addEventListener("resize", hideTooltip);
 
+// // Наведение мышкой (только если устройство поддерживает hover)
+// document.addEventListener('mouseover', function (event) {
+//   if (window.matchMedia('(hover: none)').matches) return;
+//   const cell = event.target.closest('.result-cell');
+//   if (!cell) return;
+//   window._ttTimer = setTimeout(() => {
+//     showTooltip(cell, `Нажми чтобы узнать сумму`);
+//   }, 300);
+// });
 
-function hideTooltip() {
-  const tooltip = document.getElementById("tooltip");
-  if (tooltip) {
-    tooltip.classList.remove("visible");
+document.addEventListener('mouseout', function (event) {
+  if (window.matchMedia('(hover: none)').matches) return;
+  const cell = event.target.closest('.result-cell');
+  if (!cell) return;
+  clearTimeout(window._ttTimer);
+  if (!cell.contains(event.relatedTarget)) {
+    hideTooltip();
   }
-}
-
-// Скрываем при клике в любое место, скролле или ресайзе
-document.addEventListener("click", hideTooltip);
-window.addEventListener("scroll", hideTooltip, { passive: true });
-window.addEventListener("resize", hideTooltip);
-
-
-function updateTooltipPosition(element, tooltip) {
-  const rect = element.getBoundingClientRect();
-  const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-  const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-  let top = rect.bottom + scrollY + 6; // +6px отступ снизу
-  let left = rect.left + scrollX;
-
-  // Корректировка по ширине (чтобы не улетал вправо)
-  const screenWidth = window.innerWidth;
-  // Сначала ставим, потом меряем реальную ширину (учитывая max-width)
-  tooltip.style.left = left + 'px';
-  tooltip.style.top = top + 'px';
-  
-  const tw = tooltip.offsetWidth;
-  const th = tooltip.offsetHeight;
-
-  if (left + tw > screenWidth) {
-    left = screenWidth - tw - 10; // Прижимаем к правому краю
-  }
-
-  // Если вылезает снизу - показываем НАД ячейкой
-  if (top + th > window.innerHeight) {
-    top = rect.top + scrollY - th - 6;
-  }
-
-  tooltip.style.left = left + 'px';
-  tooltip.style.top = top + 'px';
-}
-
-// Скрываем при клике в любое место ИЛИ при скролле
-document.addEventListener("click", () => {
-  hideTooltip();
 });
 
-window.addEventListener("scroll", hideTooltip, { passive: true });
-window.addEventListener("resize", hideTooltip);
-
-function hideTooltip() {
-  const tooltip = document.getElementById("tooltip");
-  if (tooltip) {
-    tooltip.style.opacity = '0';
-    tooltip.classList.remove('visible');
-    tooltip.removeAttribute('data-visible');
-  }
-}
-
-
-
-// Скрываем при любом клике вне
-document.addEventListener("click", () => {
-  const tooltip = document.getElementById("tooltip");
-  if (tooltip) tooltip.classList.remove("visible");
-});
-
-
-/**
- * Инициализация всего приложения.
- * Вызывается после загрузки страницы.
- */
+/* --- ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ --- */
 async function initApp() {
   try {
     appData = await loadData();
-
     buildTable(appData);
 
     const stats = calculateScoresWithUsers(
@@ -1196,78 +859,7 @@ async function initApp() {
     alert("Не удалось загрузить данные. Проверьте консоль.");
   }
 }
-
-// Запуск после загрузки DOM
+/* ⚙️ СЛУШАТЕЛИ НА ПРОКРУТКУ/РЕСАЙЗ: передвигаем тултип или скрываем его */
+window.addEventListener('scroll', () => hideTooltip());
+window.addEventListener('resize', () => hideTooltip());
 document.addEventListener("DOMContentLoaded", initApp);
-
-document.addEventListener('click', function (event) {
-  const cell = event.target.closest('.has-tooltip');
-
-  if (!cell) {
-    hideTooltip();
-    return;
-  }
-
-  event.stopPropagation();
-
-  const content = cell.dataset.tooltip;
-
-  if (!content) return;
-
-  if (activeTooltipCell === cell && tooltip.classList.contains('is-visible')) {
-    hideTooltip();
-    return;
-  }
-
-  showTooltipNearCell(cell, content);
-});
-
-window.addEventListener('resize', () => {
-  if (activeTooltipCell) {
-    positionTooltipNearCell(activeTooltipCell);
-  }
-});
-
-window.addEventListener('orientationchange', () => {
-  setTimeout(() => {
-    if (activeTooltipCell) {
-      positionTooltipNearCell(activeTooltipCell);
-    }
-  }, 250);
-});
-
-window.addEventListener(
-  'scroll',
-  () => {
-    if (activeTooltipCell) {
-      positionTooltipNearCell(activeTooltipCell);
-    }
-  },
-  true
-);
-
-document.addEventListener('mouseover', function (event) {
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  const cell = event.target.closest('.has-tooltip');
-
-  if (!cell) return;
-
-  const content = cell.dataset.tooltip;
-
-  if (!content) return;
-
-  showTooltipNearCell(cell, content);
-});
-
-document.addEventListener('mouseout', function (event) {
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  const cell = event.target.closest('.has-tooltip');
-
-  if (!cell) return;
-
-  if (!cell.contains(event.relatedTarget)) {
-    hideTooltip();
-  }
-});

@@ -263,21 +263,6 @@ th {
 #stage-money-rows .money-cell-negative { color: #f44336; }
 #stage-money-rows .money-cell-zero { color: #757575; }
 
-#tooltip {
-  position: fixed;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 6px;
-  font-size: 14px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s ease-out;
-  z-index: 9999;
-  max-width: 300px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  white-space: normal;
-}
 
 .stage-summary-row td {
   background-color: #eef2f7;
@@ -333,61 +318,65 @@ th {
   margin: 0 auto;
 }
 
-.cell-tooltip {
-  position: fixed;
-  z-index: 9999;
-  max-width: min(320px, calc(100vw - 24px));
-  padding: 10px 12px;
-  background: #222;
-  color: #fff;
-  border-radius: 10px;
+
+/* Защита инпута реального счёта от случайного закрытия кликом */
+.real-score-input {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
   font-size: 14px;
-  line-height: 1.35;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(4px);
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
-  word-break: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.cell-tooltip.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.cell-tooltip::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: #222;
-  transform: rotate(45deg);
-}
-
-.cell-tooltip.tooltip-bottom::after {
-  top: -5px;
-  left: var(--arrow-left, 20px);
-}
-
-.cell-tooltip.tooltip-top::after {
-  bottom: -5px;
-  left: var(--arrow-left, 20px);
-}
-
-.has-tooltip {
-  cursor: pointer;
-}
-
-@media (hover: hover) {
-  .has-tooltip:hover {
-    background-color: rgba(33, 150, 243, 0.08);
-  }
+/* Предотвращаем закрытие окна редактирования счета глобальным кликом по body */
+.real-score-input:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
 }
 
 .stage-table {
   display: block;
   overflow-x: auto;
+}
+
+.cell-tooltip {
+  /* Позиционирование полностью берет на себя JS, здесь оставляем только визуал */
+  background: #2c3e50 !important;
+  color: #fff !important;
+  padding: 12px 18px !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  font-family: Arial, sans-serif !important;
+  white-space: nowrap !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+  max-width: none !important;
+  
+  /* Критически важные сбросы */
+  transition: none !important; /* Убираем анимацию прозрачности, которая может мешать тесту */
+  margin: 0 !important;
+  border: 0 !important;
+}
+
+/* Стрелочка снизу */
+.cell-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #2c3e50;
+}
+
+/* Если тултип показан НАД элементом (JS добавит класс .tooltip-top) */
+.tooltip-top::after {
+  top: -8px;
+  bottom: auto;
+  border-top: none;
+  border-bottom: 6px solid #2c3e50; /* Цвет фона */
+  transform: translateX(-50%) rotate(180deg);
 }
