@@ -834,25 +834,26 @@ function showTooltip(element, text) {
   tooltip.textContent = text;
 
   // 2. Принудительно задаём все стили, чтобы перебить любой CSS
-  Object.assign(tooltip.style, {
+   Object.assign(tooltip.style, {
     position: "fixed",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    background: "#333",
+    background: "#2c3e50",        // чуть светлее, чем чёрный
     color: "#fff",
-    padding: "12px 18px",
+    padding: "10px 16px",         // чуть меньше отступы
     borderRadius: "8px",
-    fontSize: "16px",
-    zIndex: "99999",          // максимально высокий
+    fontSize: "15px",            // чуть меньше шрифт
+    zIndex: "99999",
     opacity: "0",
-    pointerEvents: "none",   // не перехватывает клики
-    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-    maxWidth: "300px",
+    pointerEvents: "none",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.4)",
+    maxWidth: "280px",          // чтобы на широких экранах не был огромным
     textAlign: "center",
     fontFamily: "Arial, sans-serif",
     whiteSpace: "nowrap"
   });
+
 
   // 3. Даём браузеру применить стили, потом включаем видимость
   requestAnimationFrame(() => {
