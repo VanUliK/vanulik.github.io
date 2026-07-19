@@ -399,3 +399,27 @@ th {
   color: #888;
   font-style: italic;
 }
+.tooltip {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* центрирует точно по центру */
+  background-color: #333;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  max-width: 280px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  pointer-events: none; /* чтобы не мешал кликам */
+}
+
+.tooltip.visible {
+  opacity: 1;
+}
+
+

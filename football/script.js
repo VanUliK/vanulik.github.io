@@ -824,76 +824,124 @@ if (!hasResult) {
  * text — текст подсказки
  */
 function showTooltip(element, text) {
-  // Удаляем старые тултипы, если есть
-  const existing = document.querySelector(".tooltip");
-  if (existing) existing.remove();
+  const tooltip = document.getElementById("tooltip");
+  if (!tooltip) {
+    console.error("Нет элемента #tooltip в HTML!");
+    return;
+  }
 
-  const tooltip = document.createElement("div");
-  tooltip.className = "tooltip";
+  // 1. Сразу ставим текст
   tooltip.textContent = text;
-  tooltip.style.position = "absolute";
-  tooltip.style.padding = "8px 12px";
-  tooltip.style.backgroundColor = "#333";
-  tooltip.style.color = "#fff";
-  tooltip.style.borderRadius = "6px";
-  tooltip.style.fontSize = "13px";
-  tooltip.style.pointerEvents = "none"; // чтобы не мешал событиям мыши
-  tooltip.style.zIndex = "1000";
-  tooltip.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
 
-  document.body.appendChild(tooltip);
+  // 2. Принудительно задаём все стили, чтобы перебить любой CSS
+  Object.assign(tooltip.style, {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    background: "#333",
+    color: "#fff",
+    padding: "12px 18px",
+    borderRadius: "8px",
+    fontSize: "16px",
+    zIndex: "99999",          // максимально высокий
+    opacity: "0",
+    pointerEvents: "none",   // не перехватывает клики
+    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+    maxWidth: "300px",
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif",
+    whiteSpace: "nowrap"
+  });
 
-  // Определяем, мобильное ли устройство (простая эвристика)
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  // 3. Даём браузеру применить стили, потом включаем видимость
+  requestAnimationFrame(() => {
+    tooltip.style.opacity = "1";
+  });
+}
 
-  if (isMobile) {
-    // МОБИЛЬНАЯ ВЕРСИЯ: показываем по центру над/под элементом
-    const rect = element.getBoundingClientRect();
-    const windowWidth = window.innerWidth;
-    const tooltipWidth = rect.width + 24; // с запасом
-
-    let topPos, leftPos;
-
-    // Центрируем по горизонтали относительно элемента
-    leftPos = rect.left + (rect.width - tooltipWidth) / 2;
-    // Если выходит за левый край — прижимаем к левому
-    if (leftPos < 0) leftPos = 0;
-    // Если выходит за правый край — прижимаем к правому
-    if (leftPos + tooltipWidth > windowWidth) {
-      leftPos = windowWidth - tooltipWidth;
-    }
-
-    // Показываем над элементом (или под, если не хватает места сверху)
-    topPos = rect.top - 48;
-    if (topPos < 20) topPos = rect.bottom + 12;
-
-    tooltip.style.left = leftPos + "px";
-    tooltip.style.top = topPos + "px";
-
-    // На мобильных убираем mousemove/mouseleave и просто оставляем тултип
-    // (он исчезнет при следующем вызове showTooltip или можно добавить закрытие по тапу вне)
-  } else {
-    // ПК: показываем рядом с курсором при наведении
-    element.addEventListener(
-      "mousemove",
-      (e) => {
-        tooltip.style.left = e.pageX + 14 + "px";
-        tooltip.style.top = e.pageY + 14 + "px";
-      },
-      { once: true },
-    );
-
-    element.addEventListener(
-      "mouseleave",
-      () => {
-        setTimeout(() => {
-          if (tooltip.parentNode) tooltip.remove();
-        }, 150);
-      },
-      { once: true },
-    );
+function hideTooltip() {
+  const tooltip = document.getElementById("tooltip");
+  if (tooltip) {
+    tooltip.style.opacity = "0";
+    // Можно оставить элемент на странице, он просто прозрачный
   }
 }
+
+// Скрываем при клике в любое место, скролле и ресайзе
+document.addEventListener("click", hideTooltip);
+window.addEventListener("scroll", hideTooltip, { passive: true });
+window.addEventListener("resize", hideTooltip);
+
+
+function hideTooltip() {
+  const tooltip = document.getElementById("tooltip");
+  if (tooltip) {
+    tooltip.classList.remove("visible");
+  }
+}
+
+// Скрываем при клике в любое место, скролле или ресайзе
+document.addEventListener("click", hideTooltip);
+window.addEventListener("scroll", hideTooltip, { passive: true });
+window.addEventListener("resize", hideTooltip);
+
+
+function updateTooltipPosition(element, tooltip) {
+  const rect = element.getBoundingClientRect();
+  const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+  let top = rect.bottom + scrollY + 6; // +6px отступ снизу
+  let left = rect.left + scrollX;
+
+  // Корректировка по ширине (чтобы не улетал вправо)
+  const screenWidth = window.innerWidth;
+  // Сначала ставим, потом меряем реальную ширину (учитывая max-width)
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+  
+  const tw = tooltip.offsetWidth;
+  const th = tooltip.offsetHeight;
+
+  if (left + tw > screenWidth) {
+    left = screenWidth - tw - 10; // Прижимаем к правому краю
+  }
+
+  // Если вылезает снизу - показываем НАД ячейкой
+  if (top + th > window.innerHeight) {
+    top = rect.top + scrollY - th - 6;
+  }
+
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+
+// Скрываем при клике в любое место ИЛИ при скролле
+document.addEventListener("click", () => {
+  hideTooltip();
+});
+
+window.addEventListener("scroll", hideTooltip, { passive: true });
+window.addEventListener("resize", hideTooltip);
+
+function hideTooltip() {
+  const tooltip = document.getElementById("tooltip");
+  if (tooltip) {
+    tooltip.style.opacity = '0';
+    tooltip.classList.remove('visible');
+    tooltip.removeAttribute('data-visible');
+  }
+}
+
+
+
+// Скрываем при любом клике вне
+document.addEventListener("click", () => {
+  const tooltip = document.getElementById("tooltip");
+  if (tooltip) tooltip.classList.remove("visible");
+});
+
 
 /**
  * Инициализация всего приложения.
