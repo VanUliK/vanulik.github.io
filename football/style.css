@@ -381,6 +381,11 @@ th {
   transform: translateX(-50%) rotate(180deg);
 }
 
+/* ================================================================ */
+/* ===== НИЖЕ ДОБАВЛЕНЫ НОВЫЕ СТИЛИ ДЛЯ ТРЁХ ТАБЛИЦ ===== */
+/* ================================================================ */
+
+/* Стили для финальной таблицы (как было в старом коде) */
 .final-table {
   background-color: #fafafa;
   padding: 20px;
@@ -389,7 +394,7 @@ th {
 }
 
 .final-table h2 {
-  color: #ff7e5f; /* Яркий коралловый */
+  color: #ff7e5f;
   font-size: 2em;
   margin-bottom: 1rem;
   text-align: center;
@@ -410,19 +415,17 @@ th {
   transition: all 0.3s ease;
 }
 
-/* Стили для заголовков */
 .final-table th:nth-child(1),
 .final-table th:nth-child(2) {
-  color: #ffc107; /* Золотой */
+  color: #ffc107;
 }
 
 .final-table th:nth-child(3) {
-  color: #28a745; /* Зеленый */
+  color: #28a745;
 }
 
-/* Стили для строк */
 .final-table tr:hover {
-  background-color: rgba(255, 255, 255, 0.9); /* Легкое свечение при наведении */
+  background-color: rgba(255, 255, 255, 0.9);
   transform: scaleY(1.02);
 }
 
@@ -443,7 +446,6 @@ th {
   position: relative;
 }
 
-/* Иконка монеты */
 .final-table .coin-icon::before {
   content: '';
   display: inline-block;
@@ -460,7 +462,6 @@ th {
   to {transform: rotate(-360deg);}
 }
 
-/* Анимация пульсации для баланса */
 .final-table .total-balance span {
   display: inline-block;
   animation: pulse 2s infinite;
@@ -471,15 +472,169 @@ th {
   50% {opacity: 0.7;}
 }
 
-/* Цвета по балансу */
 .final-table .positive {
-  color: #28a745; /* Зелёный */
+  color: #28a745;
 }
 
 .final-table .negative {
-  color: #dc3545; /* Красный */
+  color: #dc3545;
 }
 
 .final-table .zero {
-  color: #6c757d; /* Серый */
+  color: #6c757d;
+}
+
+/* ===== НОВЫЙ СТИЛЬ ДЛЯ #final-results (чтобы не был на всю ширину) ===== */
+#final-results {
+  max-width: 100%;
+  margin: 0 auto 32px auto;
+}
+
+#final-results table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#final-results th {
+  background-color: var(--primary);
+  color: var(--accent);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#final-results td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+#final-results tr:hover {
+  background-color: #f8f9fa;
+}
+
+#final-results .place-number {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+#final-results .participant-name {
+  font-weight: 600;
+}
+
+#final-results .total-balance {
+  font-weight: 700;
+  text-align: right;
+}
+
+#final-results .positive {
+  color: #4caf50;
+}
+
+#final-results .negative {
+  color: #f44336;
+}
+
+#final-results .zero {
+  color: #757575;
+}
+
+#final-results .coin-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 35% 35%, #fdcb6e, #f39c12);
+  border-radius: 50%;
+  margin-right: 8px;
+  border: 1px solid #e67e22;
+  vertical-align: middle;
+}
+
+/* ===== КОНТЕЙНЕРЫ ДЛЯ ТАБЛИЦ (чтобы не были на всю ширину) ===== */
+#money-container,
+#scores-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+#money-container table,
+#scores-container table {
+  width: 100%;
+}
+
+/* ===== ЗАГОЛОВКИ СЕКЦИЙ ===== */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 32px 0 16px 0;
+  padding: 8px 0;
+  border-bottom: 3px solid var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title .icon {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.2rem;
+    margin: 24px 0 12px 0;
+  }
+}
+
+/* ============================================================ */
+/* ===== УНИВЕРСАЛЬНЫЙ ФИКС ДЛЯ ВСЕХ ТАБЛИЦ ===== */
+/* ============================================================ */
+
+/* Ограничиваем все контейнеры */
+#final-results,
+#money-container,
+#scores-container,
+.money-table,
+.standings-table,
+.final-table {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Убираем лишние отступы у таблиц внутри контейнеров */
+#final-results table,
+#money-container table,
+#scores-container table,
+.final-table table {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Если таблица всё ещё на всю ширину - ограничиваем через родителя */
+.predictions-table-wrapper,
+#final-results,
+#money-container,
+#scores-container,
+.final-table {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+  .predictions-table-wrapper,
+  #final-results,
+  #money-container,
+  #scores-container,
+  .final-table {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
 }

@@ -13,31 +13,30 @@
     <header class="header">
       <h1>Чемпионат Мира 2026: Прогнозы</h1>
     </header>
-    <div id="final-results" class="final-table">
-  <h2>Финансы: кто сколько заработал</h2>
-  <table>
-    <!-- Данные будут вставляться сюда -->
-  </table>
-</div>
-  <br>
-  <br>
 
-    <!-- Таблица денег (долги/баланс) -->
-    
+    <!-- ФИНАЛЬНАЯ ТАБЛИЦА -->
+    <h3 class="section-title"><span class="icon">🏆</span> Итоговый баланс</h3>
+    <div id="final-results"></div>
+
+    <!-- ТАБЛИЦА ПРОГНОЗОВ -->
+    <h3 class="section-title"><span class="icon">📋</span> Таблица прогнозов</h3>
     <div class="predictions-table-wrapper">
       <table id="predictions-table">
         <!-- Содержимое генерируется JS -->
       </table>
-      <!-- ЕДИНСТВЕННЫЙ контейнер для всех всплывающих сообщений -->
       <div id="cellTooltip" class="cell-tooltip"></div>
     </div>
-    <h3>Финансовый расчёт (долги)</h3>
-    <div id="money-container"></div> 
-    <h3>Турнирная таблица (очки)</h3>
+
+    <!-- ФИНАНСЫ -->
+    <h3 class="section-title"><span class="icon">💰</span> Финансы: кто сколько заработал</h3>
+    <div id="money-container"></div>
+
+    <!-- ТУРНИРНАЯ ТАБЛИЦА -->
+    <h3 class="section-title"><span class="icon">📊</span> Турнирная таблица (очки)</h3>
     <div id="scores-container"></div>
-    
+
   </div>
-  
+
   <script src="script.js"></script>
 </body>
 
