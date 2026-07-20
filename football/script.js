@@ -1,3 +1,8 @@
+// ============================================================
+// ОСНОВНОЙ КОД ПРИЛОЖЕНИЯ
+// НЕ МЕНЯЙТЕ ЭТОТ ФАЙЛ, ЕСЛИ НЕ ЗНАЕТЕ, ЧТО ДЕЛАЕТЕ!
+// ============================================================
+
 // ==================== УТИЛИТЫ ====================
 const UTILS = {
   STAGE_TRIGGERS: ['финал', '1/', 'четвертьфинал', 'полуфинал', 'чемпион', 'место', 'отборочный', 'групповой', 'стадия', 'раунд', 'этап'],
@@ -397,9 +402,9 @@ function renderFinalResults(moneyData, users) {
   
   var html = '<table>';
   html += '<thead><tr>';
-  html += '<th style="color: #ffd900 !important;"><span class="place-number" style="color: #ffd900 !important;">Место</span></th>';
-  html += '<th style="color: #ffd900 !important;"><span class="participant-name" style="color: #ffd900 !important;">Участник</span></th>';
-  html += '<th style="color: #ffd900 !important;"><span class="total-balance" style="color: #ffd900 !important;"><span class="coin-icon"></span>Итоговый баланс ₽</span></th>';
+  html += '<th><span class="place-number">Место</span></th>';
+  html += '<th><span class="participant-name">Участник</span></th>';
+  html += '<th><span class="total-balance"><span class="coin-icon"></span>Итоговый баланс ₽</span></th>';
   html += '</tr></thead><tbody>';
   
   sortedUsers.forEach(function(user, index) {
@@ -452,7 +457,6 @@ function updateRowColors(matches, predictions, realScores, users) {
     cell.textContent = pred || '—';
   });
   
-  // ===== ДОБАВЛЯЕМ ОБНОВЛЕНИЕ ФИНАЛЬНОЙ ТАБЛИЦЫ =====
   const money = calculateMoneyTable(matches, predictions, realScores, users);
   renderFinalResults(money, users);
 }
@@ -493,17 +497,11 @@ function showTooltip(targetEl, text) {
   tooltip.style.opacity = '1';
   tooltip.style.pointerEvents = 'auto';
   
-  // Получаем координаты ячейки
   var rect = targetEl.getBoundingClientRect();
-  
-  // Вычисляем центр ячейки по горизонтали
   var centerX = rect.left + rect.width / 2;
-  
-  // Позиционируем над ячейкой (смещение вверх)
-  var offsetY = 10; // Отступ от ячейки
+  var offsetY = 10;
   var topPos = rect.top - offsetY;
   
-  // Показываем тултип, но пока не знаем его размеры
   tooltip.style.position = 'fixed';
   tooltip.style.left = centerX + 'px';
   tooltip.style.top = topPos + 'px';
@@ -518,14 +516,11 @@ function showTooltip(targetEl, text) {
   tooltip.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)';
   tooltip.style.maxWidth = '300px';
   
-  // Принудительно пересчитываем размеры
   tooltip.offsetHeight;
   
-  // Теперь знаем высоту тултипа, корректируем позицию
   var tooltipHeight = tooltip.offsetHeight;
   var newTop = rect.top - tooltipHeight - offsetY;
   
-  // Если не помещается сверху - показываем снизу
   if (newTop < 0) {
     newTop = rect.bottom + offsetY;
     tooltip.classList.remove('tooltip-top');
@@ -533,7 +528,6 @@ function showTooltip(targetEl, text) {
     tooltip.classList.add('tooltip-top');
   }
   
-  // Проверяем, не вылезает ли за левый край
   var tooltipWidth = tooltip.offsetWidth;
   var newLeft = centerX;
   if (newLeft - tooltipWidth / 2 < 10) {
@@ -542,7 +536,6 @@ function showTooltip(targetEl, text) {
     newLeft = window.innerWidth - tooltipWidth / 2 - 10;
   }
   
-  // Применяем финальные координаты
   tooltip.style.left = newLeft + 'px';
   tooltip.style.top = newTop + 'px';
 }
@@ -553,84 +546,6 @@ function hideTooltip() {
   tooltip.style.opacity = '0';
   tooltip.style.pointerEvents = 'none';
   activeTooltipCell = null;
-}
-
-function attachTableHandlers(data) {
-  const matches = data.matches;
-  const predictions = data.predictions;
-  const users = data.users;
-  const realScores = data.realScores;
-  
-  // Обработчики для инпутов реального счета
-  document.querySelectorAll('.real-score-input').forEach(function(input) {
-    input.onchange = function() {
-      const idx = parseInt(this.dataset.index);
-      realScores[idx] = this.value.trim();
-      
-      const stats = calculateScoresWithUsers(matches, predictions, realScores, users);
-      const money = calculateMoneyTable(matches, predictions, realScores, users);
-      
-      renderScoresTable(stats, users);
-      renderMoneyTable(money, users);
-      renderFinalResults(money, users);
-      updateStageSummaryRows(matches, predictions, realScores, users);
-      updateRowColors(matches, predictions, realScores, users);
-    };
-  });
-  
-  // Обработчики для ячеек прогнозов
-  document.querySelectorAll('.result-cell').forEach(function(cell) {
-    cell.onclick = function(e) {
-      e.stopPropagation();
-      
-      const matchIdx = parseInt(this.dataset.match);
-      const userIdx = parseInt(this.dataset.user);
-      const score = realScores[matchIdx];
-      
-      if (!score) {
-        showTooltip(this, 'Счёт ещё не задан');
-        return;
-      }
-      
-      const result = calculateMatchResult(matchIdx, userIdx, matches, predictions, users, realScores);
-      const sign = result >= 0 ? '+' : '';
-      showTooltip(this, 'За этот матч: ' + sign + result + ' ₽');
-    };
-  });
-  
-  // Глобальный клик для закрытия тултипа
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.result-cell')) {
-      hideTooltip();
-    }
-  });
-  
-  // ===== ПРИ ПРОКРУТКЕ СКРЫВАЕМ ТУЛТИП =====
-  // Прокрутка окна
-  window.addEventListener('scroll', function() {
-    hideTooltip();
-  }, true);
-  
-  // Прокрутка внутри контейнера таблицы
-  var tableWrapper = document.querySelector('.predictions-table-wrapper');
-  if (tableWrapper) {
-    tableWrapper.addEventListener('scroll', function() {
-      hideTooltip();
-    }, true);
-  }
-  
-  // Прокрутка любых элементов внутри таблицы
-  document.addEventListener('scroll', function(e) {
-    var target = e.target;
-    if (target && target.closest && target.closest('#predictions-table')) {
-      hideTooltip();
-    }
-  }, true);
-  
-  // При изменении размера окна тоже скрываем
-  window.addEventListener('resize', function() {
-    hideTooltip();
-  });
 }
 
 // ==================== ПОСТРОЕНИЕ ТАБЛИЦЫ ====================
@@ -695,7 +610,75 @@ function buildTable(data) {
   attachTableHandlers(data);
 }
 
-
+function attachTableHandlers(data) {
+  const matches = data.matches;
+  const predictions = data.predictions;
+  const users = data.users;
+  const realScores = data.realScores;
+  
+  document.querySelectorAll('.real-score-input').forEach(function(input) {
+    input.onchange = function() {
+      const idx = parseInt(this.dataset.index);
+      realScores[idx] = this.value.trim();
+      
+      const stats = calculateScoresWithUsers(matches, predictions, realScores, users);
+      const money = calculateMoneyTable(matches, predictions, realScores, users);
+      
+      renderScoresTable(stats, users);
+      renderMoneyTable(money, users);
+      renderFinalResults(money, users);
+      updateStageSummaryRows(matches, predictions, realScores, users);
+      updateRowColors(matches, predictions, realScores, users);
+    };
+  });
+  
+  document.querySelectorAll('.result-cell').forEach(function(cell) {
+    cell.onclick = function(e) {
+      e.stopPropagation();
+      
+      const matchIdx = parseInt(this.dataset.match);
+      const userIdx = parseInt(this.dataset.user);
+      const score = realScores[matchIdx];
+      
+      if (!score) {
+        showTooltip(this, 'Счёт ещё не задан');
+        return;
+      }
+      
+      const result = calculateMatchResult(matchIdx, userIdx, matches, predictions, users, realScores);
+      const sign = result >= 0 ? '+' : '';
+      showTooltip(this, 'За этот матч: ' + sign + result + ' ₽');
+    };
+  });
+  
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.result-cell')) {
+      hideTooltip();
+    }
+  });
+  
+  window.addEventListener('scroll', function() {
+    hideTooltip();
+  }, true);
+  
+  var tableWrapper = document.querySelector('.predictions-table-wrapper');
+  if (tableWrapper) {
+    tableWrapper.addEventListener('scroll', function() {
+      hideTooltip();
+    }, true);
+  }
+  
+  document.addEventListener('scroll', function(e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('#predictions-table')) {
+      hideTooltip();
+    }
+  }, true);
+  
+  window.addEventListener('resize', function() {
+    hideTooltip();
+  });
+}
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 async function initApp() {
