@@ -638,3 +638,25 @@ th {
     padding-right: 8px !important;
   }
 }
+
+/* ===== ВЫРОВНИВАНИЕ ФАМИЛИЙ В ТАБЛИЦЕ ИТОГОВОГО БАЛАНСА ===== */
+#final-results td:nth-child(2),
+#final-results .participant-name {
+  text-align: left !important;
+}
+
+/* Чтобы заголовок "Участник" тоже был по левому краю */
+#final-results th:nth-child(2) {
+  text-align: left !important;
+}
+
+/* ===== ВСЕ ФАМИЛИИ В ТАБЛИЦЕ БАЛАНСА ПО ЛЕВОМУ КРАЮ ===== */
+#final-results tbody td.participant-name {
+  text-align: left !important;
+  padding-left: 20px !important;
+}
+
+#final-results thead th:nth-child(2) {
+  text-align: left !important;
+  padding-left: 20px !important;
+}
