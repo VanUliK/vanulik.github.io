@@ -701,3 +701,88 @@ async function initApp() {
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
+
+
+// ============================================================
+// РЕГИСТРАЦИЯ SERVICE WORKER (PWA)
+// ============================================================
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/football/sw.js')
+      .then(function(registration) {
+        console.log('✅ Service Worker зарегистрирован успешно!');
+      })
+      .catch(function(error) {
+        console.log('❌ Ошибка регистрации Service Worker:', error);
+      });
+  });
+}
+
+// Уведомление об обновлении
+let newWorker;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('controllerchange', function() {
+    console.log('🔄 Приложение обновлено!');
+    // Можно показать уведомление пользователю
+    // showUpdateNotification();
+  });
+}
+
+// ============================================================
+// ПРЕДЛОЖЕНИЕ УСТАНОВИТЬ ПРИЛОЖЕНИЕ
+// ============================================================
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Показываем кнопку
+  const btn = document.createElement('button');
+  btn.id = 'install-btn';
+  btn.textContent = '📱 Установить приложение';
+  btn.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a2a6c;
+    color: #ffd900;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 999;
+  `;
+  
+  btn.onclick = function() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(choiceResult) {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('✅ Приложение установлено!');
+        }
+        deferredPrompt = null;
+        btn.remove();
+      });
+    }
+  };
+  
+  document.body.appendChild(btn);
+});
+
+window.addEventListener('appinstalled', function() {
+  console.log('✅ Приложение установлено!');
+  const btn = document.getElementById('install-btn');
+  if (btn) btn.remove();
+});
+
+// Уведомление об обновлении
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+  alert('🔄 Доступна новая версия! Обновите страницу.');
+});
