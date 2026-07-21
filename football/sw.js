@@ -1,5 +1,5 @@
 // ============================================================
-// SERVICE WORKER ДЛЯ PWA (папка /football2/)
+// SERVICE WORKER ДЛЯ PWA (папка /football/)
 // ============================================================
 
 const CACHE_NAME = 'predictions-v1.0';
@@ -22,7 +22,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('✅ Кэширование файлов для /football2/...');
+        console.log('✅ Кэширование файлов для /football/...');
         return cache.addAll(urlsToCache);
       })
       .then(function() {

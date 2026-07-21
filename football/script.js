@@ -718,7 +718,6 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-
 // Уведомление об обновлении
 let newWorker;
 if ('serviceWorker' in navigator) {
