@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', initApp);
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('/football2/sw.js')
       .then(function(registration) {
         console.log('✅ Service Worker зарегистрирован успешно!');
         
