@@ -1,26 +1,28 @@
 // ============================================================
-// SERVICE WORKER ДЛЯ PWA
+// SERVICE WORKER ДЛЯ PWA (папка /football2/)
 // ============================================================
 
 const CACHE_NAME = 'predictions-v1.0';
+const BASE_PATH = '/football2/';
+
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/manifest.json',
-  '/data/matches.json',
-  '/data/predictions.json',
-  '/data/users.json',
-  '/data/real-scores.json'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'style.css',
+  BASE_PATH + 'script.js',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + 'data/matches.json',
+  BASE_PATH + 'data/predictions.json',
+  BASE_PATH + 'data/users.json',
+  BASE_PATH + 'data/real-scores.json'
 ];
 
-// Установка - кэшируем файлы
+// Установка
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('✅ Кэширование файлов...');
+        console.log('✅ Кэширование файлов для /football2/...');
         return cache.addAll(urlsToCache);
       })
       .then(function() {
@@ -29,7 +31,7 @@ self.addEventListener('install', function(event) {
   );
 });
 
-// Активация - удаляем старый кэш
+// Активация
 self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
@@ -48,23 +50,19 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-// Перехват запросов - отдаём из кэша, если есть
+// Перехват запросов
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
-        // Если есть в кэше - отдаём
         if (response) {
           return response;
         }
-        // Иначе идём в сеть
         return fetch(event.request)
           .then(function(response) {
-            // Проверяем, что ответ валидный
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
-            // Кэшируем новый файл
             var responseToCache = response.clone();
             caches.open(CACHE_NAME)
               .then(function(cache) {
@@ -73,7 +71,6 @@ self.addEventListener('fetch', function(event) {
             return response;
           })
           .catch(function() {
-            // Если офлайн и файла нет в кэше
             return new Response('Страница недоступна офлайн', {
               status: 503,
               statusText: 'Offline'
@@ -81,11 +78,4 @@ self.addEventListener('fetch', function(event) {
           });
       })
   );
-});
-
-// Сообщение об обновлении
-self.addEventListener('message', function(event) {
-  if (event.data === 'skipWaiting') {
-    self.skipWaiting();
-  }
 });

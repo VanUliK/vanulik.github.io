@@ -712,12 +712,6 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/football2/sw.js')
       .then(function(registration) {
         console.log('✅ Service Worker зарегистрирован успешно!');
-        
-        // Проверяем обновления каждые 5 минут
-        setInterval(function() {
-          registration.update();
-          console.log('🔄 Проверка обновлений...');
-        }, 300000); // 5 минут
       })
       .catch(function(error) {
         console.log('❌ Ошибка регистрации Service Worker:', error);
