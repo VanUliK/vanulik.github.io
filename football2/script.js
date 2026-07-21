@@ -736,66 +736,53 @@ if ('serviceWorker' in navigator) {
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', function(e) {
-  // Предотвращаем автоматическое появление
   e.preventDefault();
   deferredPrompt = e;
   
-  // Показываем кнопку "Установить приложение"
-  showInstallButton();
-});
-
-function showInstallButton() {
-  // Проверяем, есть ли уже кнопка
-  if (document.getElementById('install-btn')) return;
-  
-  const button = document.createElement('button');
-  button.id = 'install-btn';
-  button.textContent = '📱 Установить приложение';
-  button.style.cssText = `
+  // Показываем кнопку
+  const btn = document.createElement('button');
+  btn.id = 'install-btn';
+  btn.textContent = '📱 Установить приложение';
+  btn.style.cssText = `
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    background: var(--primary);
-    color: var(--accent);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a2a6c;
+    color: #ffd900;
     border: none;
-    padding: 12px 24px;
+    padding: 14px 28px;
     border-radius: 12px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     z-index: 999;
-    transition: all 0.3s ease;
   `;
   
-  button.onmouseover = function() {
-    this.style.transform = 'scale(1.05)';
-  };
-  button.onmouseout = function() {
-    this.style.transform = 'scale(1)';
-  };
-  
-  button.onclick = function() {
+  btn.onclick = function() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(function(choiceResult) {
         if (choiceResult.outcome === 'accepted') {
-          console.log('✅ Пользователь установил приложение');
-        } else {
-          console.log('❌ Пользователь отказался от установки');
+          console.log('✅ Приложение установлено!');
         }
         deferredPrompt = null;
-        document.getElementById('install-btn').remove();
+        btn.remove();
       });
     }
   };
   
-  document.body.appendChild(button);
-}
+  document.body.appendChild(btn);
+});
 
-// Скрываем кнопку, если приложение уже установлено
 window.addEventListener('appinstalled', function() {
   console.log('✅ Приложение установлено!');
   const btn = document.getElementById('install-btn');
   if (btn) btn.remove();
+});
+
+// Уведомление об обновлении
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+  alert('🔄 Доступна новая версия! Обновите страницу.');
 });
