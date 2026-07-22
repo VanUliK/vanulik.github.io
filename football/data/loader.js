@@ -5,6 +5,8 @@
 let currentUser = null;
 let appData = null;
 let showingAllTables = false;
+let showingBalance = false;
+let showingFinance = false;
 
 // ============================================================
 // АВТОРИЗАЦИЯ
@@ -16,26 +18,26 @@ async function loadPasswords() {
     if (!response.ok) {
       return {
         "Сугревин": "1234",
-        "Романчугов": "1234",
-        "Ишутов": "1234",
-        "Мамедов": "1234",
-        "Васин": "1234",
-        "Романчугова": "1234",
-        "Чвокин": "1234",
-        "Колмыков": "1234"
+        "Романчугов": "5678",
+        "Ишутов": "9012",
+        "Мамедов": "3456",
+        "Васин": "7890",
+        "Романчугова": "2345",
+        "Чвокин": "6789",
+        "Колмыков": "0123"
       };
     }
     return await response.json();
   } catch (e) {
     return {
       "Сугревин": "1234",
-      "Романчугов": "1234",
-      "Ишутов": "1234",
-      "Мамедов": "1234",
-      "Васин": "1234",
-      "Романчугова": "1234",
-      "Чвокин": "1234",
-      "Колмыков": "1234"
+      "Романчугов": "5678",
+      "Ишутов": "9012",
+      "Мамедов": "3456",
+      "Васин": "7890",
+      "Романчугова": "2345",
+      "Чвокин": "6789",
+      "Колмыков": "0123"
     };
   }
 }
@@ -52,40 +54,85 @@ function closeLoginModal() {
   document.getElementById("login-modal").style.display = "none";
 }
 
-// Показать все таблицы (без личных прогнозов)
+// Показать итоговый баланс
+function showFinalBalance() {
+  showingBalance = true;
+  showingFinance = false;
+  showingAllTables = false;
+  
+  document.getElementById("user-predictions-wrapper").style.display = "none";
+  document.getElementById("all-tables").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "none";
+  document.getElementById("final-balance-wrapper").style.display = "block";
+  
+  if (appData) {
+    const money = calculateMoneyTable(appData.matches, appData.predictions, appData.realScores, appData.users);
+    renderFinalResults(money, appData.users);
+  }
+}
+
+// Закрыть итоговый баланс
+function closeFinalBalance() {
+  showingBalance = false;
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("user-predictions-wrapper").style.display = "block";
+}
+
+// Показать финансы
+function showFinance() {
+  showingFinance = true;
+  showingBalance = false;
+  showingAllTables = false;
+  
+  document.getElementById("user-predictions-wrapper").style.display = "none";
+  document.getElementById("all-tables").style.display = "none";
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "block";
+  
+  if (appData) {
+    const money = calculateMoneyTable(appData.matches, appData.predictions, appData.realScores, appData.users);
+    renderMoneyTable(money, appData.users);
+  }
+}
+
+// Закрыть финансы
+function closeFinance() {
+  showingFinance = false;
+  document.getElementById("finance-wrapper").style.display = "none";
+  document.getElementById("user-predictions-wrapper").style.display = "block";
+}
+
+// Показать все таблицы (без личных прогнозов, без баланса, без финансов)
 function showAllTables() {
   showingAllTables = true;
+  showingBalance = false;
+  showingFinance = false;
   
-  // Скрываем личные прогнозы
   document.getElementById("user-predictions-wrapper").style.display = "none";
-  
-  // Показываем все общие таблицы
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "block";
-  
-  // Показываем кнопку "Мои прогнозы" в блоке all-tables
   document.getElementById("back-to-my-btn").style.display = "block";
   
-  // Перезагружаем таблицы с данными
   if (appData) {
     buildAllTables(appData);
   }
 }
 
-// Показать мои прогнозы (скрыть общие таблицы)
+// Показать мои прогнозы
 function showMyPredictions() {
   showingAllTables = false;
+  showingBalance = false;
+  showingFinance = false;
   
-  // Показываем личные прогнозы
   document.getElementById("user-predictions-wrapper").style.display = "block";
-  
-  // Скрываем все общие таблицы
   document.getElementById("all-tables").style.display = "none";
-  
-  // Скрываем кнопку "Мои прогнозы"
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "none";
   document.getElementById("back-to-my-btn").style.display = "none";
 }
 
-// Построить все общие таблицы
+// Построить все общие таблицы (без баланса и финансов)
 function buildAllTables(data) {
   if (typeof buildTable === "function") {
     buildTable(data);
@@ -93,14 +140,6 @@ function buildAllTables(data) {
   if (typeof renderScoresTable === "function") {
     const stats = calculateScoresWithUsers(data.matches, data.predictions, data.realScores, data.users);
     renderScoresTable(stats, data.users);
-  }
-  if (typeof renderMoneyTable === "function") {
-    const money = calculateMoneyTable(data.matches, data.predictions, data.realScores, data.users);
-    renderMoneyTable(money, data.users);
-  }
-  if (typeof renderFinalResults === "function") {
-    const money = calculateMoneyTable(data.matches, data.predictions, data.realScores, data.users);
-    renderFinalResults(money, data.users);
   }
   if (typeof updateStageSummaryRows === "function") {
     updateStageSummaryRows(data.matches, data.predictions, data.realScores, data.users);
@@ -126,23 +165,25 @@ async function login() {
     errorEl.style.display = "none";
     closeLoginModal();
     
-    // Обновляем интерфейс
     document.getElementById("user-name-display").textContent = name;
     document.getElementById("user-info").style.display = "flex";
     document.getElementById("login-btn").style.display = "none";
     
-    // Показываем блок с прогнозами пользователя
     document.getElementById("user-predictions-wrapper").style.display = "block";
     document.getElementById("show-all-btn").style.display = "inline-block";
+    document.getElementById("show-balance-btn").style.display = "inline-block";
+    document.getElementById("show-finance-btn").style.display = "inline-block";
     
-    // Скрываем общие таблицы
     document.getElementById("all-tables").style.display = "none";
+    document.getElementById("final-balance-wrapper").style.display = "none";
+    document.getElementById("finance-wrapper").style.display = "none";
     document.getElementById("back-to-my-btn").style.display = "none";
+    
     showingAllTables = false;
+    showingBalance = false;
+    showingFinance = false;
     
-    // Загружаем данные
     await loadAppData();
-    
     console.log(`✅ ${name} вошёл в систему`);
   } else {
     errorEl.textContent = "❌ Неверный пароль";
@@ -154,19 +195,24 @@ async function login() {
 function logout() {
   currentUser = null;
   showingAllTables = false;
+  showingBalance = false;
+  showingFinance = false;
   
   document.getElementById("user-info").style.display = "none";
   document.getElementById("login-btn").style.display = "block";
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "block";
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "none";
   document.getElementById("back-to-my-btn").style.display = "none";
   document.getElementById("show-all-btn").style.display = "none";
+  document.getElementById("show-balance-btn").style.display = "none";
+  document.getElementById("show-finance-btn").style.display = "none";
   
   document.getElementById("user-predictions").innerHTML = '<p style="color: #999; text-align: center;">👤 Войдите, чтобы увидеть свои прогнозы</p>';
   console.log("👋 Выход из системы");
 }
 
-// Закрытие по клику вне модального окна
 document.addEventListener("click", function(e) {
   const modal = document.getElementById("login-modal");
   if (e.target === modal) {
@@ -174,7 +220,6 @@ document.addEventListener("click", function(e) {
   }
 });
 
-// Закрытие по Escape
 document.addEventListener("keydown", function(e) {
   if (e.key === "Escape") {
     closeLoginModal();
@@ -223,8 +268,6 @@ async function loadAppData() {
     ]);
 
     appData = { matches, predictions, users, realScores };
-    
-    // Показываем прогнозы пользователя
     displayUserPredictions();
     
   } catch (error) {
@@ -334,9 +377,12 @@ function displayUserPredictions() {
 document.addEventListener("DOMContentLoaded", function() {
   initLoginForm();
   
-  // По умолчанию показываем все общие таблицы
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "block";
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "none";
   document.getElementById("back-to-my-btn").style.display = "none";
   document.getElementById("show-all-btn").style.display = "none";
+  document.getElementById("show-balance-btn").style.display = "none";
+  document.getElementById("show-finance-btn").style.display = "none";
 });

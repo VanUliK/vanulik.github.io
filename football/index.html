@@ -145,23 +145,54 @@
 
     <!-- ===== БЛОК ПРОГНОЗОВ ПОЛЬЗОВАТЕЛЯ ===== -->
     <div id="user-predictions-wrapper" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h3 class="section-title" style="margin: 0; border-bottom: none; padding: 0;">
-          <span class="icon">📋</span> Ваши прогнозы
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">📋</span> Ваши прогнозы
         </h3>
-        <button onclick="showAllTables()" id="show-all-btn" style="
-          background: #1a2a6c;
-          color: #ffd900;
-          border: 2px solid #ffd900;
-          padding: 6px 18px;
-          border-radius: 6px;
-          font-weight: 700;
-          font-size: 13px;
-          cursor: pointer;
-          transition: all 0.2s;
-        ">
-          📊 Все таблицы
-        </button>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button onclick="showFinalBalance()" id="show-balance-btn" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+          ">
+            🏆 Итоговый баланс
+          </button>
+          <button onclick="showFinance()" id="show-finance-btn" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+          ">
+            💰 Финансы
+          </button>
+          <button onclick="showAllTables()" id="show-all-btn" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+          ">
+            📊 Все таблицы
+          </button>
+        </div>
       </div>
       <div id="user-predictions" style="
         background: white;
@@ -176,11 +207,56 @@
       </div>
     </div>
 
-    <!-- ===== ВСЕ ОБЩИЕ ТАБЛИЦЫ ===== -->
+    <!-- ===== БЛОК ИТОГОВОГО БАЛАНСА ===== -->
+    <div id="final-balance-wrapper" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">🏆</span> Итоговый баланс
+        </h3>
+        <button onclick="closeFinalBalance()" style="
+          background: #f44336;
+          color: white;
+          border: none;
+          padding: 6px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 13px;
+        ">
+          ✕ Закрыть
+        </button>
+      </div>
+      <div id="final-results" style="margin-bottom: 30px;"></div>
+    </div>
+
+    <!-- ===== БЛОК ФИНАНСОВ ===== -->
+    <div id="finance-wrapper" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">💰</span> Финансы: кто сколько заработал
+        </h3>
+        <button onclick="closeFinance()" style="
+          background: #f44336;
+          color: white;
+          border: none;
+          padding: 6px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 13px;
+        ">
+          ✕ Закрыть
+        </button>
+      </div>
+      <div id="money-container" style="margin-bottom: 30px;"></div>
+    </div>
+
+    <!-- ===== ВСЕ ОБЩИЕ ТАБЛИЦЫ (без Финансов и Баланса) ===== -->
     <div id="all-tables">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h3 class="section-title" style="margin: 0; border-bottom: none; padding: 0;">
-          <span class="icon">🏆</span> Итоговый баланс
+      <!-- Таблица прогнозов -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">📊</span> Таблица прогнозов (все участники)
         </h3>
         <button onclick="showMyPredictions()" id="back-to-my-btn" style="
           background: #1a2a6c;
@@ -193,22 +269,23 @@
           cursor: pointer;
           transition: all 0.2s;
           display: none;
+          white-space: nowrap;
+          margin-left: 16px;
         ">
           🔙 Мои прогнозы
         </button>
       </div>
-      <div id="final-results"></div>
-
-      <h3 class="section-title"><span class="icon">📊</span> Таблица прогнозов (все участники)</h3>
       <div class="predictions-table-wrapper">
         <table id="predictions-table"></table>
         <div id="cellTooltip" class="cell-tooltip"></div>
       </div>
 
-      <h3 class="section-title"><span class="icon">💰</span> Финансы: кто сколько заработал</h3>
-      <div id="money-container"></div>
-
-      <h3 class="section-title"><span class="icon">📊</span> Турнирная таблица (очки)</h3>
+      <!-- Турнирная таблица -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px 0;">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">📊</span> Турнирная таблица (очки)
+        </h3>
+      </div>
       <div id="scores-container"></div>
     </div>
     
