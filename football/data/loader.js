@@ -7,6 +7,8 @@ let appData = null;
 let showingAllTables = false;
 let showingBalance = false;
 let showingFinance = false;
+let showingStandings = false;
+let returnToUserPredictions = false;
 
 // ============================================================
 // АВТОРИЗАЦИЯ
@@ -54,14 +56,58 @@ function closeLoginModal() {
   document.getElementById("login-modal").style.display = "none";
 }
 
+// ============================================================
+// ПОКАЗАТЬ ТАБЛИЦЫ
+// ============================================================
+
+// Показать турнирную таблицу (из Мои прогнозы)
+function showStandingsFromUser() {
+  returnToUserPredictions = true;
+  showStandings();
+}
+
+// Показать турнирную таблицу (общая)
+function showStandings() {
+  showingStandings = true;
+  
+  document.getElementById("all-tables").style.display = "none";
+  document.getElementById("user-predictions-wrapper").style.display = "none";
+  document.getElementById("final-balance-wrapper").style.display = "none";
+  document.getElementById("finance-wrapper").style.display = "none";
+  document.getElementById("standings-wrapper").style.display = "block";
+  
+  if (appData) {
+    const stats = calculateScoresWithUsers(appData.matches, appData.predictions, appData.realScores, appData.users);
+    renderScoresTable(stats, appData.users);
+  }
+}
+
+// Закрыть турнирную таблицу
+function closeStandings() {
+  showingStandings = false;
+  document.getElementById("standings-wrapper").style.display = "none";
+  
+  if (returnToUserPredictions && currentUser) {
+    returnToUserPredictions = false;
+    document.getElementById("user-predictions-wrapper").style.display = "block";
+  } else if (currentUser) {
+    document.getElementById("user-predictions-wrapper").style.display = "block";
+  } else {
+    document.getElementById("all-tables").style.display = "block";
+  }
+}
+
 // Показать итоговый баланс
 function showFinalBalance() {
   showingBalance = true;
   showingFinance = false;
   showingAllTables = false;
+  showingStandings = false;
+  returnToUserPredictions = false;
   
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "none";
+  document.getElementById("standings-wrapper").style.display = "none";
   document.getElementById("finance-wrapper").style.display = "none";
   document.getElementById("final-balance-wrapper").style.display = "block";
   
@@ -75,7 +121,11 @@ function showFinalBalance() {
 function closeFinalBalance() {
   showingBalance = false;
   document.getElementById("final-balance-wrapper").style.display = "none";
-  document.getElementById("user-predictions-wrapper").style.display = "block";
+  if (currentUser) {
+    document.getElementById("user-predictions-wrapper").style.display = "block";
+  } else {
+    document.getElementById("all-tables").style.display = "block";
+  }
 }
 
 // Показать финансы
@@ -83,9 +133,12 @@ function showFinance() {
   showingFinance = true;
   showingBalance = false;
   showingAllTables = false;
+  showingStandings = false;
+  returnToUserPredictions = false;
   
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "none";
+  document.getElementById("standings-wrapper").style.display = "none";
   document.getElementById("final-balance-wrapper").style.display = "none";
   document.getElementById("finance-wrapper").style.display = "block";
   
@@ -99,18 +152,25 @@ function showFinance() {
 function closeFinance() {
   showingFinance = false;
   document.getElementById("finance-wrapper").style.display = "none";
-  document.getElementById("user-predictions-wrapper").style.display = "block";
+  if (currentUser) {
+    document.getElementById("user-predictions-wrapper").style.display = "block";
+  } else {
+    document.getElementById("all-tables").style.display = "block";
+  }
 }
 
-// Показать все таблицы (без личных прогнозов, без баланса, без финансов)
+// Показать все прогнозы
 function showAllTables() {
   showingAllTables = true;
   showingBalance = false;
   showingFinance = false;
+  showingStandings = false;
+  returnToUserPredictions = false;
   
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("final-balance-wrapper").style.display = "none";
   document.getElementById("finance-wrapper").style.display = "none";
+  document.getElementById("standings-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "block";
   document.getElementById("back-to-my-btn").style.display = "block";
   
@@ -124,29 +184,31 @@ function showMyPredictions() {
   showingAllTables = false;
   showingBalance = false;
   showingFinance = false;
+  showingStandings = false;
+  returnToUserPredictions = false;
   
   document.getElementById("user-predictions-wrapper").style.display = "block";
   document.getElementById("all-tables").style.display = "none";
   document.getElementById("final-balance-wrapper").style.display = "none";
   document.getElementById("finance-wrapper").style.display = "none";
+  document.getElementById("standings-wrapper").style.display = "none";
   document.getElementById("back-to-my-btn").style.display = "none";
 }
 
-// Построить все общие таблицы (без баланса и финансов)
+// Построить все общие таблицы
 function buildAllTables(data) {
   if (typeof buildTable === "function") {
     buildTable(data);
-  }
-  if (typeof renderScoresTable === "function") {
-    const stats = calculateScoresWithUsers(data.matches, data.predictions, data.realScores, data.users);
-    renderScoresTable(stats, data.users);
   }
   if (typeof updateStageSummaryRows === "function") {
     updateStageSummaryRows(data.matches, data.predictions, data.realScores, data.users);
   }
 }
 
-// Вход
+// ============================================================
+// ВХОД / ВЫХОД
+// ============================================================
+
 async function login() {
   const name = document.getElementById("login-name").value;
   const password = document.getElementById("login-password").value;
@@ -169,19 +231,29 @@ async function login() {
     document.getElementById("user-info").style.display = "flex";
     document.getElementById("login-btn").style.display = "none";
     
+    // Показываем кнопки для авторизованных
+    document.getElementById("show-balance-btn-all").style.display = "inline-block";
+    document.getElementById("show-finance-btn-all").style.display = "inline-block";
+    
+    // Показываем прогнозы пользователя
     document.getElementById("user-predictions-wrapper").style.display = "block";
     document.getElementById("show-all-btn").style.display = "inline-block";
     document.getElementById("show-balance-btn").style.display = "inline-block";
     document.getElementById("show-finance-btn").style.display = "inline-block";
+    document.getElementById("show-standings-from-user").style.display = "inline-block";
     
+    // Скрываем всё остальное
     document.getElementById("all-tables").style.display = "none";
     document.getElementById("final-balance-wrapper").style.display = "none";
     document.getElementById("finance-wrapper").style.display = "none";
+    document.getElementById("standings-wrapper").style.display = "none";
     document.getElementById("back-to-my-btn").style.display = "none";
     
     showingAllTables = false;
     showingBalance = false;
     showingFinance = false;
+    showingStandings = false;
+    returnToUserPredictions = false;
     
     await loadAppData();
     console.log(`✅ ${name} вошёл в систему`);
@@ -191,23 +263,31 @@ async function login() {
   }
 }
 
-// Выход
 function logout() {
   currentUser = null;
   showingAllTables = false;
   showingBalance = false;
   showingFinance = false;
+  showingStandings = false;
+  returnToUserPredictions = false;
   
   document.getElementById("user-info").style.display = "none";
   document.getElementById("login-btn").style.display = "block";
+  
+  // Скрываем кнопки для авторизованных
+  document.getElementById("show-balance-btn-all").style.display = "none";
+  document.getElementById("show-finance-btn-all").style.display = "none";
+  
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "block";
   document.getElementById("final-balance-wrapper").style.display = "none";
   document.getElementById("finance-wrapper").style.display = "none";
+  document.getElementById("standings-wrapper").style.display = "none";
   document.getElementById("back-to-my-btn").style.display = "none";
   document.getElementById("show-all-btn").style.display = "none";
   document.getElementById("show-balance-btn").style.display = "none";
   document.getElementById("show-finance-btn").style.display = "none";
+  document.getElementById("show-standings-from-user").style.display = "none";
   
   document.getElementById("user-predictions").innerHTML = '<p style="color: #999; text-align: center;">👤 Войдите, чтобы увидеть свои прогнозы</p>';
   console.log("👋 Выход из системы");
@@ -379,10 +459,14 @@ document.addEventListener("DOMContentLoaded", function() {
   
   document.getElementById("user-predictions-wrapper").style.display = "none";
   document.getElementById("all-tables").style.display = "block";
+  document.getElementById("standings-wrapper").style.display = "none";
   document.getElementById("final-balance-wrapper").style.display = "none";
   document.getElementById("finance-wrapper").style.display = "none";
   document.getElementById("back-to-my-btn").style.display = "none";
   document.getElementById("show-all-btn").style.display = "none";
   document.getElementById("show-balance-btn").style.display = "none";
   document.getElementById("show-finance-btn").style.display = "none";
+  document.getElementById("show-balance-btn-all").style.display = "none";
+  document.getElementById("show-finance-btn-all").style.display = "none";
+  document.getElementById("show-standings-from-user").style.display = "none";
 });
