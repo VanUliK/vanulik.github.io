@@ -313,8 +313,8 @@ th {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  max-height: 85vh;
-  overflow: auto;
+  max-height: none; /* ← убираем ограничение высоты */
+  overflow: visible; /* ← убираем прокрутку */
   margin: 0 auto;
 }
 

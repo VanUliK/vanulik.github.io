@@ -17,7 +17,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Прогнозы ЧМ-2026">
   <link rel="apple-touch-icon" href="/football/icons/icon-192x192.png">
-  
+
   <!-- Иконки для разных iPhone -->
   <link rel="apple-touch-icon" sizes="152x152" href="/football/icons/icon-152x152.png">
   <link rel="apple-touch-icon" sizes="167x167" href="/football/icons/icon-167x167.png">
@@ -25,39 +25,43 @@
 </head>
 
 <body>
-  
+
   <div class="container">
-    <header class="header" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px;">
-      <h1 style="margin: 0;">⚽ Чемпионат Мира 2026: Прогнозы</h1>
-      
+    <header class="header"
+      style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px;">
+      <h1 style="margin: 0; display: flex; align-items: center; gap: 12px;">
+        <img src="./icons/icon-192x192.png" alt="ЧМ-2026" style="width: 40px; height: 40px; border-radius: 8px;">
+        Чемпионат Мира 2026: Прогнозы
+      </h1>
+
       <!-- Кнопка входа / информация о пользователе -->
       <div>
         <button id="login-btn" onclick="showLoginModal()" style="
-          background: #1a2a6c;
-          color: #ffd900;
-          border: 2px solid #ffd900;
-          padding: 8px 20px;
-          border-radius: 8px;
-          font-weight: 700;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s;
-        ">
+      background: #1a2a6c;
+      color: #ffd900;
+      border: 2px solid #ffd900;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    ">
           🔑 Войти
         </button>
-        
+
         <div id="user-info" style="display: none; align-items: center; gap: 12px;">
           <span style="color: #ffd900; font-weight: 600;">👤 <span id="user-name-display"></span></span>
           <button onclick="logout()" style="
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-          ">
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+      ">
             Выйти
           </button>
         </div>
@@ -97,10 +101,10 @@
           cursor: pointer;
           color: #999;
         ">✕</button>
-        
+
         <h2 style="margin: 0 0 8px 0; color: #1a2a6c;">🔐 Вход</h2>
         <p style="color: #666; margin-bottom: 20px;">Введите ваше имя и пароль (1234)</p>
-        
+
         <div style="margin: 20px 0;">
           <select id="login-name" style="
             width: 100%;
@@ -113,7 +117,7 @@
           ">
             <option value="">Выберите имя</option>
           </select>
-          
+
           <input type="password" id="login-password" placeholder="Введите пароль" style="
             width: 100%;
             padding: 12px;
@@ -123,7 +127,7 @@
             box-sizing: border-box;
           ">
         </div>
-        
+
         <button onclick="login()" style="
           background: #1a2a6c;
           color: #ffd900;
@@ -138,18 +142,34 @@
         ">
           Войти
         </button>
-        
-        <p id="login-error" style="color: #f44336; margin-top: 12px; display: none; font-weight: 600;">❌ Неверное имя или пароль</p>
+
+        <p id="login-error" style="color: #f44336; margin-top: 12px; display: none; font-weight: 600;">❌ Неверное имя
+          или пароль</p>
       </div>
     </div>
 
     <!-- ===== БЛОК ПРОГНОЗОВ ПОЛЬЗОВАТЕЛЯ ===== -->
     <div id="user-predictions-wrapper" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+        <h3
+          style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
           <span style="font-size: 1.5rem;">📋</span> Ваши прогнозы
         </h3>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button onclick="showStandings()" id="show-standings-from-user" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+          ">
+            📊 Турнирная таблица
+          </button>
           <button onclick="showFinalBalance()" id="show-balance-btn" style="
             background: #1a2a6c;
             color: #ffd900;
@@ -190,7 +210,7 @@
             transition: all 0.2s;
             white-space: nowrap;
           ">
-            📊 Все таблицы
+            📊 Все прогнозы
           </button>
         </div>
       </div>
@@ -207,10 +227,109 @@
       </div>
     </div>
 
+    <!-- ===== БЛОК ТАБЛИЦЫ ПРОГНОЗОВ (все участники) ===== -->
+    <div id="all-tables">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3
+          style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">📊</span> Таблица прогнозов (все участники)
+        </h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button onclick="showStandings()" id="show-standings-btn" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+          ">
+            📊 Турнирная таблица
+          </button>
+          <button onclick="showFinalBalance()" id="show-balance-btn-all" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: none;
+          ">
+            🏆 Итоговый баланс
+          </button>
+          <button onclick="showFinance()" id="show-finance-btn-all" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: none;
+          ">
+            💰 Финансы
+          </button>
+          <button onclick="showMyPredictions()" id="back-to-my-btn" style="
+            background: #1a2a6c;
+            color: #ffd900;
+            border: 2px solid #ffd900;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+            white-space: nowrap;
+          ">
+            🔙 Мои прогнозы
+          </button>
+        </div>
+      </div>
+      <div class="predictions-table-wrapper">
+        <table id="predictions-table"></table>
+        <div id="cellTooltip" class="cell-tooltip"></div>
+      </div>
+    </div>
+
+    <!-- ===== БЛОК ТУРНИРНОЙ ТАБЛИЦЫ ===== -->
+    <div id="standings-wrapper" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3
+          style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+          <span style="font-size: 1.5rem;">📊</span> Турнирная таблица (очки)
+        </h3>
+        <button onclick="closeStandings()" style="
+          background: #f44336;
+          color: white;
+          border: none;
+          padding: 6px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 13px;
+        ">
+          ✕ Закрыть
+        </button>
+      </div>
+      <div id="scores-container" style="margin-bottom: 30px;"></div>
+    </div>
+
     <!-- ===== БЛОК ИТОГОВОГО БАЛАНСА ===== -->
     <div id="final-balance-wrapper" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+        <h3
+          style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
           <span style="font-size: 1.5rem;">🏆</span> Итоговый баланс
         </h3>
         <button onclick="closeFinalBalance()" style="
@@ -232,7 +351,8 @@
     <!-- ===== БЛОК ФИНАНСОВ ===== -->
     <div id="finance-wrapper" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
+        <h3
+          style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
           <span style="font-size: 1.5rem;">💰</span> Финансы: кто сколько заработал
         </h3>
         <button onclick="closeFinance()" style="
@@ -251,44 +371,6 @@
       <div id="money-container" style="margin-bottom: 30px;"></div>
     </div>
 
-    <!-- ===== ВСЕ ОБЩИЕ ТАБЛИЦЫ (без Финансов и Баланса) ===== -->
-    <div id="all-tables">
-      <!-- Таблица прогнозов -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
-          <span style="font-size: 1.5rem;">📊</span> Таблица прогнозов (все участники)
-        </h3>
-        <button onclick="showMyPredictions()" id="back-to-my-btn" style="
-          background: #1a2a6c;
-          color: #ffd900;
-          border: 2px solid #ffd900;
-          padding: 6px 18px;
-          border-radius: 6px;
-          font-weight: 700;
-          font-size: 13px;
-          cursor: pointer;
-          transition: all 0.2s;
-          display: none;
-          white-space: nowrap;
-          margin-left: 16px;
-        ">
-          🔙 Мои прогнозы
-        </button>
-      </div>
-      <div class="predictions-table-wrapper">
-        <table id="predictions-table"></table>
-        <div id="cellTooltip" class="cell-tooltip"></div>
-      </div>
-
-      <!-- Турнирная таблица -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px 0;">
-        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1a2a6c; margin: 0; padding: 0; border-bottom: 3px solid #ffd900; padding-bottom: 8px;">
-          <span style="font-size: 1.5rem;">📊</span> Турнирная таблица (очки)
-        </h3>
-      </div>
-      <div id="scores-container"></div>
-    </div>
-    
   </div>
 
   <script src="data/loader.js"></script>
